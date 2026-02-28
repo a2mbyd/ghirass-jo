@@ -1,0 +1,44 @@
+[
+    {
+        "id": "1",
+        "title": "Programming I",
+        "description": "Introduction to programming fundamentals and problem solving",
+        "url": "https://example.com/programming-1",
+        "icon": "code"
+    },
+    {
+        "id": "2",
+        "title": "Data Structures",
+        "description": "Arrays, linked lists, trees, graphs, and algorithms",
+        "url": "https://example.com/data-structures",
+        "icon": "database"
+    },
+    {
+        "id": "3",
+        "title": "Database Systems",
+        "description": "SQL, relational design, and database management",
+        "url": "https://example.com/databases",
+        "icon": "database"
+    },
+    {
+        "id": "4",
+        "title": "Operating Systems",
+        "description": "Processes, memory management, and system design",
+        "url": "https://example.com/os",
+        "icon": "cpu"
+    },
+    {
+        "id": "5",
+        "title": "Computer Networks",
+        "description": "TCP/IP, protocols, and network architecture",
+        "url": "https://example.com/networks",
+        "icon": "globe"
+    },
+    {
+        "id": "6",
+        "title": "Software Engineering",
+        "description": "SDLC, design patterns, and project management",
+        "url": "https://example.com/software-eng",
+        "icon": "layers"
+    }
+]

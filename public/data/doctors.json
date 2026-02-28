@@ -1,0 +1,23 @@
+[
+    {
+        "id": "1",
+        "name": "Dr. Ahmad Hassan",
+        "email": "a.hassan@university.edu",
+        "department": "Computer Science",
+        "subjects": ["Programming I", "Data Structures"]
+    },
+    {
+        "id": "2",
+        "name": "Dr. Sara Mahmoud",
+        "email": "s.mahmoud@university.edu",
+        "department": "Information Technology",
+        "subjects": ["Database Systems", "Software Engineering"]
+    },
+    {
+        "id": "3",
+        "name": "Dr. Omar Khalil",
+        "email": "o.khalil@university.edu",
+        "department": "Computer Science",
+        "subjects": ["Operating Systems", "Computer Networks"]
+    }
+]
