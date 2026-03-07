@@ -18,12 +18,12 @@ return new class extends Migration
                 ->constrained()
                 ->nullOnDelete();
             $table->string('name');
+
             $table->string('description')->nullable();
             $table->string('course_code')->nullable();
             $table->tinyInteger('credit_hours')->default(3);
             $table->boolean('is_lab')->default(false);
             $table->timestamps();
-            
         });
     }
 

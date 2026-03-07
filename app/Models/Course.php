@@ -41,6 +41,11 @@ class Course extends Model
         return $this->hasMany(CourseVideo::class);
     }
 
+    public function pastYearQuestions(): HasMany
+    {
+        return $this->hasMany(CoursePastYearQuestion::class);
+    }
+
     public function prerequisites(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -48,6 +53,21 @@ class Course extends Model
             'course_prerequisite',
             'course_id',
             'prerequisite_id'
+        )->withPivot('requirement_type');
+    }
+
+    public function corequisites(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'course_corequisite',
+            'course_id',
+            'corequisite_id'
         );
+    }
+
+    public function majors(): BelongsToMany
+    {
+        return $this->belongsToMany(Major::class, 'course_major')->withPivot('year', 'semester', 'type');
     }
 }

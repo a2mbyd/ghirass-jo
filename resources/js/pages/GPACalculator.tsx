@@ -1,5 +1,5 @@
 import PageHeader from '@/components/PageHeader';
-import GPAForm from '@/components/GPAForm';
+import GPAForm from '@/components/GPA/GPAForm';
 
 export default function GPACalculator() {
     return (

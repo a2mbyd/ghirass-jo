@@ -15,11 +15,29 @@ class SectionFactory extends Factory
 
     public function definition(): array
     {
-        $major = Major::factory()->create();
-
         return [
-            'major_id' => $major->id,
-            'name' => strtoupper($major->slug),
+            'name' => fake()->unique()->words(2, true),
         ];
+    }
+
+    public function forMajor(Major $major): static
+    {
+        return $this->afterCreating(function (Section $section) use ($major) {
+            $major->sections()->syncWithoutDetaching([$section->id]);
+        });
+    }
+
+    public function forCsMajor(): static
+    {
+        return $this->forMajor(
+            Major::firstOrCreate(
+                ['slug' => 'cs'],
+                [
+                    'name' => 'علوم الحاسوب',
+                    'description' => 'أساسيات البرمجة، الخوارزميات، وهياكل البيانات.',
+                    'roadmap_image' => '/images/cs-major-roadmap-2022.png',
+                ]
+            )
+        );
     }
 }

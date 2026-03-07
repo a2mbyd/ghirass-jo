@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
-import Topbar from '@/components/Topbar';
-import Footer from '@/components/Footer';
+import Topbar from '@/components/Topbar/Topbar';
+import Footer from '@/components/Footer/Footer';
 
 export default function MainLayout({ children }: { children: ReactNode }) {
     return (

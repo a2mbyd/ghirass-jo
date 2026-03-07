@@ -1,12 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Instrument+Sans:wght@400;500;600&display=swap');
+
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 html {
     scroll-behavior: smooth;
+    background-color: var(--color-background);
 }
+
 @theme {
     /* =========================
-       PRIMARY — SinAI Blue
+       PRIMARY — Ghirass Blue
     ========================= */
     --color-primary-50: #eaf2fb;
     --color-primary-100: #d6e5f7;
@@ -52,7 +56,12 @@ html {
        GRADIENTS
     ========================= */
     --color-gradient-primary: linear-gradient(135deg, #196fc2 0%, #8b5cf6 100%);
-    --color-gradient-energetic: linear-gradient(135deg, #196fc2 0%, #06b6d4 50%, #ec4899 100%);
+    --color-gradient-energetic: linear-gradient(
+        135deg,
+        #196fc2 0%,
+        #06b6d4 50%,
+        #ec4899 100%
+    );
     --color-gradient-cool: linear-gradient(135deg, #06b6d4 0%, #196fc2 100%);
     --color-gradient-success: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
 
@@ -85,6 +94,7 @@ html {
     --color-text: #0f172a;
     --color-text-muted: #64748b;
     --color-text-subtle: #94a3b8;
+    --color-text-inverse: #f1f5f9;
 
     /* =========================
        SEMANTIC
@@ -116,8 +126,12 @@ html {
 }
 
 @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes scale-in {
@@ -143,19 +157,41 @@ html {
     animation: scale-in 0.3s ease-out forwards;
 }
 
-.stagger-1 { animation-delay: 0.05s; }
-.stagger-2 { animation-delay: 0.1s; }
-.stagger-3 { animation-delay: 0.15s; }
-.stagger-4 { animation-delay: 0.2s; }
-.stagger-5 { animation-delay: 0.25s; }
-.stagger-6 { animation-delay: 0.3s; }
-.stagger-7 { animation-delay: 0.35s; }
-.stagger-8 { animation-delay: 0.4s; }
-.stagger-9 { animation-delay: 0.45s; }
-.stagger-10 { animation-delay: 0.5s; }
+.stagger-1 {
+    animation-delay: 0.05s;
+}
+.stagger-2 {
+    animation-delay: 0.1s;
+}
+.stagger-3 {
+    animation-delay: 0.15s;
+}
+.stagger-4 {
+    animation-delay: 0.2s;
+}
+.stagger-5 {
+    animation-delay: 0.25s;
+}
+.stagger-6 {
+    animation-delay: 0.3s;
+}
+.stagger-7 {
+    animation-delay: 0.35s;
+}
+.stagger-8 {
+    animation-delay: 0.4s;
+}
+.stagger-9 {
+    animation-delay: 0.45s;
+}
+.stagger-10 {
+    animation-delay: 0.5s;
+}
 
 .card-hover {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 .card-hover:hover {
     transform: translateY(-4px);
@@ -163,7 +199,11 @@ html {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-accent-violet) 100%);
+    background: linear-gradient(
+        135deg,
+        var(--color-primary-500) 0%,
+        var(--color-accent-violet) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -173,11 +213,172 @@ html {
     font-family: var(--font-display);
 }
 
-html {
-    scroll-behavior: smooth;
+.major-hero-font {
+    font-family: 'Syne', sans-serif;
+}
+
+/* Hero section fonts */
+.hero-font {
+    font-family: 'Syne', sans-serif;
+}
+.body-font {
+    font-family: 'Instrument Sans', sans-serif;
+}
+
+/* Hero section animations */
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes float-a {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-0.5deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(0.5deg);
+    }
+}
+@keyframes float-b {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.hero-slide-up {
+    animation: slide-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-fade-in {
+    animation: fade-in 0.8s ease both;
+}
+.hero-float-a {
+    animation: float-a 5s ease-in-out infinite;
+}
+.hero-float-b {
+    animation: float-b 6s ease-in-out infinite;
+}
+.hero-float-b-d1 {
+    animation: float-b 6s ease-in-out 0.8s infinite;
+}
+.hero-float-b-d2 {
+    animation: float-b 6s ease-in-out 1.6s infinite;
+}
+
+.hero-anim-1 {
+    animation: slide-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+.hero-anim-2 {
+    animation: slide-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+.hero-anim-3 {
+    animation: slide-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+.hero-anim-4 {
+    animation: slide-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+}
+.hero-anim-5 {
+    animation: fade-in 0.8s ease 0.6s both;
+}
+
+.cta-primary {
+    transition: all 0.15s ease;
+}
+.cta-primary:hover {
+    box-shadow: 0 8px 28px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+}
+.cta-secondary {
+    transition: background-color 0.15s ease;
+}
+.cta-secondary:hover {
+    background-color: var(--color-primary-50);
 }
 
 :focus-visible {
     outline: 2px solid var(--color-primary-500);
     outline-offset: 2px;
+}
+
+/* =========================
+   DARK MODE OVERRIDES
+   Applies when <html class="dark"> is set by ThemeProvider
+========================= */
+.dark {
+    /* =========================
+       SURFACES & BACKGROUNDS
+    ========================= */
+    --color-background: #0f172a; /* slate-900 */
+    --color-surface: #1e293b; /* slate-800 */
+    --color-surface-alt: #0f172a; /* slate-900 */
+    --color-surface-elevated: #263449; /* between slate-800/700 */
+    --color-border: #334155; /* slate-700 */
+    --color-border-subtle: #1e293b; /* slate-800 */
+
+    /* Glassmorphism — dark glass */
+    --color-glass-bg: rgba(15, 23, 42, 0.75);
+    --color-glass-border: rgba(255, 255, 255, 0.08);
+    --color-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+    /* Soft shadows — heavier on dark */
+    --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.25);
+    --shadow-soft-hover: 0 8px 28px rgba(0, 0, 0, 0.45);
+    --shadow-glow-primary: 0 0 24px rgba(59, 130, 246, 0.5);
+    --shadow-glow-cyan: 0 0 24px rgba(6, 182, 212, 0.5);
+    --shadow-glow-pink: 0 0 24px rgba(236, 72, 153, 0.5);
+
+    /* =========================
+       TEXT
+    ========================= */
+    --color-text: #f1f5f9; /* slate-100 */
+    --color-text-muted: #94a3b8; /* slate-400 */
+    --color-text-subtle: #64748b; /* slate-500 */
+
+    /* =========================
+       PRIMARY — inverted for dark backgrounds
+       50 (lightest tint) → darkest, 900 → lightest
+    ========================= */
+    --color-primary-50: #082340; /* darkest tint (was lightest) */
+    --color-primary-100: #0d3761;
+    --color-primary-200: #114a82;
+    --color-primary-300: #155da3;
+    --color-primary-400: #196fc2; /* brand */
+    --color-primary-500: #3b82f6; /* brighter for dark bg readability */
+    --color-primary-600: #60a5fa;
+    --color-primary-700: #93c5fd;
+    --color-primary-800: #bfdbfe;
+    --color-primary-900: #eff6ff; /* lightest tint */
+
+    /* =========================
+       SEMANTIC
+    ========================= */
+    --color-text-inverse: #f1f5f9;
+    --color-success: #4ade80; /* emerald-400 — brighter on dark */
+    --color-warning: #fbbf24; /* amber-400 */
+    --color-danger: #f87171; /* rose-400 */
+}
+
+.dark .cta-secondary:hover {
+    background-color: #e7f0fa;
+}
+
+/* Dark mode number input spinner buttons */
+.dark .gpa-number-input::-webkit-inner-spin-button,
+.dark .gpa-number-input::-webkit-outer-spin-button {
+    filter: invert(1);
+}
+
+/* Dark mode select option dropdown */
+.dark select option {
+    background-color: #1e293b;
+    color: #f1f5f9;
 }

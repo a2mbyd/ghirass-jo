@@ -1,20 +1,28 @@
-import PageHeader from '@/components/PageHeader';
-import React from 'react';
+import type { Course, Major, Section } from '@/types';
+import Hero from '@/components/Major/Hero';
+import RoadMapSection from '@/components/Major/RoadMapSection';
+import CourseByYearSection from '@/components/Major/CourseByYearSection/CourseByYearSection';
 
-const Major = ({ major }: { major: string }) => {
+interface MajorProps {
+    major: Major;
+    sections: Section[];
+    courses: Course[];
+}
+export default function Major({ major, sections, courses }: MajorProps) {
     return (
-        <div className="container mx-auto max-w-3xl px-4 py-12">
-            <PageHeader
-                title="التخصص"
-                subtitle="عرض المقررات للتخصص"
+        <div dir="rtl" className="flex flex-col gap-8">
+            {/* ── Hero / Major Header ── */}
+            <Hero courses={courses} major={major} sections={sections} />
+
+            {/* ── Roadmap Section ── */}
+            <RoadMapSection
+                major={major}
+                sections={sections}
+                courses={courses}
             />
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <div className="card">
-                    <h2 className="text-2xl font-bold">{major}</h2>
-                </div>
-            </div>
+
+            {/* ── Courses by Year Section ── */}
+            <CourseByYearSection courses={courses} />
         </div>
     );
-};
-
-export default Major;
+}

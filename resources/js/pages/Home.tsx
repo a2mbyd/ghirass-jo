@@ -1,13 +1,14 @@
-import HeroSection from '@/components/Home/HeroSection';
-import MajorsSection from '@/components/Home/MajorsSection';
-import QuickLinksSection from '@/components/Home/QuickLinksSection';
+import HeroSection from '@/components/Home/HeroSection/HeroSection';
+import MajorsSection from '@/components/Home/MajorsSection/MajorsSection';
+import QuickLinksSection from '@/components/Home/QuickLinksSection/QuickLinksSection';
+import { Major } from '@/types';
 
-export default function Home() {
+export default function Home({ majors }: { majors: Major[] }) {
     return (
         <div>
             <HeroSection />
             <QuickLinksSection />
-            <MajorsSection />
+            <MajorsSection majors={majors} />
         </div>
     );
 }

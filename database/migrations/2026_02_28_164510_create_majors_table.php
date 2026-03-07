@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('description');
             $table->string('slug')->unique();
-            $table->string('roadmap_image')->nullable();
+            $table->string('roadmap_image');
             $table->timestamps();
         });
     }
