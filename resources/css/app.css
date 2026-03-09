@@ -303,12 +303,6 @@ html {
 .cta-secondary:hover {
     background-color: var(--color-primary-50);
 }
-
-:focus-visible {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: 2px;
-}
-
 /* =========================
    DARK MODE OVERRIDES
    Applies when <html class="dark"> is set by ThemeProvider
@@ -381,4 +375,52 @@ html {
 .dark select option {
     background-color: #1e293b;
     color: #f1f5f9;
+}
+
+/* Delete assertion modal — theme-aware */
+.delete-modal-overlay {
+    background: color-mix(in srgb, var(--color-background) 20%, transparent);
+    backdrop-filter: blur(8px);
+}
+.delete-modal-card {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-soft-hover);
+}
+.delete-modal-close {
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+    background: var(--color-surface-alt);
+}
+.delete-modal-close:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-subtle);
+    background: var(--color-surface-elevated);
+}
+.delete-modal-icon {
+    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+    border-color: color-mix(in srgb, var(--color-danger) 25%, transparent);
+}
+.delete-modal-title {
+    color: var(--color-text);
+}
+.delete-modal-description {
+    color: var(--color-text-muted);
+}
+.delete-modal-cancel {
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+    background: var(--color-surface-alt);
+}
+.delete-modal-cancel:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-subtle);
+    background: var(--color-surface-elevated);
+}
+.delete-modal-confirm {
+    background: var(--color-danger);
+    color: white;
+}
+.delete-modal-confirm:hover:not(:disabled) {
+    filter: brightness(1.1);
 }

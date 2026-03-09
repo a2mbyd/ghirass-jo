@@ -3,6 +3,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { ReactNode } from 'react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import AdminLayout from './layouts/AdminLayout';
 import MainLayout from './layouts/MainLayout';
 import '../css/app.css';
 import ThemeProvider from './providers/ThemeProvider';
@@ -16,13 +17,12 @@ createInertiaApp({
             `./pages/${name}.tsx`,
             import.meta.glob('./pages/**/*.tsx'),
         ).then((module) => {
-            // Assert the module type
             const mod = module as {
                 default: { layout?: (page: ReactNode) => ReactNode };
             };
-            mod.default.layout ??= (page: ReactNode) => (
-                <MainLayout>{page}</MainLayout>
-            );
+            const isAdminPage = name.startsWith('Admin/');
+            const DefaultLayout = isAdminPage ? AdminLayout : MainLayout;
+            mod.default.layout ??= (page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>;
             return mod;
         }),
     setup({ el, App, props }) {

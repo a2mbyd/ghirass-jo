@@ -5,4 +5,6 @@ export interface Section {
     name: string;
     /** Present when eager-loaded via majors relationship */
     majors?: Major[];
+    /** Present when loaded with withCount('courses') */
+    courses_count?: number;
 }

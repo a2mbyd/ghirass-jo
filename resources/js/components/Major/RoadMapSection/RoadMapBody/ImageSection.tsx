@@ -2,13 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Major } from '@/types';
 import { ImageIcon } from 'lucide-react';
+import { getImageUrl } from '@/lib/utils';
 
 const ImageSection = ({ major }: { major: Major }) => {
     if (major.roadmap_image)
         return (
             <motion.img
                 key="roadmap-image"
-                src={major.roadmap_image}
+                src={getImageUrl(major.roadmap_image) as string}
                 alt={`خريطة تخصص ${major.name}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

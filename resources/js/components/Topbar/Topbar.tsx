@@ -4,19 +4,12 @@ import { useEffect, useState } from 'react';
 import { navItems } from './navItems';
 import { useThemeStore } from '@/store/theme.store';
 import DarkModeButton from '../ui/DarkModeButton';
+import useTheme from '@/hooks/useTheme';
 
 const Topbar = () => {
     const { url } = usePage();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { darkMode, toggleDarkMode, setDarkMode } = useThemeStore();
-
-    useEffect(() => {
-        const themeStore = localStorage.getItem('theme-store');
-        if (themeStore) {
-            const themeStoreData = JSON.parse(themeStore);
-            setDarkMode(themeStoreData.darkMode);
-        }
-    }, []);
+    const { darkMode, toggleDarkMode } = useTheme();
     return (
         <header className="border-color-border sticky top-0 z-50 w-full border-b border-border bg-glass-bg backdrop-blur-xl supports-backdrop-filter:bg-glass-bg">
             <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4">
@@ -30,7 +23,10 @@ const Topbar = () => {
                         </span>
                         غراس
                     </Link>
-                    <DarkModeButton toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+                    <DarkModeButton
+                        toggleDarkMode={toggleDarkMode}
+                        darkMode={darkMode}
+                    />
                 </div>
 
                 <nav className="hidden items-center gap-1 md:flex">

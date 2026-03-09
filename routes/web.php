@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminMajorController;
+use App\Http\Controllers\AdminSectionController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
@@ -17,4 +20,24 @@ Route::prefix('courses')->controller(CourseController::class)->group(function ()
 
 Route::prefix('majors')->controller(MajorController::class)->group(function () {
     Route::get('/{major_slug}', 'show')->name('major');
+});
+
+Route::prefix('admin')->controller(AdminController::class)->group(function () {
+    Route::get('/', 'dashboard')->name('admin.dashboard');
+
+    Route::prefix('majors')->controller(AdminMajorController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.majors');
+        Route::get('/create', 'create')->name('admin.majors.create');
+        Route::post('/', 'store')->name('admin.majors.store');
+        Route::get('/{major_slug}', 'edit')->name('admin.major.edit');
+        Route::put('/{major_slug}', 'update')->name('admin.major.update');
+        Route::delete('/{major_slug}', 'destroy')->name('admin.major.destroy');
+    });
+
+    Route::prefix('sections')->controller(AdminSectionController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.sections.index');
+        Route::get('/create', 'create')->name('admin.sections.create');
+        Route::post('/', 'store')->name('admin.sections.store');
+        Route::delete('/{section_name}', 'destroy')->name('admin.section.destroy');
+    });
 });

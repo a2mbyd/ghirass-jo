@@ -23,6 +23,7 @@ const Course = ({ course }: { course: Course | null }) => {
 
     if (!course) {
         return (
+            
             <div
                 className="flex min-h-screen items-center justify-center bg-background"
                 dir="rtl"
