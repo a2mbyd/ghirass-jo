@@ -1,22 +1,21 @@
 import { slideUp } from '@/motion';
-import { BookOpen, Clock, GraduationCap, Layers } from 'lucide-react';
+import { BookMarked, BookOpen, Clock, Layers } from 'lucide-react';
 import { major } from '@/routes';
-import { MAJOR_ACCENT_COLOR_MAP } from '@/lib/MajorAccentColorMap';
-import { MAJOR_ICON_MAP } from '@/lib/MajorIconMap';
+import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
+import { getMajorIcon } from '@/lib/MajorIconMap';
 import { Course, Major, Section } from '@/types';
 import { motion } from 'framer-motion';
-import HeroBadge from './Hero.badage';
 import HeroStatsCards from './Hero.StatsCards';
+import Badge from '@/components/ui/Badge';
 
 interface HeroProps {
-    courses: Course[];
+    allCourses: Course[];
     major: Major;
     sections: Section[];
 }
-const Hero = ({ major, courses, sections }: HeroProps) => {
-    const MajorIcon = MAJOR_ICON_MAP[major.slug] ?? GraduationCap;
-    const majorAccentColor =
-        MAJOR_ACCENT_COLOR_MAP[major.slug] ?? 'from-primary-500 to-violet-500';
+const Hero = ({ major, allCourses, sections }: HeroProps) => {
+    const MajorIcon = getMajorIcon(major.slug);
+    const majorAccentColor = getMajorAccentColor(major.slug);
 
     return (
         <section className="relative overflow-hidden rounded-2xl bg-background shadow-sm shadow-border/80">
@@ -46,14 +45,18 @@ const Hero = ({ major, courses, sections }: HeroProps) => {
                     </motion.div>
 
                     {/* Badge */}
-                    <HeroBadge />
-
+                    <Badge
+                        text=" تخصص"
+                        icon={
+                            <BookMarked className="h-4 w-4 text-primary-500" />
+                        }
+                    />
                     {/* Title */}
                     <motion.h1
                         initial={slideUp.initial}
                         animate={slideUp.animate}
                         transition={{ ...slideUp.transition, delay: 0.18 }}
-                        className="major-hero-font m-0 text-3xl leading-tight font-extrabold tracking-tight text-text md:text-4xl"
+                        className="major-hero-font mt-4 text-3xl leading-tight font-extrabold tracking-tight text-text md:text-4xl"
                     >
                         {major.name}
                     </motion.h1>
@@ -70,7 +73,7 @@ const Hero = ({ major, courses, sections }: HeroProps) => {
                 </div>
 
                 {/* Stats row — full width, horizontal */}
-                <HeroStatsCards courses={courses} sections={sections} />
+                <HeroStatsCards allCourses={allCourses} sections={sections} />
             </div>
         </section>
     );

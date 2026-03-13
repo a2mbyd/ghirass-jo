@@ -1,4 +1,4 @@
-import { QUICK_LINKS_CONFIG } from './config';
+import { QUICK_LINKS_CONFIG } from './QuickLinksSection.config';
 import QuickLinkCard from './QuickLinkCard';
 
 const QuickLinksSection = () => {

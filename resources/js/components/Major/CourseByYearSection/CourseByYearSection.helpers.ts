@@ -1,7 +1,7 @@
 import { Course } from '@/types/course';
 
 export const isExcluded = (course: Course) =>
-    course.name.includes('اختياري') || course.name.includes('استدراكي');
+    course.course_type !== 'major_course' ;
 
 export const getByYear = (courses: Course[]) => {
     return courses

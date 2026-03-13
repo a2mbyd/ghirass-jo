@@ -2,6 +2,7 @@ import { CourseEntry } from '@/types';
 import { GRADE_OPTIONS } from './gradeOptions';
 import React from 'react';
 import { Trash2 } from 'lucide-react';
+import IncrementalInput from '../ui/GPA/IncrementalInput';
 
 interface CourseCardProps {
     course: CourseEntry;
@@ -50,19 +51,14 @@ const CourseCard = ({
                 >
                     الساعات
                 </label>
-                <input
+                <IncrementalInput
                     id={`credits-${course.id}`}
-                    type="number"
+                    value={course.credits}
+                    onChange={(value) =>
+                        updateCourse(course.id, 'credits', value)
+                    }
                     min={1}
                     max={6}
-                    value={course.credits}
-                    onChange={(e) =>
-                        updateCourse(
-                            course.id,
-                            'credits',
-                            Math.min(+e.target.value, 6) || 0,
-                        )
-                    }
                     className="gpa-number-input w-full rounded-lg border border-border bg-surface px-3 py-2 text-text focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
                 />
             </div>

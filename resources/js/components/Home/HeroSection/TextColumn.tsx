@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Calculator, ArrowUpLeft, Zap } from 'lucide-react';
 import Badge from '@/components/ui/Badge';

@@ -1,4 +1,4 @@
-import { AdminCourse } from "@/types";
+import { AdminCourse } from '@/types/admin/major';
 import { BookMarked } from "lucide-react";
 
 interface CourseChipProps {

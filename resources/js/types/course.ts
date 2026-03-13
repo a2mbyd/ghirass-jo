@@ -1,17 +1,15 @@
-/** Matches CourseService::getMajorCourses() response shape */
 export interface Course {
     id: number;
     sectionId: number | null;
     name: string;
-    course_code: string | null;
+    course_code: string;
     credit_hours: number;
-    type: string;
+    course_type: string;
+    course_major_type?: string;
     is_lab: boolean;
     year: number;
-    /** Semester within year (1 or 2 only) */
-    semester: number;
+    semester: 1 | 2;
     prerequisites: number[];
-    corequisites: number[];
     past_year_questions: PastYearQuestion[];
     files: CourseFile[];
     videos: CourseVideo[];
@@ -43,4 +41,5 @@ export interface MajorWithCourses {
     roadmap_image: string;
     required: Course[];
     elective: Course[];
+    graduationProject: Course[];
 }

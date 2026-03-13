@@ -5,56 +5,48 @@ import type { CourseNodeData } from './GraphSection.types';
 import { PALETTE } from './GraphSection.colors';
 import { NODE_W, NODE_H, H_GAP, V_GAP } from './GraphSection.constants';
 
-export function getDepth(
-    id: number,
-    courses: Course[],
-    cache: Record<number, number>,
-): number {
-    if (cache[id] !== undefined) return cache[id];
-    const c = courses.find((x) => x.id === id);
-    if (!c || !c.prerequisites?.length) {
-        cache[id] = 0;
-        return 0;
-    }
-    cache[id] =
-        Math.max(...c.prerequisites.map((p) => getDepth(p, courses, cache))) +
-        1;
-    return cache[id];
-}
-
+/**
+ * @param courses       - All courses (all groups already merged with virtual sectionIds)
+ * @param colorMap      - Section id → colour scheme (includes virtual section IDs)
+ * @param collegeRequiredIds - IDs of college_required courses; these are pinned as a
+ *                            header row at the very top of the graph canvas.
+ */
 export function buildNodes(
     courses: Course[],
     colorMap: Record<number, ColorScheme>,
+    collegeRequiredIds: Set<number> = new Set(),
 ): Node<CourseNodeData>[] {
-    const cache: Record<number, number> = {};
+    // ── Separate college_required (header) from the rest ────────────────────
+    const headerCourses = courses.filter((c) => collegeRequiredIds.has(c.id));
+    const remainingCourses = courses.filter(
+        (c) => !collegeRequiredIds.has(c.id),
+    );
 
-    // Collect all IDs referenced as prerequisites or corequisites by other courses
+    // ── Isolated detection (within remaining only) ───────────────────────────
     const referencedAsPrereq = new Set<number>();
-    const referencedAsCore = new Set<number>();
-    courses.forEach((c) => {
+    remainingCourses.forEach((c) => {
         (c.prerequisites ?? []).forEach((pid) => referencedAsPrereq.add(pid));
-        (c.corequisites ?? []).forEach((pid) => referencedAsCore.add(pid));
     });
 
-    // Isolated = no prereqs, no coreqs of its own, AND nobody else depends on it
-    const isolated = courses.filter(
+    const isolated = remainingCourses.filter(
         (c) =>
             (c.prerequisites ?? []).length === 0 &&
-            (c.corequisites ?? []).length === 0 &&
-            !referencedAsPrereq.has(c.id) &&
-            !referencedAsCore.has(c.id),
+            !referencedAsPrereq.has(c.id),
     );
     const isolatedIds = new Set(isolated.map((c) => c.id));
-    const mainCourses = courses.filter((c) => !isolatedIds.has(c.id));
+    const mainCourses = remainingCourses.filter((c) => !isolatedIds.has(c.id));
 
-    // ── main graph: depth-based rows ────────────────────────────────────────
+    // ── Main graph: depth-based rows ─────────────────────────────────────────
+    const cache: Record<number, number> = {};
     const rows: Record<number, Course[]> = {};
     mainCourses.forEach((c) => {
         const d = getDepth(c.id, mainCourses, cache);
         (rows[d] = rows[d] || []).push(c);
     });
 
-    const depths = Object.keys(rows).map(Number).sort((a, b) => a - b);
+    const depths = Object.keys(rows)
+        .map(Number)
+        .sort((a, b) => a - b);
     const maxDepth = depths.length > 0 ? Math.max(...depths) : 0;
     const totalMainHeight = (maxDepth + 1) * NODE_H + maxDepth * V_GAP;
 
@@ -75,7 +67,7 @@ export function buildNodes(
         }));
     });
 
-    // ── side columns: isolated courses flanking the main graph ──────────────
+    // ── Side columns: isolated courses flanking the main graph ───────────────
     const maxRowWidth = depths.reduce((max, d) => {
         const row = rows[d];
         return Math.max(max, row.length * NODE_W + (row.length - 1) * H_GAP);
@@ -89,12 +81,13 @@ export function buildNodes(
     const sectionGroups = new Map<number, Course[]>();
     isolated.forEach((c) => {
         const key = c.sectionId ?? -1;
-        if (!sectionGroups.has(key)) { sectionGroups.set(key, []); }
+        if (!sectionGroups.has(key)) {
+            sectionGroups.set(key, []);
+        }
         sectionGroups.get(key)!.push(c);
     });
 
     const groupEntries = [...sectionGroups.entries()].sort(([a], [b]) => a - b);
-    // First half goes left, second half goes right
     const mid = Math.ceil(groupEntries.length / 2);
     const leftGroups = groupEntries.slice(0, mid).map(([, g]) => g);
     const rightGroups = groupEntries.slice(mid).map(([, g]) => g);
@@ -130,14 +123,37 @@ export function buildNodes(
                 });
                 y += NODE_H + SIDE_V_GAP;
             });
-            if (gi < groups.length - 1) { y += GROUP_GAP; }
+            if (gi < groups.length - 1) {
+                y += GROUP_GAP;
+            }
         });
     };
 
     placeSide(leftGroups, leftX);
     placeSide(rightGroups, rightX);
 
-    return [...mainNodes, ...sideNodes];
+    // ── Header row: college_required courses pinned above the main graph ──────
+    // Positioned at a fixed negative-y offset so they always appear at the top
+    // of the canvas, centred horizontally above the main graph.
+    const HEADER_Y = -(NODE_H + V_GAP + 80);
+    const headerRowWidth =
+        headerCourses.length * NODE_W + (headerCourses.length - 1) * H_GAP;
+    const headerStartX = -headerRowWidth / 2;
+
+    const headerNodes: Node<CourseNodeData>[] = headerCourses.map(
+        (course, i) => ({
+            id: String(course.id),
+            type: 'courseNode',
+            position: { x: headerStartX + i * (NODE_W + H_GAP), y: HEADER_Y },
+            data: {
+                course,
+                colors: colorMap[course.sectionId ?? -1] ?? PALETTE[0],
+                semester: null,
+            },
+        }),
+    );
+
+    return [...headerNodes, ...mainNodes, ...sideNodes];
 }
 
 export function buildEdges(courses: Course[]): Edge[] {
@@ -158,25 +174,29 @@ export function buildEdges(courses: Course[]): Edge[] {
                 },
             }),
         );
-        (c.corequisites ?? []).forEach((pid) =>
-            edges.push({
-                id: `co-${pid}-${c.id}`,
-                source: String(pid),
-                target: String(c.id),
-                type: 'smoothstep',
-                style: {
-                    stroke: '#60A5FA',
-                    strokeWidth: 1.8,
-                    strokeDasharray: '6 3',
-                },
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    color: '#60A5FA',
-                    width: 14,
-                    height: 14,
-                },
-            }),
-        );
     });
     return edges;
+}
+
+/**
+ * @param id - The id of the course
+ * @param courses - All courses
+ * @param cache - The cache of the courses
+ * @returns The depth of the course
+ */
+function getDepth(
+    id: number,
+    courses: Course[],
+    cache: Record<number, number>,
+): number {
+    if (cache[id] !== undefined) return cache[id];
+    const c = courses.find((x) => x.id === id);
+    if (!c || !c.prerequisites?.length) {
+        cache[id] = 0;
+        return 0;
+    }
+    cache[id] =
+        Math.max(...c.prerequisites.map((p) => getDepth(p, courses, cache))) +
+        1;
+    return cache[id];
 }

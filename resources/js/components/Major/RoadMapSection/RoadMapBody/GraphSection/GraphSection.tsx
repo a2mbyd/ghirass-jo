@@ -9,10 +9,10 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 import { GLOBAL_STYLES } from './GraphSection.styles';
-import { CourseNode } from './GraphSection.CourseNode';
+import { CourseNode } from './CourseNode';
 import { GraphSectionFullscreenButton } from './GraphSection.FullscreenButton';
-import { GraphSectionFilterPanel } from './GraphSection.FilterPanel';
-import { GraphSectionStatsPanel } from './GraphSection.StatsPanel';
+import { GraphSectionFilterPanel } from './FilterPanel';
+import { GraphSectionStatsPanel } from './StatsPanel';
 import useInteractiveGraph from '@/hooks/useInteractiveGraph';
 import { Course } from '@/types/course';
 import { Section } from '@/types';
@@ -22,9 +22,21 @@ const NODE_TYPES = { courseNode: CourseNode };
 
 interface RoadmapGraphProps {
     sections: Section[];
-    courses: Course[];
+    majorCourses: Course[];
+    majorElectives: Course[];
+    uniRequired: Course[];
+    collegeRequired: Course[];
+    uniElective: Course[];
 }
-export default function RoadmapGraph({ sections, courses }: RoadmapGraphProps) {
+
+export default function RoadmapGraph({
+    sections,
+    majorCourses,
+    majorElectives,
+    uniRequired,
+    collegeRequired,
+    uniElective,
+}: RoadmapGraphProps) {
     const { darkMode: isDark } = useThemeStore();
     const {
         wrapperRef,
@@ -43,7 +55,15 @@ export default function RoadmapGraph({ sections, courses }: RoadmapGraphProps) {
         toggleFullscreen,
         progress,
         completedHoursCount,
-    } = useInteractiveGraph({ sections, courses });
+        totalCoursesCount,
+    } = useInteractiveGraph({
+        sections,
+        majorCourses,
+        majorElectives,
+        uniRequired,
+        collegeRequired,
+        uniElective,
+    });
 
     return (
         <div
@@ -93,7 +113,7 @@ export default function RoadmapGraph({ sections, courses }: RoadmapGraphProps) {
 
                 <Panel position="bottom-right">
                     <GraphSectionStatsPanel
-                        totalCourses={courses.length}
+                        totalCourses={totalCoursesCount}
                         completedHoursCount={completedHoursCount}
                         progress={progress}
                     />

@@ -1,5 +1,5 @@
-import { TAB_CONFIG } from '@/components/Course/config';
-import { TabKey } from '@/components/Course/types';
+import { TAB_CONFIG } from '@/components/Course/Course.config';
+import { TabKey } from '@/components/Course/Course.types';
 import {
     Course,
     CourseFile,
@@ -44,7 +44,7 @@ const useCourse = (course: Course | null) => {
         files,
         is_lab: course?.is_lab,
         course_code: course?.course_code,
-        type: course?.type,
+        course_type: course?.course_type,
         year: course?.year,
         semester: course?.semester,
         credit_hours: course?.credit_hours,

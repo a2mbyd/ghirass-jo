@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('course_major', function (Blueprint $table) {
@@ -22,24 +19,20 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            // Year of study (1 = First year, 2 = Second year, etc.)
             $table->unsignedTinyInteger('year');
-
-            // Semester within year (1 or 2 only)
             $table->unsignedTinyInteger('semester')->default(1);
 
-            // Type of course (elective_university, elective_major, required_university, required_major, required_college)
-            $table->string('type')
-                ->check("type in ('elective_university', 'elective_major', 'required_university', 'required_major', 'required_college')")->default('required_major');
+            // required_major | elective_major | graduation_project
+            $table->string('course_major_type')
+                ->check("course_major_type in ('required_major', 'elective_major', 'graduation_project')")
+                ->default('required_major');
+
             $table->timestamps();
 
             $table->unique(['course_id', 'major_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('course_major');

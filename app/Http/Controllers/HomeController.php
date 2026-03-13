@@ -32,7 +32,7 @@ class HomeController extends Controller
                 'email' => $d->email,
                 'department' => $d->department ?? '',
                 'section' => $d->section?->name ?? '',
-                'subjects' => [],
+                'image' => $d->image ?? '',
             ])->values()->all())
             ->all();
 

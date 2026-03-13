@@ -1,14 +1,13 @@
-import React from 'react';
 import { Major } from '@/types';
 import { Link } from '@inertiajs/react';
-import { ChevronLeft, GraduationCap } from 'lucide-react';
-import { MAJOR_ACCENT_COLOR_MAP } from '@/lib/MajorAccentColorMap';
-import { MAJOR_ICON_MAP } from '@/lib/MajorIconMap';
+import { ChevronLeft } from 'lucide-react';
+import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
+import { getMajorIcon } from '@/lib/MajorIconMap';
 
 const MajorCard = ({ major }: { major: Major }) => {
-    const Icon = MAJOR_ICON_MAP[major.slug] ?? GraduationCap;
+    const Icon = getMajorIcon(major.slug);
     const accentColor =
-        MAJOR_ACCENT_COLOR_MAP[major.slug] ?? 'from-primary-500 to-violet-500';
+        getMajorAccentColor(major.slug);
 
     return (
         <Link

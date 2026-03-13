@@ -6,12 +6,12 @@ import { BookOpen, Clock, Layers } from 'lucide-react';
 
 interface StatsCardsProps {
     sections: Section[];
-    courses: Course[];
+    allCourses: Course[];
 }
 
-const HeroStatsCards = ({ sections, courses }: StatsCardsProps) => {
-    const totalCreditHours = courses.reduce(
-        (sum, c) => sum + (c.creditHours ?? 0),
+const HeroStatsCards = ({ sections, allCourses }: StatsCardsProps) => {
+    const totalCreditHours = allCourses.reduce(
+        (sum, c) => sum + (c.credit_hours ?? 0),
         0,
     );
 
@@ -38,7 +38,7 @@ const HeroStatsCards = ({ sections, courses }: StatsCardsProps) => {
                     <BookOpen className="h-4.5 w-4.5 text-primary-500" />
                 </div>
                 <span className="text-2xl font-bold text-text">
-                    {courses.length}
+                    {allCourses.length}
                 </span>
                 <span className="text-[11px] font-medium text-text-muted">
                     إجمالي المقررات

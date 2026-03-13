@@ -6,25 +6,44 @@ import {
     Cpu,
     Gamepad2,
     Laptop,
+    LucideIcon,
     Network,
     RadioTower,
     ServerCog,
     ShieldCheck,
     Stethoscope,
 } from 'lucide-react';
+import { hashString } from './hashString';
 
-export const MAJOR_ICON_MAP: Record<string, React.ElementType> = {
-    des: Network,
-    cy: ShieldCheck,
-    cpe: Cpu,
-    se: Code2,
-    cis: ServerCog,
-    cs: Laptop,
-    ai: BrainCircuit,
-    ds: BarChart3,
-    iot: RadioTower,
-    gd: Gamepad2,
-    rob: Bot,
-    his: Stethoscope,
-};
+export const ICONS = [
+    Network,
+    ShieldCheck,
+    Cpu,
+    Code2,
+    ServerCog,
+    Laptop,
+    BrainCircuit,
+    BarChart3,
+    RadioTower,
+    Gamepad2,
+    Bot,
+    Stethoscope,
+];
 
+const cache: Record<string, LucideIcon> = {};
+const usedIndices = new Set<number>();
+
+export function getMajorIcon(code: string): LucideIcon {
+    if (code in cache) return cache[code];
+
+    let index = hashString(code) % ICONS.length;
+    let steps = 0;
+    while (usedIndices.has(index) && steps < ICONS.length) {
+        index = (index + 1) % ICONS.length;
+        steps++;
+    }
+
+    usedIndices.add(index);
+    cache[code] = ICONS[index];
+    return cache[code];
+}

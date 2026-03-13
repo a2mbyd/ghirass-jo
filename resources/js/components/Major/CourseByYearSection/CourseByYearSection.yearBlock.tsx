@@ -1,5 +1,5 @@
 import React from 'react';
-import { FALLBACK_CONFIG, YEAR_CONFIGS } from './CourseByYearSection.config';
+import { getYearConfig } from './CourseByYearSection.config';
 import { motion } from 'framer-motion';
 import { Course } from '@/types/course';
 import { slideUp } from '@/motion/animations';
@@ -7,6 +7,7 @@ import { BookOpen, Clock } from 'lucide-react';
 import CourseCard from './CourseByYearSection.CourseCard';
 import { SEMESTER_LABELS } from './CourseByYearSection.config';
 import SemesterSection from './CourseByYearSection.semesterSection';
+import CourseByYearSectionYearBlockHeader from './CourseByYearSection.yearBlock.header';
 
 interface CourseByYearSectionYearBlockProps {
     year: number;
@@ -18,8 +19,7 @@ const CourseByYearSectionYearBlock = ({
     yearIdx,
     byYear,
 }: CourseByYearSectionYearBlockProps) => {
-    const config = YEAR_CONFIGS[year] ?? FALLBACK_CONFIG;
-
+    const config = getYearConfig(year);
     const rawSemesterMap = byYear[year];
     // Keep only required_major and required_college courses
     const semesterMap = Object.fromEntries(
@@ -27,8 +27,8 @@ const CourseByYearSectionYearBlock = ({
             sem,
             courses.filter(
                 (c) =>
-                    c.type === 'required_major' ||
-                    c.type === 'required_college',
+                    c.course_major_type === 'required_major' ||
+                    c.course_major_type === 'required_college',
             ),
         ]),
     );
@@ -41,7 +41,7 @@ const CourseByYearSectionYearBlock = ({
     const totalHours = semesters.reduce(
         (sum, s) =>
             sum +
-            semesterMap[s].reduce((sh, c) => sh + (c.creditHours ?? 0), 0),
+            semesterMap[s].reduce((sh, c) => sh + (c.credit_hours ?? 0), 0),
         0,
     );
     const totalYearCourses = semesters.reduce(
@@ -61,32 +61,12 @@ const CourseByYearSectionYearBlock = ({
             className="overflow-hidden rounded-xl border border-border bg-surface"
         >
             {/* Year header strip */}
-            <div
-                className={`flex items-center justify-between px-5 py-3.5 ${config.headerBg}`}
-            >
-                <div className="flex items-center gap-3">
-                    <span
-                        className={`flex h-7 w-7 items-center justify-center rounded-lg ${config.badgeBg} text-xs font-bold text-white shadow-sm`}
-                    >
-                        {year}
-                    </span>
-                    <span className={`text-[15px] font-bold text-white`}>
-                        {config.label}
-                    </span>
-                </div>
-                <div
-                    className={`flex items-center gap-4 text-[12px] font-medium text-white opacity-90`}
-                >
-                    <span className="flex items-center gap-1.5">
-                        <BookOpen className="h-3.5 w-3.5" />
-                        {totalYearCourses} مقرر
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5" />
-                        {totalHours} ساعة
-                    </span>
-                </div>
-            </div>
+            <CourseByYearSectionYearBlockHeader
+                year={year}
+                config={config}
+                totalYearCourses={totalYearCourses}
+                totalHours={totalHours}
+            />
 
             {/* Semester panels */}
             <div className="grid grid-cols-2 divide-x-2 divide-border bg-surface-alt">

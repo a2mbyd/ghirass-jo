@@ -371,6 +371,12 @@ html {
     filter: invert(1);
 }
 
+.credit-hours-input::-webkit-inner-spin-button,
+.credit-hours-input::-webkit-outer-spin-button {
+    filter: invert(1);
+}
+
+
 /* Dark mode select option dropdown */
 .dark select option {
     background-color: #1e293b;

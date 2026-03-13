@@ -1,6 +1,6 @@
 // stores/useThemeStore.ts
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+
 interface ThemeStoreState {
     darkMode: boolean;
     toggleDarkMode: () => void;
@@ -12,7 +12,6 @@ export const useThemeStore = create<ThemeStoreState>()((set, get) => ({
     toggleDarkMode: () => {
         const { darkMode } = get();
         set((state) => ({ darkMode: !state.darkMode }));
-        console.log(darkMode);
         localStorage.setItem(
             'theme-store',
             JSON.stringify({ darkMode: !darkMode }),

@@ -1,10 +1,11 @@
 import { Course } from '@/types/course';
-import { Clock, FlaskConical, GitMerge, Link2 } from 'lucide-react';
-import { YEAR_CONFIGS } from './CourseByYearSection.config';
+import { Clock, FlaskConical, GitMerge } from 'lucide-react';
 import { Link } from '@inertiajs/react';
+import type { YearConfig } from './CourseByYearSection.types';
+
 interface CourseCardProps {
     course: Course;
-    config: (typeof YEAR_CONFIGS)[number];
+    config: YearConfig;
 }
 const CourseCard = ({ course, config }: CourseCardProps) => {
     return (
@@ -34,7 +35,7 @@ const CourseCard = ({ course, config }: CourseCardProps) => {
                 {course.name}
             </p>
 
-            {/* Footer: credit hours + prereqs/coreqs */}
+            {/* Footer: credit hours + prereqs */}
             <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-border pt-2 text-[11px] font-semibold text-text-muted">
                 <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3 text-text-muted" />
@@ -44,12 +45,6 @@ const CourseCard = ({ course, config }: CourseCardProps) => {
                     <span className="flex items-center gap-1">
                         <GitMerge className="h-3 w-3 text-text-muted" />
                         {course.prerequisites.length} متطلب
-                    </span>
-                )}
-                {course.corequisites.length > 0 && (
-                    <span className="flex items-center gap-1">
-                        <Link2 className="h-3 w-3 text-text-muted" />
-                        {course.corequisites.length} مرافق
                     </span>
                 )}
             </div>

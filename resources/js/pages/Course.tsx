@@ -1,9 +1,8 @@
 import type { Course } from '@/types/course';
-import TabContent from '@/components/Course/TabContent';
 import useCourse from '@/hooks/useCourse';
-import CourseHero from '@/components/Course/CourseHero';
-import Sidebar from '@/components/Course/Sidebar';
-import Content from '@/components/Course/Content';
+import CourseHero from '@/components/Course/Course.CourseHero';
+import Sidebar from '@/components/Course/Course.Sidebar';
+import Content from '@/components/Course/Course.Content';
 
 const Course = ({ course }: { course: Course | null }) => {
     const {
@@ -14,7 +13,7 @@ const Course = ({ course }: { course: Course | null }) => {
         videos,
         pastYearQuestions,
         is_lab,
-        type,
+        course_type,
         year,
         semester,
         credit_hours,
@@ -23,7 +22,6 @@ const Course = ({ course }: { course: Course | null }) => {
 
     if (!course) {
         return (
-            
             <div
                 className="flex min-h-screen items-center justify-center bg-background"
                 dir="rtl"
@@ -42,7 +40,7 @@ const Course = ({ course }: { course: Course | null }) => {
             <CourseHero
                 course_code={course_code ?? ''}
                 is_lab={is_lab ?? false}
-                type={type ?? ''}
+                course_type={course_type ?? ''}
                 year={year ?? 1}
                 semester={semester ?? 1}
                 credit_hours={credit_hours ?? 3}

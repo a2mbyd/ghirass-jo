@@ -8,11 +8,11 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({ course }: CourseCardProps) => {
-    const colors = TYPE_COLORS[course.type] ?? FALLBACK_COLORS;
+    const colors = TYPE_COLORS[course.course_type] ?? FALLBACK_COLORS;
     return (
         <Link
             href={`/courses/${course.course_code}`}
-            className={`flex flex-1 flex-col gap-2.5 rounded-lg border bg-surface p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm ${colors.border} ${colors.hover}`}
+            className={`flex flex-1 flex-col gap-2.5 rounded-lg border bg-surface p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm ${colors.accentBorder} ${colors.hover}`}
         >
             <div className="flex items-center justify-between gap-2">
                 {course.course_code && (
@@ -43,12 +43,6 @@ const CourseCard = ({ course }: CourseCardProps) => {
                     <span className="flex items-center gap-1">
                         <GitMerge className="h-3 w-3" />
                         {course.prerequisites.length} متطلب
-                    </span>
-                )}
-                {course.corequisites.length > 0 && (
-                    <span className="flex items-center gap-1">
-                        <Link2 className="h-3 w-3" />
-                        {course.corequisites.length} مرافق
                     </span>
                 )}
             </div>

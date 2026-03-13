@@ -9,16 +9,7 @@ use Illuminate\Database\Seeder;
 class DoctorSeeder extends Seeder
 {
     /**
-     * Sections to exclude (uni and graduation projects - not IT field).
-     */
-    protected array $excludedSections = [
-        'متطلبات الجامعة العامة',
-        'مشروع التخرج',
-        'متطلب جامعة اختياري',
-    ];
-
-    /**
-     * Section name -> department code (short form: M2, A3, C4, P2, PH1).
+     * Section name → department code.
      *
      * @var array<string, string>
      */
@@ -28,11 +19,10 @@ class DoctorSeeder extends Seeder
         'هندسة الحاسوب' => 'A3',
         'نظم المعلومات' => 'A3',
         'هندسة البرمجيات' => 'P2',
-        'اختياري قسم' => 'C4',
     ];
 
     /**
-     * Section name -> email prefix for unique doctor emails.
+     * Section name → email prefix for unique doctor emails.
      *
      * @var array<string, string>
      */
@@ -42,24 +32,15 @@ class DoctorSeeder extends Seeder
         'هندسة الحاسوب' => 'ce',
         'نظم المعلومات' => 'is',
         'هندسة البرمجيات' => 'se',
-        'اختياري قسم' => 'elective',
     ];
 
-    /**
-     * Number of doctors to create per section.
-     */
     protected int $doctorsPerSection = 3;
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Doctor::query()->delete();
 
-        $sections = Section::query()
-            ->whereNotIn('name', $this->excludedSections)
-            ->get();
+        $sections = Section::all();
 
         $placeholderImage = '/images/placeholders/avatar.svg';
 

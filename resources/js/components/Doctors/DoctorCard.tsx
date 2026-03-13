@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Check, Copy, Mail } from 'lucide-react';
 import { Doctor } from '@/types/doctors';
+import { copyEmail, getDelay, getGradient } from './DoctorCard.config';
 
 interface DoctorCardProps {
     doctor: Doctor;
@@ -9,31 +10,21 @@ interface DoctorCardProps {
 
 export default function DoctorCard({ doctor, index = 0 }: DoctorCardProps) {
     const [copied, setCopied] = useState(false);
-    const delay = `stagger-${Math.min(index + 1, 10)}`;
-    const gradients = [
-        'from-primary-500 to-accent-cyan',
-        'from-accent-violet to-accent-rose',
-        'from-accent-emerald to-accent-cyan',
-    ];
-    const gradient = gradients[index % gradients.length];
-    const { name, email, department, subjects } = doctor;
-    const copyEmail = async () => {
-        try {
-            await navigator.clipboard.writeText(email);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        } catch {
-            // fallback for older browsers
-            const input = document.createElement('input');
-            input.value = email;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
+    const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const { name, email, department } = doctor;
+
+    const delay = getDelay(index ?? 0);
+    const gradient = getGradient(index ?? 0);
+
+    const handleCopyEmail = useCallback(() => {
+        if (timeout.current) {
+            clearTimeout(timeout.current);
         }
-    };
+        copyEmail(email, () => {
+            setCopied(true);
+            timeout.current = setTimeout(() => setCopied(false), 2000);
+        });
+    }, [email]);
 
     return (
         <div
@@ -57,7 +48,7 @@ export default function DoctorCard({ doctor, index = 0 }: DoctorCardProps) {
                 </div>
                 <button
                     type="button"
-                    onClick={copyEmail}
+                    onClick={handleCopyEmail}
                     className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all ${
                         copied
                             ? 'bg-success/10 text-success'
@@ -83,18 +74,6 @@ export default function DoctorCard({ doctor, index = 0 }: DoctorCardProps) {
             >
                 {email}
             </a>
-            {subjects.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                    {subjects.map((subject) => (
-                        <span
-                            key={subject}
-                            className="rounded-lg bg-surface-alt px-2 py-1 text-xs text-text-muted"
-                        >
-                            {subject}
-                        </span>
-                    ))}
-                </div>
-            )}
         </div>
     );
 }

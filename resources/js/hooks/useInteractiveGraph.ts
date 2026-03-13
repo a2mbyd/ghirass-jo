@@ -15,9 +15,20 @@ import {
 
 interface RoadmapGraphProps {
     sections: Section[];
-    courses: Course[];
+    majorCourses: Course[];
+    majorElectives: Course[];
+    uniRequired: Course[];
+    collegeRequired: Course[];
+    uniElective: Course[];
 }
-const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
+const useInteractiveGraph = ({
+    sections,
+    majorCourses,
+    majorElectives,
+    uniRequired,
+    collegeRequired,
+    uniElective,
+}: RoadmapGraphProps) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const [completedIds, setCompletedIds] = useState<Set<number>>(new Set());
@@ -25,27 +36,59 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
     const [filterSec, setFilterSec] = useState<number | null>(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
 
-    // ── color map: section id → palette color ──────────────────────────────
+    const allSections = sections;
+
+    // ── colour map: section id → palette colour ─────────────────────────────
     const colorMap = useMemo<Record<number, ColorScheme>>(
         () =>
             Object.fromEntries(
-                sections.map((s, i) => [s.id, PALETTE[i % PALETTE.length]]),
+                allSections.map((section, index) => [
+                    section.id,
+                    PALETTE[index % PALETTE.length],
+                ]),
             ),
-        [sections],
+        [allSections],
     );
 
-    // ── initial nodes / edges ───────────────────────────────────────────────
-    const initNodes = useMemo(
-        () => buildNodes(courses, colorMap),
-        [courses, colorMap],
+    // ── Merge all course groups, injecting virtual sectionIds for non-major ──
+    // Virtual section IDs match VIRTUAL_SECTIONS defined in RoadMapSection.tsx:
+    //   college_required → -3 | uni_required → -1
+    //   major_elective   → -4 | uni_elective → -2
+    const allCourses = useMemo<Course[]>(
+        () => [
+            ...majorCourses,
+            ...majorElectives.map((c) => ({ ...c, sectionId: -4 })),
+            ...uniRequired.map((c) => ({ ...c, sectionId: -1 })),
+            ...collegeRequired.map((c) => ({ ...c, sectionId: -3 })),
+            ...uniElective.map((c) => ({ ...c, sectionId: -2 })),
+        ],
+        [
+            majorCourses,
+            majorElectives,
+            uniRequired,
+            collegeRequired,
+            uniElective,
+        ],
     );
-    const initEdges = useMemo(() => buildEdges(courses), [courses]);
+
+    // Set of IDs for college_required courses — placed as a header row at top
+    const collegeRequiredIds = useMemo(
+        () => new Set(collegeRequired.map((c) => c.id)),
+        [collegeRequired],
+    );
+
+    // ── initial nodes / edges ────────────────────────────────────────────────
+    const initNodes = useMemo(
+        () => buildNodes(allCourses, colorMap, collegeRequiredIds),
+        [allCourses, colorMap, collegeRequiredIds],
+    );
+    const initEdges = useMemo(() => buildEdges(allCourses), [allCourses]);
 
     const [nodes, setNodes, onNodesChange] =
         useNodesState<CourseNodeData>(initNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
 
-    // ── ancestor / descendant walk for hover chain ──────────────────────────
+    // ── ancestor / descendant walk for hover chain ───────────────────────────
     const { anc, desc } = useMemo<{
         anc: Set<number>;
         desc: Set<number>;
@@ -54,16 +97,15 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
 
         const anc: Set<number> = new Set();
         const desc: Set<number> = new Set();
-        const map = Object.fromEntries(courses.map((c) => [c.id, c]));
+        const map = Object.fromEntries(allCourses.map((c) => [c.id, c]));
 
         const up = (id: number) =>
             map[id]?.prerequisites?.forEach((p) => {
                 anc.add(p);
                 up(p);
             });
-
         const down = (id: number) =>
-            courses.forEach((c) => {
+            allCourses.forEach((c) => {
                 if (c.prerequisites?.includes(id)) {
                     desc.add(c.id);
                     down(c.id);
@@ -73,9 +115,9 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
         up(parseInt(hoveredId));
         down(parseInt(hoveredId));
         return { anc, desc };
-    }, [hoveredId, courses]);
+    }, [hoveredId, allCourses]);
 
-    // ── sync highlight / dim / completed into node & edge data ─────────────
+    // ── sync highlight / dim / completed into node & edge data ──────────────
     useEffect(() => {
         const hid = hoveredId ? parseInt(hoveredId) : null;
 
@@ -113,8 +155,9 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
 
                 const inFilter =
                     filterSec === null ||
-                    courses.find((c) => c.id === s)?.sectionId === filterSec ||
-                    courses.find((c) => c.id === t)?.sectionId === filterSec;
+                    allCourses.find((c) => c.id === s)?.sectionId ===
+                        filterSec ||
+                    allCourses.find((c) => c.id === t)?.sectionId === filterSec;
 
                 return {
                     ...e,
@@ -127,7 +170,7 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
                             (hid !== null && !chain) || !inFilter ? 0.1 : 1,
                     },
                     markerEnd: {
-                        ...e.markerEnd,
+                        ...e.markerEnd as any,
                         color: chain ? '#6366F1' : '#94A3B8',
                     },
                 };
@@ -135,7 +178,7 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
         );
     }, [hoveredId, filterSec, completedIds, anc, desc]);
 
-    // ── toggle completed on node click ──────────────────────────────────────
+    // ── toggle completed on node click ───────────────────────────────────────
     const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
         const cid = parseInt(node.id);
         setCompletedIds((prev) => {
@@ -145,7 +188,7 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
         });
     }, []);
 
-    // ── native fullscreen ───────────────────────────────────────────────────
+    // ── native fullscreen ────────────────────────────────────────────────────
     const toggleFullscreen = useCallback(async () => {
         if (!document.fullscreenElement) {
             await wrapperRef.current?.requestFullscreen();
@@ -160,7 +203,7 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
         return () => document.removeEventListener('fullscreenchange', handler);
     }, []);
 
-    // ── scroll trap: prevent wheel events escaping to the page ─────────────
+    // ── scroll trap ──────────────────────────────────────────────────────────
     useEffect(() => {
         const el = wrapperRef.current;
         if (!el) return;
@@ -169,48 +212,48 @@ const useInteractiveGraph = ({ sections, courses }: RoadmapGraphProps) => {
         return () => el.removeEventListener('wheel', trap);
     }, []);
 
-    // ── derived values ──────────────────────────────────────────────────────
+    // ── derived values ───────────────────────────────────────────────────────
     const usedSections = useMemo(
-        () => sections.filter((s) => courses.some((c) => c.sectionId === s.id)),
-        [sections, courses],
+        () =>
+            allSections.filter((s) =>
+                allCourses.some((c) => c.sectionId === s.id),
+            ),
+        [allSections, allCourses],
     );
 
-    const progress = courses.length
-        ? Math.round((completedIds.size / courses.length) * 100)
+    // ── progress ─────────────────────────────────────────────────────────────
+    const progress = allCourses.length
+        ? Math.round((completedIds.size / allCourses.length) * 100)
         : 0;
 
     const completedHoursCount = Array.from(completedIds).reduce(
         (sum, completedId) => {
             const hours =
-                courses.find((course) => course.id === completedId)
-                    ?.creditHours || 0;
+                allCourses.find((course) => course.id === completedId)
+                    ?.credit_hours || 0;
             return hours + sum;
         },
         0,
     );
+
     return {
-        // refs
         wrapperRef,
-        // reactflow state
         nodes,
         edges,
         onNodesChange,
         onEdgesChange,
-        // event handlers
         onNodeClick,
         onNodeMouseEnter: (_: React.MouseEvent, n: Node) => setHoveredId(n.id),
         onNodeMouseLeave: () => setHoveredId(null),
-        // filter
         colorMap,
         usedSections,
         filterSec,
         setFilterSec,
-        // fullscreen
         isFullscreen,
         toggleFullscreen,
-        // stats
         progress,
         completedHoursCount,
+        totalCoursesCount: allCourses.length,
     };
 };
 

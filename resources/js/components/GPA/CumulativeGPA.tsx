@@ -1,4 +1,8 @@
-import React from 'react';
+import IncrementalInput from '../ui/GPA/IncrementalInput';
+import DirectedNumberInput from '../ui/GPA/DirectedNumberInput';
+
+const MAX_CREDITS = 300;
+const MAX_GPA = 4.2;
 
 interface CumulativeGPAProps {
     previousGpa: string;
@@ -31,22 +35,12 @@ export default function CumulativeGPA({
                             >
                                 المعدل السابق
                             </label>
-                            <input
+                            <DirectedNumberInput
                                 id="previous-gpa"
-                                type="text"
-                                inputMode="decimal"
                                 value={previousGpa}
-                                onChange={(e) => setPreviousGpa(e.target.value)}
-                                onBlur={() => {
-                                    const num = parseFloat(previousGpa);
-                                    if (isNaN(num) || num < 0) {
-                                        setPreviousGpa('');
-                                    } else if (num > 4.2) {
-                                        setPreviousGpa('4.2');
-                                    } else {
-                                        setPreviousGpa(String(num));
-                                    }
-                                }}
+                                onSuccess={(value) => setPreviousGpa(value)}
+                                max={MAX_GPA}
+                                min={0}
                                 placeholder="مثال: 3.25"
                                 className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-text placeholder:text-text-subtle focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
                             />
@@ -58,37 +52,26 @@ export default function CumulativeGPA({
                             >
                                 الساعات السابقة
                             </label>
-                            <input
+                            <IncrementalInput
                                 id="previous-credits"
-                                type="number"
+                                value={+previousCredits}
+                                onChange={(value) =>
+                                    setPreviousCredits(String(value))
+                                }
                                 min={0}
-                                max={200}
-                                value={previousCredits}
-                                onChange={(e) => {
-                                    const raw = e.target.value;
-                                    if (raw === '') {
-                                        setPreviousCredits('');
-                                        return;
-                                    }
-                                    const num = parseInt(raw);
-                                    if (!isNaN(num) && num <= 300) {
-                                        setPreviousCredits(String(num));
-                                    } else if (!isNaN(num) && num > 300) {
-                                        setPreviousCredits('300');
-                                    }
-                                }}
-                                placeholder="مثال: 90"
+                                max={MAX_CREDITS}
                                 className="gpa-number-input w-full rounded-lg border border-border bg-surface px-3 py-2 text-text placeholder:text-text-subtle focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none"
+                                placeholder="مثال: 90"
                             />
                         </div>
                     </div>
                 </div>
                 <div className="bg-linaer-to-br rounded-xl from-primary-50 to-accent-violet/10 p-4 text-center">
                     <p className="text-sm leading-6 font-medium text-text-muted">
-                        معدلك التراكمي (بحد أقصى 4.2)
+                        معدلك التراكمي (بحد أقصى {MAX_GPA})
                     </p>
                     <p className="text-sm leading-6 font-medium text-text-muted">
-                        عدد الساعات (بحد أقصى 300 ساعة)
+                        عدد الساعات (بحد أقصى {MAX_CREDITS} ساعة)
                     </p>
                     <p className="mt-2 font-display text-4xl font-bold text-primary-600">
                         {cumulativeGpa.toFixed(2)}

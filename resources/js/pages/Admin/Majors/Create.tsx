@@ -1,4 +1,4 @@
-import { AdminCourse } from '@/types/major';
+import { AdminCourse } from '@/types/admin/major';
 import { Section } from '@/types/section';
 import AdminMajorController from '@/actions/App/Http/Controllers/AdminMajorController';
 import { Link, useForm } from '@inertiajs/react';

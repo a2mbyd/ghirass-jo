@@ -1,4 +1,4 @@
-import { AdminCourse, MajorWithRelations } from '@/types/major';
+import { AdminCourse, MajorWithRelations } from '@/types/admin/major';
 import { Section } from '@/types/section';
 import AdminMajorController, {
     update,
@@ -166,25 +166,6 @@ const Edit = ({ major, allCourses, allSections }: EditProps) => {
         }
         setDraggedCourseId(null);
         setDragOverCoursesPanel(null);
-    };
-
-    /* ── Sections DnD ────────────────────────────────────── */
-    const assignedSectionIds = new Set(form.data.sections);
-    const availableSections = allSections.filter(
-        (s) => !assignedSectionIds.has(s.id),
-    );
-    const assignedSections = allSections.filter((s) =>
-        assignedSectionIds.has(s.id),
-    );
-
-    const handleSectionAssign = (sectionId: number) => {
-        form.setData('sections', [...form.data.sections, sectionId]);
-    };
-    const handleSectionUnassign = (sectionId: number) => {
-        form.setData(
-            'sections',
-            form.data.sections.filter((id) => id !== sectionId),
-        );
     };
 
     return (
@@ -372,23 +353,6 @@ const Edit = ({ major, allCourses, allSections }: EditProps) => {
                                             alt="معاينة خارطة الطريق"
                                             className="max-h-auto h-full w-full object-contain text-text"
                                         />
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setImagePreview(null);
-                                                form.setData(
-                                                    'roadmap_image',
-                                                    null,
-                                                );
-                                                if (fileInputRef.current) {
-                                                    fileInputRef.current.value =
-                                                        '';
-                                                }
-                                            }}
-                                            className="absolute top-2 left-2 flex h-7 w-7 items-center justify-center rounded-full bg-surface/80 text-text-muted opacity-0 backdrop-blur-sm transition group-hover:opacity-100 hover:text-danger"
-                                        >
-                                            <X className="h-4 w-4" />
-                                        </button>
                                     </div>
                                 ) : (
                                     <div className="flex min-h-[140px] items-center justify-center rounded-xl border border-dashed border-border bg-surface-alt">

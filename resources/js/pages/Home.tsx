@@ -6,9 +6,10 @@ import { Major } from '@/types';
 export default function Home({ majors }: { majors: Major[] }) {
     return (
         <div>
-            <HeroSection />
+            <HeroSection majors={majors} />
             <QuickLinksSection />
             <MajorsSection majors={majors} />
         </div>
     );
 }
+

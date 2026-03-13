@@ -143,7 +143,9 @@ const Index = ({ majors }: { majors: Major[] }) => {
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-2">
                                                 <Link
-                                                    href={AdminMajorController.edit.url(major.slug)}
+                                                    href={AdminMajorController.edit.url(
+                                                        major.slug,
+                                                    )}
                                                     className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-surface text-text-muted transition hover:border-accent-amber hover:text-accent-amber"
                                                     title="تعديل"
                                                 >

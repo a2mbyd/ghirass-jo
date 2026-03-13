@@ -1,11 +1,12 @@
 import LeftPanel from './LeftPanel';
 import TextColumn from './TextColumn';
+import { Major } from '@/types';
 
-export default function HeroSection() {
+export default function HeroSection({ majors }: { majors: Major[] }) {
     return (
         <section
             dir="rtl"
-            className="body-font relative overflow-hidden rounded-2xl bg-background shadow-sm shadow-border/80 "
+            className="body-font relative overflow-hidden rounded-2xl bg-background shadow-sm shadow-border/80"
         >
             {/* Subtle dot grid */}
             <div
@@ -25,7 +26,7 @@ export default function HeroSection() {
                 <TextColumn />
 
                 {/* ── Visual panel ── */}
-                <LeftPanel />
+                <LeftPanel majors={majors} />
             </div>
         </section>
     );

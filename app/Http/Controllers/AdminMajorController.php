@@ -47,7 +47,7 @@ class AdminMajorController extends Controller
         $courseIds = $request->validated('courses') ?? [];
         if (! empty($courseIds)) {
             $attachData = collect($courseIds)->mapWithKeys(fn($id) => [
-                $id => ['year' => 1, 'semester' => 1, 'type' => 'required'],
+                $id => ['year' => 1, 'semester' => 1, 'course_major_type' => 'required'],
             ])->all();
             $major->courses()->attach($attachData);
         }
@@ -111,7 +111,7 @@ class AdminMajorController extends Controller
 
         if (count($toAttach) > 0) {
             $attachData = collect($toAttach)->mapWithKeys(fn($id) => [
-                $id => ['year' => 1, 'semester' => 1, 'type' => 'required'],
+                $id => ['year' => 1, 'semester' => 1, 'course_major_type' => 'required'],
             ])->all();
             $major->courses()->attach($attachData);
         }

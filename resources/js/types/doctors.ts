@@ -1,8 +1,8 @@
 export interface Doctor {
-    id: string;
+    id: number;
     name: string;
     email: string;
-    department: string;
-    section: string;
-    subjects: string[];
+    department: string | null;
+    image: string | null;
+    section?: string;
 }

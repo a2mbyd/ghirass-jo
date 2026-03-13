@@ -14,6 +14,7 @@ class Course extends Model
 
     protected $fillable = [
         'section_id',
+        'course_type',
         'name',
         'description',
         'course_code',
@@ -56,18 +57,8 @@ class Course extends Model
         )->withPivot('requirement_type');
     }
 
-    public function corequisites(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Course::class,
-            'course_corequisite',
-            'course_id',
-            'corequisite_id'
-        );
-    }
-
     public function majors(): BelongsToMany
     {
-        return $this->belongsToMany(Major::class, 'course_major')->withPivot('year', 'semester', 'type');
+        return $this->belongsToMany(Major::class, 'course_major')->withPivot('year', 'semester', 'course_major_type');
     }
 }

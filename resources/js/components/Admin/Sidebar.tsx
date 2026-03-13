@@ -21,7 +21,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/' },
+    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
     { icon: GraduationCap, label: 'Majors', href: '/admin/majors' },
     { icon: Layers, label: 'Sections', href: '/admin/sections' },
     { icon: BookMarked, label: 'Courses', href: '/admin/courses' },
@@ -34,8 +34,13 @@ const Sidebar = () => {
     const { toggleDarkMode, darkMode } = useTheme();
     const { url } = usePage();
 
-    const isActive = (href: string) =>
-        url === href || url.startsWith(href + '/');
+    const isActive = (href: string) => {
+        if (href === '/admin') {
+            return url === '/admin' || url === '/admin/';
+        }
+
+        return url.startsWith(href);
+    };
 
     return (
         <>

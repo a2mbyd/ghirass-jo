@@ -2,6 +2,9 @@ import { generateId } from '@/lib/utils';
 import React, { useState } from 'react';
 import { CourseEntry } from '@/types';
 
+const MAX_CREDITS = 300;
+const MAX_GPA = 4.2;
+
 const useGPA = () => {
     const [courses, setCourses] = useState<CourseEntry[]>([
         { id: generateId(), name: '', credits: 3, grade: 4.0 },
@@ -41,15 +44,18 @@ const useGPA = () => {
     );
     const gpa = totalCredits > 0 ? weightedSum / totalCredits : 0;
 
-    const previousGpaValue = Math.min(parseFloat(previousGpa) || 0, 4.2);
-    const previousCreditsValue = Math.min(parseInt(previousCredits) || 0, 300);
+    const previousGpaValue = Math.min(parseFloat(previousGpa) || 0, MAX_GPA);
+    const previousCreditsValue = Math.min(
+        parseInt(previousCredits) || 0,
+        MAX_CREDITS,
+    );
     const cumulativeTotalCredits = totalCredits + previousCreditsValue;
     const rawCumulativeGpa =
         cumulativeTotalCredits > 0
             ? (weightedSum + previousGpaValue * previousCreditsValue) /
               cumulativeTotalCredits
             : 0;
-    const cumulativeGpa = Math.min(rawCumulativeGpa, 4.2);
+    const cumulativeGpa = Math.min(rawCumulativeGpa, MAX_GPA);
 
     return {
         courses,

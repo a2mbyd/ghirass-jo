@@ -3,16 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import CourseCard from './CourseCard';
+import { SECTION_FALLBACK, TYPE_COLORS } from './Courses.config';
 
 interface CollapsibleSectionProps {
     title: string;
     icon: React.ElementType;
     courses: Course[];
-    accentBg: string;
-    accentText: string;
-    accentBorder: string;
-    badgeBg: string;
-    badgeText: string;
+    sectionType: string;
     defaultOpen?: boolean;
 }
 
@@ -20,13 +17,15 @@ const CollapsibleSection = ({
     title,
     icon: Icon,
     courses,
-    accentBg,
-    accentText,
-    accentBorder,
-    badgeBg,
-    badgeText,
+    sectionType,
     defaultOpen = false,
 }: CollapsibleSectionProps) => {
+    const colors = TYPE_COLORS[sectionType] ?? {};
+    const accentBg = colors.accentBg ?? SECTION_FALLBACK.accentBg;
+    const accentText = colors.accentText ?? SECTION_FALLBACK.accentText;
+    const accentBorder = colors.accentBorder ?? SECTION_FALLBACK.accentBorder;
+    const badgeBg = colors.badgeBg ?? SECTION_FALLBACK.badgeBg;
+    const badgeText = colors.badgeText ?? SECTION_FALLBACK.badgeText;
     const [open, setOpen] = useState(defaultOpen);
 
     return (
@@ -72,7 +71,7 @@ const CollapsibleSection = ({
                         className="overflow-hidden"
                     >
                         <div className="border-t border-border-subtle px-6 py-5">
-                            <div className="xs:grid-col-2 grid gap-3 sm:grid-cols-3 ">
+                            <div className="xs:grid-col-2 grid gap-3 sm:grid-cols-3">
                                 {courses.map((course) => (
                                     <CourseCard
                                         key={course.id}

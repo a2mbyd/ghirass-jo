@@ -35,6 +35,7 @@ class Major extends Model
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class, 'course_major')->withPivot('year', 'semester', 'type');
+        return $this->belongsToMany(Course::class, 'course_major')->withPivot('year', 'semester', 'course_major_type');
     }
 }
+

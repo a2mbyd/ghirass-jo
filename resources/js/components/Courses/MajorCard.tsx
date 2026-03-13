@@ -1,6 +1,6 @@
-import { MAJOR_ACCENT_COLOR_MAP } from '@/lib/MajorAccentColorMap';
-import { MAJOR_ICON_MAP } from '@/lib/MajorIconMap';
-import { BookOpen, GraduationCap, Star } from 'lucide-react';
+import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
+import { getMajorIcon } from '@/lib/MajorIconMap';
+import { BookOpen, Star, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { MajorWithCourses } from '@/types';
 
@@ -9,10 +9,10 @@ interface MajorCardProps {
     isSelected: boolean;
     onClick: () => void;
 }
+
 const MajorCard = ({ major, isSelected, onClick }: MajorCardProps) => {
-    const Icon = MAJOR_ICON_MAP[major.slug] ?? GraduationCap;
-    const accentColor =
-        MAJOR_ACCENT_COLOR_MAP[major.slug] ?? 'from-primary-500 to-violet-500';
+    const Icon = getMajorIcon(major.slug);
+    const accentColor = getMajorAccentColor(major.slug);
 
     return (
         <motion.button
@@ -49,6 +49,12 @@ const MajorCard = ({ major, isSelected, onClick }: MajorCardProps) => {
                     <span className="flex items-center gap-1">
                         <Star className="h-3 w-3 text-amber-500" />
                         {major.elective.length} اختياري
+                    </span>
+                )}
+                {major.graduationProject.length > 0 && (
+                    <span className="flex items-center gap-1">
+                        <Trophy className="h-3 w-3 text-indigo-500" />
+                        {major.graduationProject.length} تخرج
                     </span>
                 )}
             </div>

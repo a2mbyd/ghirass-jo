@@ -1,7 +1,6 @@
 import { Link } from '@inertiajs/react';
-import React from 'react';
 import { ChevronLeft } from 'lucide-react';
-import { QuickLinkConfig } from './types';
+import type { QuickLinkConfig } from './QuickLinksSection.types';
 
 const QuickLinkCard = ({ link }: { link: QuickLinkConfig }) => {
     const Icon = link.icon;

@@ -1,9 +1,17 @@
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
+
 export const generateId = () =>
     typeof crypto !== 'undefined' && crypto.randomUUID
         ? crypto.randomUUID()
         : Math.random().toString(36).slice(2);
 
 const BASE_URL = import.meta.env.VITE_APP_URL;
+
 export const getImageUrl = (image: string | null) => {
     if (!image) return null;
 

@@ -23,7 +23,7 @@ const SectionCard = ({
 
     return (
         <div
-            className={`overflow-hidden rounded-2xl border bg-surface shadow-sm shadow-border/60 transition-shadow hover:shadow-md ${accent.border}`}
+            className={`mb-4 inline-block w-full break-inside-avoid overflow-hidden rounded-2xl border bg-surface shadow-sm shadow-border/60 transition-shadow hover:shadow-md ${accent.border}`}
         >
             <button
                 type="button"
@@ -85,8 +85,8 @@ const SectionCard = ({
                                 <div className="flex flex-col gap-4">
                                     {doctors.map((doctor, index) => (
                                         <DoctorCard
-                                            doctor={doctor}   
-                                        index={index}
+                                            doctor={doctor}
+                                            index={index}
                                         />
                                     ))}
                                 </div>

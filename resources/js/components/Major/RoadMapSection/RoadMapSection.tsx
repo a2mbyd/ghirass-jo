@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Image as ImageIcon, Network } from 'lucide-react';
 import { fadeIn } from '@/motion';
 import { Course, Major, Section } from '@/types';
 import RoadMapSectionHeader from './RoadMapSection.header';
@@ -10,14 +8,36 @@ import DownloadImageButton from './DownloadImageButton';
 import { RoadmapView } from './RoadMapSection.types';
 import ImageSection from './RoadMapBody/ImageSection';
 import GraphSection from './RoadMapBody/GraphSection/GraphSection';
-
 interface RoadMapSectionProps {
     major: Major;
     sections: Section[];
-    courses: Course[];
+    majorCourses: Course[];
+    majorElectives: Course[];
+    uniRequired: Course[];
+    collegeRequired: Course[];
+    uniElective: Course[];
 }
-const RoadMapSection = ({ major, sections, courses }: RoadMapSectionProps) => {
+
+const RoadMapSection = ({
+    major,
+    sections,
+    majorCourses,
+    majorElectives,
+    uniRequired,
+    collegeRequired,
+    uniElective,
+}: RoadMapSectionProps) => {
     const [roadmapView, setRoadmapView] = useState<RoadmapView>('image');
+
+    // Virtual section IDs must match useInteractiveGraph (college→-3, uni_required→-1, major_elective→-4, uni_elective→-2)
+    const extraSections: Section[] = [
+        { id: -3, name: 'متطلبات الكلية' },
+        { id: -1, name: 'متطلبات الجامعة الإلزامية' },
+        { id: -4, name: 'اختياريات التخصص' },
+        { id: -2, name: 'اختياريات الجامعة' },
+    ];
+
+    const newSections = [...sections, ...extraSections];
 
     return (
         <section className="rounded-2xl border border-border bg-surface px-8 py-10 shadow-sm shadow-slate-200/60">
@@ -31,7 +51,9 @@ const RoadMapSection = ({ major, sections, courses }: RoadMapSectionProps) => {
             />
 
             {/* Download button (image view only) */}
-            <DownloadImageButton major={major} roadmapView={roadmapView} />
+            {roadmapView === 'image' && major.roadmap_image && (
+                <DownloadImageButton major={major} />
+            )}
 
             {/* View area */}
             <motion.div
@@ -44,10 +66,13 @@ const RoadMapSection = ({ major, sections, courses }: RoadMapSectionProps) => {
                     {roadmapView === 'image' ? (
                         <ImageSection major={major} />
                     ) : (
-                        /* ── Graph View Placeholder ── */
                         <GraphSection
-                            sections={sections}
-                            courses={courses}
+                            sections={newSections}
+                            majorCourses={majorCourses}
+                            majorElectives={majorElectives}
+                            uniRequired={uniRequired}
+                            collegeRequired={collegeRequired}
+                            uniElective={uniElective}
                         />
                     )}
                 </AnimatePresence>

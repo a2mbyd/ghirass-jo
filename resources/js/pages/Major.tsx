@@ -6,23 +6,42 @@ import CourseByYearSection from '@/components/Major/CourseByYearSection/CourseBy
 interface MajorProps {
     major: Major;
     sections: Section[];
-    courses: Course[];
+    majorCourses: Course[];
+    majorElectives: Course[];
+    uniRequired: Course[];
+    collegeRequired: Course[];
+    uniElective: Course[];
+    allCourses: Course[];
 }
-export default function Major({ major, sections, courses }: MajorProps) {
+
+export default function Major({
+    major,
+    sections,
+    majorCourses,
+    majorElectives,
+    uniRequired,
+    collegeRequired,
+    uniElective,
+    allCourses,
+}: MajorProps) {
     return (
         <div dir="rtl" className="flex flex-col gap-8">
-            {/* ── Hero / Major Header ── */}
-            <Hero courses={courses} major={major} sections={sections} />
+            {/* ── Hero / Major Header — only counts real major sections & courses ── */}
+            <Hero allCourses={allCourses} major={major} sections={sections} />
 
-            {/* ── Roadmap Section ── */}
+            {/* ── Roadmap Section — receives all course groups separately ── */}
             <RoadMapSection
                 major={major}
                 sections={sections}
-                courses={courses}
+                majorCourses={majorCourses}
+                majorElectives={majorElectives}
+                uniRequired={uniRequired}
+                collegeRequired={collegeRequired}
+                uniElective={uniElective}
             />
 
-            {/* ── Courses by Year Section ── */}
-            <CourseByYearSection courses={courses} />
+            {/* ── Courses by Year — only shows real major courses ── */}
+            <CourseByYearSection courses={majorCourses} />
         </div>
     );
 }

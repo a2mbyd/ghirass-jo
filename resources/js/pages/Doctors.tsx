@@ -18,14 +18,12 @@ export default function Doctors({ doctorsBySection }: DoctorsProps) {
         const filtered: Record<string, Doctor[]> = {};
 
         for (const [section, doctors] of Object.entries(doctorsBySection)) {
-            console.log(doctors);
             const matched = doctors.filter(
                 (d) =>
                     d.name.toLowerCase().includes(q) ||
                     d.email.toLowerCase().includes(q) ||
-                    d.section.toLowerCase().includes(q) ||
-                    (d.department || '').toLowerCase().includes(q) ||
-                    (d.subjects ?? []).some((s) => s.toLowerCase().includes(q)),
+                    d?.section?.includes(q) ||
+                    (d.department || '').toLowerCase().includes(q),
             );
             if (matched.length > 0) {
                 filtered[section] = matched;
@@ -62,10 +60,10 @@ export default function Doctors({ doctorsBySection }: DoctorsProps) {
                     {search ? 'لا توجد نتائج تطابق بحثك.' : 'لا يوجد أساتذة.'}
                 </p>
             ) : (
-                <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2">
+                <div className="columns-1 gap-4 sm:columns-2">
                     {sectionEntries.map(([sectionName, doctors], index) => (
                         <SectionCard
-                            key={sectionName}
+                            key={`${sectionName}-${index}`}
                             sectionName={sectionName}
                             doctors={doctors}
                             defaultOpen={index === 0}

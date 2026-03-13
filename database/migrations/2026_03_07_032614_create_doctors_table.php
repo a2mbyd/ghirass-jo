@@ -19,6 +19,7 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->string('name');
             $table->string('email');
+            $table->string('image')->nullable();
             $table->string('department')->nullable();
             $table->timestamps();
         });
