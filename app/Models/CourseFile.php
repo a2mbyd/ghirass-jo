@@ -13,7 +13,7 @@ class CourseFile extends Model
     protected $fillable = [
         'course_id',
         'title',
-        'url'
+        'url',
     ];
 
     /* Relationships */

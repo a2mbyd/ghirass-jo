@@ -5,4 +5,5 @@ export interface Doctor {
     department: string | null;
     image: string | null;
     section?: string;
+    section_id: number;
 }

@@ -35,7 +35,7 @@ return [
         ['name' => 'نظم المعلومات'],      // 3
         ['name' => 'هندسة البرمجيات'],   // 4
     ],
-   
+
     'courses' => [
         // ─── متطلبات الجامعة العامة ─── course_type: uni_required, no major pivot ───
         ['course_code' => 'GEN101', 'name' => 'اللغة العربية ومهارات الاتصال والتواصل', 'description' => 'Arabic Language and Communication Skills', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'uni_required'],

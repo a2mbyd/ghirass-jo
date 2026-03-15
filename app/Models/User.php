@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
@@ -13,15 +14,41 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
 
+    protected static function booted(): void
+    {
+        static::saving(function (User $user): void {
+            if (! $user->isDirty('password')) {
+                return;
+            }
+
+            $password = $user->attributes['password'] ?? '';
+
+            if (self::passwordAlreadyHashed($password)) {
+                return;
+            }
+
+            $user->attributes['password'] = Hash::make($password);
+        });
+    }
+
+    private static function passwordAlreadyHashed(string $password): bool
+    {
+        return str_starts_with($password, '$2y$')
+            || str_starts_with($password, '$2a$')
+            || str_starts_with($password, '$2b$')
+            || str_starts_with($password, '$argon2');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
+        'role',
         'password',
+        'unhashed_password',
     ];
 
     /**
@@ -30,7 +57,6 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
         'two_factor_secret',
         'two_factor_recovery_codes',
         'remember_token',
@@ -44,8 +70,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
     }

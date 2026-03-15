@@ -8,11 +8,12 @@ export interface AdminCourse {
     credit_hours: number;
     is_lab: boolean;
     section_id: number | null;
-    pivot?: {
+    course_type: string;
+    majors?: {
         year: number;
         semester: number;
-        type: string;
-    };
+        course_major_type: string;
+    }[];
 }
 
 export interface MajorWithRelations extends Major {

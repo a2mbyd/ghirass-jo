@@ -69,7 +69,7 @@ const CourseByYearSectionYearBlock = ({
             />
 
             {/* Semester panels */}
-            <div className="grid grid-cols-2 divide-x-2 divide-border bg-surface-alt">
+            <div className="grid grid-cols-1 divide-y-2 divide-border bg-surface-alt md:grid-cols-2 md:divide-x-2 md:divide-y-0">
                 {semesters.map((semester, semIdx) => (
                     <SemesterSection
                         key={semester}

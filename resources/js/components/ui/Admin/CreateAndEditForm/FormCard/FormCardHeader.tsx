@@ -1,11 +1,11 @@
 import { GraduationCap } from 'lucide-react';
 import React from 'react'
 
-interface FormSectionHeaderProps {
+interface FormCardHeaderProps {
     title: string;
     icon?: React.ReactNode;
 }
-const FormSectionHeader = ({ title, icon }: FormSectionHeaderProps) => {
+const FormCardHeader = ({ title, icon }: FormCardHeaderProps) => {
   return (
     <div className="flex items-center gap-3 border-b border-border px-6 py-4">
       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50">
@@ -24,4 +24,4 @@ const FormSectionHeader = ({ title, icon }: FormSectionHeaderProps) => {
   )
 }
 
-export default FormSectionHeader
+export default FormCardHeader

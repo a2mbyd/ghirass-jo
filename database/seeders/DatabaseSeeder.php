@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
+        $this->call(UserSeeder::class);
         $this->call(CsPlanSeeder::class);
         $this->call(CalculusOneResourcesSeeder::class);
         $this->call(DoctorSeeder::class);

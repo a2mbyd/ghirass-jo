@@ -4,174 +4,214 @@ namespace App\Services;
 
 use App\Models\Course;
 use App\Models\Major;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use App\Models\Section;
+use Illuminate\Database\Eloquent\Collection;
 
 class CourseService
 {
-    /**
-     * @return Collection<int, array{id: int, sectionId: int|null, name: string, course_code: string, credit_hours: int, is_lab: bool, course_type: string, year: int, semester: int, prerequisites: array<int>}>
-     */
-    public function getMajorCourses(Major $major): Collection
+    public function majorsForForm(): Collection
     {
-        $majorCourses = $major->courses()
-            ->where('courses.course_type', 'major_course')
-            ->with(['prerequisites'])
-            ->get()
-            ->map(function ($course) {
-                return [
-                    'id' => $course->id,
-                    'sectionId' => $course->section_id,
-                    'name' => $course->name,
-                    'course_code' => $course->course_code,
-                    'credit_hours' => $course->credit_hours,
-                    'is_lab' => (bool) $course->is_lab,
-                    'course_type' => $course->pivot->course_type,
-                    'year' => (int) $course->pivot->year,
-                    'semester' => (int) ($course->pivot->semester ?? 1),
-                    'prerequisites' => $course->prerequisites->pluck('id')->toArray(),
-                ];
-            });
+        return Major::orderBy('name')->get(['id', 'name', 'slug']);
+    }
 
-        return $majorCourses
-            ->merge($this->getCoursesByInherentType('uni_required'))
-            ->merge($this->getCoursesByInherentType('uni_elective'))
-            ->merge($this->getCoursesByInherentType('college_required'))
-            ->values();
+    public function coursesForAdminIndex(): Collection
+    {
+        return Course::orderBy('name')
+            ->get(['id', 'name', 'course_code', 'credit_hours', 'is_lab', 'section_id']);
+    }
+
+    public function coursesForAdminCreateForm(): array
+    {
+        return [
+            'sections' => $this->sectionsForForm(),
+            'allCourses' => Course::orderBy('name')->get(['id', 'name', 'course_code']),
+            'allMajors' => $this->majorsForForm(),
+        ];
+    }
+
+    public function coursesForAdminEditForm(Course $course): array
+    {
+        return [
+            'sections' => $this->sectionsForForm(),
+            'allCourses' => Course::where('id', '!=', $course->id)
+                ->orderBy('name')
+                ->get(['id', 'name', 'course_code']),
+            'allMajors' => $this->majorsForForm(),
+        ];
+    }
+
+    public function findCourseByCode(string $courseCode): Course
+    {
+        return Course::where('course_code', $courseCode)->firstOrFail();
+    }
+
+    public function getCourseForAdminEdit(string $courseCode): Course
+    {
+        return Course::where('course_code', $courseCode)
+            ->with([
+                'prerequisites:id,name,course_code',
+                'majors:id,name,slug',
+                'files',
+                'videos',
+                'pastYearQuestions',
+            ])
+            ->firstOrFail();
     }
 
     /**
-     * Major courses required for the roadmap main graph (required_major + graduation_project).
-     *
-     * @return Collection<int, array{id: int, sectionId: int|null, name: string, course_code: string, credit_hours: int, is_lab: bool, course_type: string, year: int, semester: int, prerequisites: array<int>}>
+     * @param  array<string, mixed>  $data
      */
+    public function createFromAdminData(array $data): Course
+    {
+        $course = Course::create([
+            'name' => $data['name'],
+            'course_code' => $data['course_code'],
+            'description' => $data['description'] ?? null,
+            'credit_hours' => $data['credit_hours'],
+            'course_type' => $data['course_type'],
+            'is_lab' => $data['is_lab'] ?? false,
+            'section_id' => $data['section_id'] ?? null,
+        ]);
+
+        $course->prerequisites()->sync($data['prerequisites'] ?? []);
+        $course->majors()->sync($this->buildMajorSync($data['majors'] ?? []));
+
+        foreach ($data['files'] ?? [] as $file) {
+            $course->files()->create($file);
+        }
+        foreach ($data['videos'] ?? [] as $video) {
+            $course->videos()->create($video);
+        }
+        foreach ($data['past_year_questions'] ?? [] as $pyq) {
+            $course->pastYearQuestions()->create($pyq);
+        }
+
+        return $course;
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function updateFromAdminData(Course $course, array $data): void
+    {
+        $course->update([
+            'name' => $data['name'],
+            'course_code' => $data['course_code'],
+            'description' => $data['description'] ?? null,
+            'credit_hours' => $data['credit_hours'],
+            'is_lab' => $data['is_lab'] ?? false,
+            'section_id' => $data['section_id'] ?? null,
+        ]);
+
+        $course->prerequisites()->sync($data['prerequisites'] ?? []);
+        $course->majors()->sync($this->buildMajorSync($data['majors'] ?? []));
+
+        if (! empty($data['delete_file_ids'])) {
+            $course->files()->whereIn('id', $data['delete_file_ids'])->delete();
+        }
+        foreach ($data['new_files'] ?? [] as $file) {
+            $course->files()->create($file);
+        }
+
+        if (! empty($data['delete_video_ids'])) {
+            $course->videos()->whereIn('id', $data['delete_video_ids'])->delete();
+        }
+        foreach ($data['new_videos'] ?? [] as $video) {
+            $course->videos()->create($video);
+        }
+
+        if (! empty($data['delete_pyq_ids'])) {
+            $course->pastYearQuestions()->whereIn('id', $data['delete_pyq_ids'])->delete();
+        }
+        foreach ($data['new_past_year_questions'] ?? [] as $pyq) {
+            $course->pastYearQuestions()->create($pyq);
+        }
+    }
+
+    public function delete(Course $course): void
+    {
+        $course->delete();
+    }
+
+    /**
+     * @param  array<int, array{id: int, year: int, semester: int, course_major_type: string}>  $majors
+     * @return array<int, array{year: int, semester: int, course_major_type: string}>
+     */
+    private function buildMajorSync(array $majors): array
+    {
+        $sync = [];
+        foreach ($majors as $major) {
+            $sync[$major['id']] = [
+                'year' => $major['year'],
+                'semester' => $major['semester'],
+                'course_major_type' => $major['course_major_type'],
+            ];
+        }
+
+        return $sync;
+    }
+
+    public function getMajorCourses(Major $major): Collection
+    {
+        return $major->courses()
+            ->where('courses.course_type', 'major_course')
+            ->with(['prerequisites', 'files', 'videos', 'pastYearQuestions'])
+            ->get()
+            ->merge($this->getCoursesByInherentType('uni_required'))
+            ->merge($this->getCoursesByInherentType('uni_elective'))
+            ->merge($this->getCoursesByInherentType('college_required'));
+    }
+
     public function getMajorRequiredCourses(Major $major): Collection
     {
-        $courses = $major->courses()
+        return $major->courses()
             ->wherePivotIn('course_major_type', ['required_major', 'graduation_project'])
             ->with(['prerequisites'])
             ->get();
-
-        return $courses->map(function ($course) {
-            return [
-                'id' => $course->id,
-                'sectionId' => $course->section_id,
-                'name' => $course->name,
-                'course_type' => $course->course_type,
-                'course_code' => $course->course_code,
-                'credit_hours' => $course->credit_hours,
-                'is_lab' => (bool) $course->is_lab,
-                'course_major_type' => $course->pivot->course_major_type,
-                'year' => (int) $course->pivot->year,
-                'semester' => (int) ($course->pivot->semester ?? 1),
-                'prerequisites' => $course->prerequisites->pluck('id')->toArray(),
-            ];
-        });
     }
 
-    /**
-     * Get all courses globally that match the given type across any major, deduplicated by course id.
-     *
-     * @return Collection<int, array{id: int, sectionId: int|null, name: string, course_code: string, credit_hours: int, is_lab: bool, course_type: string, year: int, semester: int, prerequisites: array<int>}>
-     */
-    public function getGlobalCoursesByType(string $type): Collection
-    {
-        $courseIds = DB::table('course_major')
-            ->where('course_major_type', $type)
-            ->distinct()
-            ->pluck('course_id');
-
-        $courses = Course::whereIn('id', $courseIds)
-            ->with(['prerequisites'])
-            ->get();
-
-        $pivotByCourse = DB::table('course_major')
-            ->where('course_major_type', $type)
-            ->whereIn('course_id', $courseIds)
-            ->get()
-            ->groupBy('course_id')
-            ->map(fn($rows) => $rows->first());
-
-        return $courses->map(function ($course) use ($type, $pivotByCourse) {
-            $pivot = $pivotByCourse->get($course->id);
-            $year = (int) ($pivot?->year ?? 0);
-            $semester = (int) ($pivot?->semester ?? 1);
-
-            return [
-                'id' => $course->id,
-                'sectionId' => $course->section_id,
-                'name' => $course->name,
-                'course_code' => $course->course_code,
-                'credit_hours' => $course->credit_hours,
-                'is_lab' => (bool) $course->is_lab,
-                'course_type' => $type,
-                'year' => $year,
-                'semester' => $semester,
-                'prerequisites' => $course->prerequisites->pluck('id')->toArray(),
-            ];
-        });
-    }
-
-    /**
-     * Get a major's courses filtered by a specific pivot type.
-     *
-     * @return Collection<int, array{id: int, sectionId: int|null, name: string, course_code: string, credit_hours: int, is_lab: bool, course_type: string, year: int, semester: int, prerequisites: array<int>}>
-     */
     public function getMajorCoursesByType(Major $major, string $type): Collection
     {
-        $courses = $major->courses()
+        return $major->courses()
             ->wherePivot('course_major_type', $type)
             ->with(['prerequisites'])
             ->get();
-
-        return $courses->map(function ($course) use ($type) {
-            return [
-                'id' => $course->id,
-                'sectionId' => $course->section_id,
-                'name' => $course->name,
-                'course_code' => $course->course_code,
-                'credit_hours' => $course->credit_hours,
-                'is_lab' => (bool) $course->is_lab,
-                'course_type' => $type,
-                'year' => (int) $course->pivot->year,
-                'semester' => (int) ($course->pivot->semester ?? 1),
-                'prerequisites' => $course->prerequisites->pluck('id')->toArray(),
-            ];
-        });
     }
 
-    /**
-     * Get all global (non-major-specific) courses by their inherent type column.
-     * Covers uni_required, uni_elective, and college_required.
-     *
-     * @return Collection<int, array{id: int, sectionId: int|null, name: string, course_code: string, credit_hours: int, is_lab: bool, course_type: string, year: int, semester: int, prerequisites: array<int>}>
-     */
     public function getCoursesByInherentType(string $type): Collection
     {
-        $courses = Course::where('course_type', $type)
+        return Course::where('course_type', $type)
             ->with(['prerequisites'])
             ->get();
-
-        return $courses->map(function ($course) use ($type) {
-            return [
-                'id' => $course->id,
-                'sectionId' => $course->section_id,
-                'name' => $course->name,
-                'course_code' => $course->course_code,
-                'credit_hours' => $course->credit_hours,
-                'is_lab' => (bool) $course->is_lab,
-                'course_type' => $type,
-                'year' => 0,
-                'semester' => 0,
-                'prerequisites' => $course->prerequisites->pluck('id')->toArray(),
-            ];
-        });
     }
 
     public function getCourseByCode(string $code): ?Course
     {
         return Course::where('course_code', $code)
             ->with(['files', 'videos', 'pastYearQuestions'])
-            ->first();
+            ->firstOrFail();
+    }
+
+    public function coursesForForm(): Collection
+    {
+        return Course::orderBy('name')
+            ->get(['id', 'name', 'course_code', 'credit_hours', 'is_lab', 'section_id']);
+    }
+
+    public function sectionsForForm(): Collection
+    {
+        return Section::orderBy('name')->get(['id', 'name']);
+    }
+
+    /**
+     * Courses eligible for assignment to a new section: unassigned, required_major type.
+     */
+    public function coursesForSectionForm(): Collection
+    {
+        return Course::with('majors')
+            ->whereNull('section_id')
+            ->whereHas('majors', fn ($q) => $q->where('course_major.course_major_type', 'required_major'))
+            ->orderBy('name')
+            ->get();
     }
 }

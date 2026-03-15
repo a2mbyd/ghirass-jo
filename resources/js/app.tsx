@@ -22,7 +22,9 @@ createInertiaApp({
             };
             const isAdminPage = name.startsWith('Admin/');
             const DefaultLayout = isAdminPage ? AdminLayout : MainLayout;
-            mod.default.layout ??= (page: ReactNode) => <DefaultLayout>{page}</DefaultLayout>;
+            mod.default.layout ??= (page: ReactNode) => (
+                <DefaultLayout>{page}</DefaultLayout>
+            );
             return mod;
         }),
     setup({ el, App, props }) {

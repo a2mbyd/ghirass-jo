@@ -6,35 +6,38 @@ import { PALETTE } from './GraphSection.colors';
 import { NODE_W, NODE_H, H_GAP, V_GAP } from './GraphSection.constants';
 
 /**
- * @param courses       - All courses (all groups already merged with virtual sectionIds)
- * @param colorMap      - Section id → colour scheme (includes virtual section IDs)
- * @param collegeRequiredIds - IDs of college_required courses; these are pinned as a
- *                            header row at the very top of the graph canvas.
+ * @param courses        - All courses (all groups already merged with virtual sectionIds)
+ * @param colorMap       - Section id → colour scheme (includes virtual section IDs)
+ * @param sideSectionIds - Section IDs that are always placed in side columns
+ *                         regardless of prerequisite relationships.
+ *                         Defaults to major_elective (-4), uni_required (-1), uni_elective (-2).
  */
 export function buildNodes(
     courses: Course[],
     colorMap: Record<number, ColorScheme>,
-    collegeRequiredIds: Set<number> = new Set(),
+    sideSectionIds: Set<number> = new Set([-4, -1, -2]),
 ): Node<CourseNodeData>[] {
-    // ── Separate college_required (header) from the rest ────────────────────
-    const headerCourses = courses.filter((c) => collegeRequiredIds.has(c.id));
-    const remainingCourses = courses.filter(
-        (c) => !collegeRequiredIds.has(c.id),
+    // ── Split forced-side courses from body courses ───────────────────────────
+    const forcedSide = courses.filter((c) =>
+        sideSectionIds.has(c.sectionId ?? NaN),
+    );
+    const bodyCourses = courses.filter(
+        (c) => !sideSectionIds.has(c.sectionId ?? NaN),
     );
 
-    // ── Isolated detection (within remaining only) ───────────────────────────
+    // ── Isolated detection (within body only) ────────────────────────────────
     const referencedAsPrereq = new Set<number>();
-    remainingCourses.forEach((c) => {
+    bodyCourses.forEach((c) => {
         (c.prerequisites ?? []).forEach((pid) => referencedAsPrereq.add(pid));
     });
 
-    const isolated = remainingCourses.filter(
+    const isolated = bodyCourses.filter(
         (c) =>
             (c.prerequisites ?? []).length === 0 &&
             !referencedAsPrereq.has(c.id),
     );
     const isolatedIds = new Set(isolated.map((c) => c.id));
-    const mainCourses = remainingCourses.filter((c) => !isolatedIds.has(c.id));
+    const mainCourses = bodyCourses.filter((c) => !isolatedIds.has(c.id));
 
     // ── Main graph: depth-based rows ─────────────────────────────────────────
     const cache: Record<number, number> = {};
@@ -77,9 +80,10 @@ export function buildNodes(
     const rightX = maxRowWidth / 2 + SIDE_OFFSET;
     const leftX = -(maxRowWidth / 2 + SIDE_OFFSET + NODE_W);
 
-    // Group isolated courses by section, sorted so the split is deterministic
+    // Group side courses (forced + body-isolated) by section
+    const allSideCourses = [...forcedSide, ...isolated];
     const sectionGroups = new Map<number, Course[]>();
-    isolated.forEach((c) => {
+    allSideCourses.forEach((c) => {
         const key = c.sectionId ?? -1;
         if (!sectionGroups.has(key)) {
             sectionGroups.set(key, []);
@@ -132,28 +136,7 @@ export function buildNodes(
     placeSide(leftGroups, leftX);
     placeSide(rightGroups, rightX);
 
-    // ── Header row: college_required courses pinned above the main graph ──────
-    // Positioned at a fixed negative-y offset so they always appear at the top
-    // of the canvas, centred horizontally above the main graph.
-    const HEADER_Y = -(NODE_H + V_GAP + 80);
-    const headerRowWidth =
-        headerCourses.length * NODE_W + (headerCourses.length - 1) * H_GAP;
-    const headerStartX = -headerRowWidth / 2;
-
-    const headerNodes: Node<CourseNodeData>[] = headerCourses.map(
-        (course, i) => ({
-            id: String(course.id),
-            type: 'courseNode',
-            position: { x: headerStartX + i * (NODE_W + H_GAP), y: HEADER_Y },
-            data: {
-                course,
-                colors: colorMap[course.sectionId ?? -1] ?? PALETTE[0],
-                semester: null,
-            },
-        }),
-    );
-
-    return [...headerNodes, ...mainNodes, ...sideNodes];
+    return [...mainNodes, ...sideNodes];
 }
 
 export function buildEdges(courses: Course[]): Edge[] {

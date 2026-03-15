@@ -71,16 +71,10 @@ const useInteractiveGraph = ({
         ],
     );
 
-    // Set of IDs for college_required courses — placed as a header row at top
-    const collegeRequiredIds = useMemo(
-        () => new Set(collegeRequired.map((c) => c.id)),
-        [collegeRequired],
-    );
-
     // ── initial nodes / edges ────────────────────────────────────────────────
     const initNodes = useMemo(
-        () => buildNodes(allCourses, colorMap, collegeRequiredIds),
-        [allCourses, colorMap, collegeRequiredIds],
+        () => buildNodes(allCourses, colorMap),
+        [allCourses, colorMap],
     );
     const initEdges = useMemo(() => buildEdges(allCourses), [allCourses]);
 

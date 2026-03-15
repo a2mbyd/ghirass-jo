@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Section;
 use App\Models\Major;
+use App\Models\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class SectionFactory extends Factory
 {
@@ -42,7 +41,7 @@ class SectionFactory extends Factory
      */
     public function universityRequired(): Factory
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'name' => 'university_required',
             'slug' => 'university-required',
         ]);
@@ -50,7 +49,7 @@ class SectionFactory extends Factory
 
     public function universityElective(): Factory
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'name' => 'university_elective',
             'slug' => 'university-elective',
         ]);

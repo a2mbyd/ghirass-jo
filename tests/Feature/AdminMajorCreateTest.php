@@ -33,7 +33,7 @@ test('store creates a new major with courses and redirects', function () {
         'courses' => $courses->pluck('id')->toArray(),
     ]);
 
-    $response->assertRedirect(route('admin.majors'));
+    $response->assertRedirect(route('admin.majors.index'));
 
     $major = Major::where('slug', 'new-major')->first();
     expect($major)->not->toBeNull()

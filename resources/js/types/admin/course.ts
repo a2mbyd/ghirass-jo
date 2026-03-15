@@ -11,7 +11,7 @@ export interface AdminCourseMajorAssignment {
     pivot: {
         year: number;
         semester: number;
-        type: string;
+        course_major_type: string;
     };
 }
 

@@ -2,89 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Doctor;
-use App\Models\Section;
+use App\Http\Requests\StoreDoctorRequest;
+use App\Http\Requests\UpdateDoctorRequest;
+use App\Services\DoctorService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AdminDoctorController extends Controller
 {
+    public function __construct(
+        protected DoctorService $doctorService
+    ) {}
+
     public function index(): Response
     {
-        $sections = Section::with('doctors')->get();
-
         return Inertia::render('Admin/Doctors/Index', [
-            'sections' => $sections,
+            'sections' => $this->doctorService->getSectionsWithDoctors(),
         ]);
     }
 
     public function create(): Response
     {
-        $sections = Section::all(['id', 'name']);
-
         return Inertia::render('Admin/Doctors/Create', [
-            'sections' => $sections,
+            'sections' => $this->doctorService->sectionsForForm(),
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreDoctorRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:doctors,email'],
-            'department' => ['nullable', 'string', 'max:50'],
-            'section_id' => ['nullable', 'exists:sections,id'],
-            'image' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $this->doctorService->create($request->validated(), $request->file('image'));
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('doctors', 'public');
-        }
-
-        Doctor::create($validated);
-
-        return redirect()->route('admin.doctors.index');
+        return redirect()->route('admin.doctors.index')
+            ->with('success', config('doctor.messages.created'));
     }
 
     public function edit(string $doctor_id): Response
     {
-        $doctor = Doctor::findOrFail($doctor_id);
-        $sections = Section::all(['id', 'name']);
+        $doctor = $this->doctorService->find($doctor_id);
 
         return Inertia::render('Admin/Doctors/Edit', [
             'doctor' => $doctor,
-            'sections' => $sections,
+            'sections' => $this->doctorService->sectionsForForm(),
         ]);
     }
 
-    public function update(Request $request, string $doctor_id): RedirectResponse
+    public function update(UpdateDoctorRequest $request, string $doctor_id): RedirectResponse
     {
-        $doctor = Doctor::findOrFail($doctor_id);
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'department' => ['nullable', 'string', 'max:50'],
-            'section_id' => ['nullable', 'exists:sections,id'],
-            'image' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $doctor = $this->doctorService->find($doctor_id);
+        $this->doctorService->update($doctor, $request->validated(), $request->file('image'));
 
-        if ($request->hasFile('image')) {
-            if ($doctor->image) {
-                Storage::disk('public')->delete($doctor->image);
-            }
-            $validated['image'] = $request->file('image')->store('doctors', 'public');
-        }
-
-        $doctor->update($validated);
-
-        return redirect()->route('admin.doctors.index');
+        return redirect()->route('admin.doctors.index')
+            ->with('success', config('doctor.messages.updated'));
     }
 
     public function destroy(string $doctor_id): RedirectResponse
     {
-        return redirect()->route('admin.doctors.index');
+        $doctor = $this->doctorService->find($doctor_id);
+        $this->doctorService->delete($doctor);
+
+        return redirect()->route('admin.doctors.index')
+            ->with('success', config('doctor.messages.deleted'));
     }
 }

@@ -38,4 +38,3 @@ class Major extends Model
         return $this->belongsToMany(Course::class, 'course_major')->withPivot('year', 'semester', 'course_major_type');
     }
 }
-

@@ -6,8 +6,7 @@ import { getMajorIcon } from '@/lib/MajorIconMap';
 
 const MajorCard = ({ major }: { major: Major }) => {
     const Icon = getMajorIcon(major.slug);
-    const accentColor =
-        getMajorAccentColor(major.slug);
+    const accentColor = getMajorAccentColor(major.slug);
 
     return (
         <Link
