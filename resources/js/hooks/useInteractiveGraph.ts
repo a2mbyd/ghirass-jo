@@ -12,23 +12,16 @@ import {
     buildNodes,
     buildEdges,
 } from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.helpers';
+import {
+    UNI_ELECTIVES,
+    MAJOR_ELECTIVES,
+} from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.constants';
 
 interface RoadmapGraphProps {
     sections: Section[];
-    majorCourses: Course[];
-    majorElectives: Course[];
-    uniRequired: Course[];
-    collegeRequired: Course[];
-    uniElective: Course[];
+    allCourses: Course[];
 }
-const useInteractiveGraph = ({
-    sections,
-    majorCourses,
-    majorElectives,
-    uniRequired,
-    collegeRequired,
-    uniElective,
-}: RoadmapGraphProps) => {
+const useInteractiveGraph = ({ sections, allCourses }: RoadmapGraphProps) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const [completedIds, setCompletedIds] = useState<Set<number>>(new Set());
@@ -48,27 +41,6 @@ const useInteractiveGraph = ({
                 ]),
             ),
         [allSections],
-    );
-
-    // ── Merge all course groups, injecting virtual sectionIds for non-major ──
-    // Virtual section IDs match VIRTUAL_SECTIONS defined in RoadMapSection.tsx:
-    //   college_required → -3 | uni_required → -1
-    //   major_elective   → -4 | uni_elective → -2
-    const allCourses = useMemo<Course[]>(
-        () => [
-            ...majorCourses,
-            ...majorElectives.map((c) => ({ ...c, sectionId: -4 })),
-            ...uniRequired.map((c) => ({ ...c, sectionId: -1 })),
-            ...collegeRequired.map((c) => ({ ...c, sectionId: -3 })),
-            ...uniElective.map((c) => ({ ...c, sectionId: -2 })),
-        ],
-        [
-            majorCourses,
-            majorElectives,
-            uniRequired,
-            collegeRequired,
-            uniElective,
-        ],
     );
 
     // ── initial nodes / edges ────────────────────────────────────────────────
@@ -164,7 +136,7 @@ const useInteractiveGraph = ({
                             (hid !== null && !chain) || !inFilter ? 0.1 : 1,
                     },
                     markerEnd: {
-                        ...e.markerEnd as any,
+                        ...(e.markerEnd as any),
                         color: chain ? '#6366F1' : '#94A3B8',
                     },
                 };

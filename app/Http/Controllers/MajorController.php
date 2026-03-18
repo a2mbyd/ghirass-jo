@@ -18,10 +18,8 @@ class MajorController extends Controller
             'major' => new MajorResource($major),
             'sections' => $major->sections,
             'majorCourses' => CourseResource::collection($courseService->getMajorRequiredCourses($major)),
-            'majorElectives' => CourseResource::collection($courseService->getMajorCoursesByType($major, 'elective_major')),
             'uniRequired' => CourseResource::collection($courseService->getCoursesByInherentType('uni_required')),
             'collegeRequired' => CourseResource::collection($courseService->getCoursesByInherentType('college_required')),
-            'uniElective' => CourseResource::collection($courseService->getCoursesByInherentType('uni_elective')),
             'allCourses' => CourseResource::collection($courseService->getMajorCourses($major)),
         ]);
     }

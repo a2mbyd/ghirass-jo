@@ -1,6 +1,5 @@
 import { slideUp } from '@/motion';
-import { BookMarked, BookOpen, Clock, Layers } from 'lucide-react';
-import { major } from '@/routes';
+import { BookMarked } from 'lucide-react';
 import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
 import { getMajorIcon } from '@/lib/MajorIconMap';
 import { Course, Major, Section } from '@/types';

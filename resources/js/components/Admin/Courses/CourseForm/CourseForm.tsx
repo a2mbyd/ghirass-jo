@@ -21,7 +21,6 @@ import type {
     AdminCourseBasic,
     AdminCourseWithRelations,
 } from '@/types/admin/course';
-import type { Section } from '@/types/section';
 import { getPYQMeta } from './CourseForm.constants';
 import {
     sectionOptions,
@@ -32,13 +31,14 @@ import {
 import type { CourseFormMode } from './CourseForm.types';
 import { MajorsFormCard } from './MajorsRelationForm/MajorsFormCard';
 import ResourceCardForm from './ResourceCardForm';
+import { Major, Section } from '@/types';
 
 interface CourseFormProps {
     mode: CourseFormMode;
     course?: AdminCourseWithRelations;
     sections: Section[];
     allCourses: AdminCourseBasic[];
-    allMajors: { id: number; name: string; slug: string }[];
+    allMajors: Major[];
     cancelLink: string;
 }
 
@@ -53,10 +53,6 @@ export default function CourseForm({
     const {
         form,
         isEdit,
-        showNewMajorForm,
-        setShowNewMajorForm,
-        newMajorForm,
-        setNewMajorForm,
         showNewFileForm,
         setShowNewFileForm,
         newFileForm,
@@ -78,15 +74,12 @@ export default function CourseForm({
         unassignPrereq,
         addFile,
         removePendingFile,
-        isFileDeleted,
         toggleFileDeletion,
         addVideo,
         removePendingVideo,
-        isVideoDeleted,
         toggleVideoDeletion,
         addPYQ,
         removePendingPYQ,
-        isPYQDeleted,
         togglePYQDeletion,
         existingFiles,
         existingVideos,
@@ -102,7 +95,6 @@ export default function CourseForm({
         deletedPYQIds,
         handleSubmit,
     } = useCourseForm({ mode, course, allMajors });
-
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Basic Information */}
@@ -223,7 +215,11 @@ export default function CourseForm({
                             مواد يجب إتمامها قبل هذه المادة
                         </p>
                         <CourseSelector
-                            allCourses={allCourses}
+                            allCourses={allCourses.filter(
+                                (c) =>
+                                    c.course_type !== 'uni_elective' &&
+                                    c.course_type !== 'uni_required',
+                            )}
                             assignedIds={form.data.prerequisites}
                             onAssign={assignPrereq}
                             onUnassign={unassignPrereq}

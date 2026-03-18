@@ -24,7 +24,7 @@ class CourseService
     {
         return [
             'sections' => $this->sectionsForForm(),
-            'allCourses' => Course::orderBy('name')->get(['id', 'name', 'course_code']),
+            'allCourses' => Course::orderBy('name')->get(['id', 'name', 'course_code', 'course_type']),
             'allMajors' => $this->majorsForForm(),
         ];
     }
@@ -35,7 +35,7 @@ class CourseService
             'sections' => $this->sectionsForForm(),
             'allCourses' => Course::where('id', '!=', $course->id)
                 ->orderBy('name')
-                ->get(['id', 'name', 'course_code']),
+                ->get(['id', 'name', 'course_code', 'course_type']),
             'allMajors' => $this->majorsForForm(),
         ];
     }
@@ -195,6 +195,8 @@ class CourseService
     public function coursesForForm(): Collection
     {
         return Course::orderBy('name')
+            ->where('course_type', '!=', 'uni_elective')
+            ->where('course_type', '!=', 'uni_required')
             ->get(['id', 'name', 'course_code', 'credit_hours', 'is_lab', 'section_id']);
     }
 

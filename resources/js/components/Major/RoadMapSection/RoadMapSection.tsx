@@ -11,21 +11,13 @@ import GraphSection from './RoadMapBody/GraphSection/GraphSection';
 interface RoadMapSectionProps {
     major: Major;
     sections: Section[];
-    majorCourses: Course[];
-    majorElectives: Course[];
-    uniRequired: Course[];
-    collegeRequired: Course[];
-    uniElective: Course[];
+    allCourses: Course[];
 }
 
 const RoadMapSection = ({
     major,
     sections,
-    majorCourses,
-    majorElectives,
-    uniRequired,
-    collegeRequired,
-    uniElective,
+    allCourses,
 }: RoadMapSectionProps) => {
     const [roadmapView, setRoadmapView] = useState<RoadmapView>('image');
 
@@ -68,11 +60,7 @@ const RoadMapSection = ({
                     ) : (
                         <GraphSection
                             sections={newSections}
-                            majorCourses={majorCourses}
-                            majorElectives={majorElectives}
-                            uniRequired={uniRequired}
-                            collegeRequired={collegeRequired}
-                            uniElective={uniElective}
+                            allCourses={allCourses}
                         />
                     )}
                 </AnimatePresence>

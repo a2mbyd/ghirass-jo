@@ -22,20 +22,12 @@ const NODE_TYPES = { courseNode: CourseNode };
 
 interface RoadmapGraphProps {
     sections: Section[];
-    majorCourses: Course[];
-    majorElectives: Course[];
-    uniRequired: Course[];
-    collegeRequired: Course[];
-    uniElective: Course[];
+    allCourses: Course[];
 }
 
 export default function RoadmapGraph({
     sections,
-    majorCourses,
-    majorElectives,
-    uniRequired,
-    collegeRequired,
-    uniElective,
+    allCourses,
 }: RoadmapGraphProps) {
     const { darkMode: isDark } = useThemeStore();
     const {
@@ -58,11 +50,7 @@ export default function RoadmapGraph({
         totalCoursesCount,
     } = useInteractiveGraph({
         sections,
-        majorCourses,
-        majorElectives,
-        uniRequired,
-        collegeRequired,
-        uniElective,
+        allCourses,
     });
 
     return (

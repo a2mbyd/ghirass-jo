@@ -6,13 +6,13 @@ import {
     AdminCourseBasic,
     AdminCourseWithRelations,
 } from '@/types/admin/course';
-import { Section } from '@/types/section';
+import { Major, Section } from '@/types';
 
 interface EditProps {
     course: AdminCourseWithRelations;
     sections: Section[];
     allCourses: AdminCourseBasic[];
-    allMajors: { id: number; name: string; slug: string }[];
+    allMajors: Major[];
 }
 
 const Edit = ({ course, sections, allCourses, allMajors }: EditProps) => {

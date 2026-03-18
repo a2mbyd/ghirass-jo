@@ -2,6 +2,7 @@ export interface AdminCourseBasic {
     id: number;
     name: string;
     course_code: string;
+    course_type: string;
 }
 
 export interface AdminCourseMajorAssignment {
