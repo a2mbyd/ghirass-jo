@@ -1,8 +1,9 @@
-import CourseChip from '@/components/ui/Admin/EditPage.CourseChip';
-import DualPanelDnD, { DnDGroup } from '@/components/ui/DualPanelDnD';
-import { AdminCourse } from '@/types/admin/major';
-import { Section } from '@/types/section';
 import React from 'react';
+import type { AdminCourse } from "@/features/admin/majors/types/major";
+import type { Section } from "@/features/doctors/types/section";
+import CourseChip from "@/shared/ui/admin/EditPage.CourseChip";
+import type { DnDGroup } from "@/shared/ui/DualPanelDnD";
+import DualPanelDnD from "@/shared/ui/DualPanelDnD";
 
 interface MajorCoursesDnDProps {
     allCourses: AdminCourse[];

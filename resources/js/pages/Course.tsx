@@ -1,8 +1,8 @@
-import type { Course } from '@/types/course';
-import useCourse from '@/hooks/useCourse';
-import CourseHero from '@/components/Course/Course.CourseHero';
-import Sidebar from '@/components/Course/Course.Sidebar';
-import Content from '@/components/Course/Course.Content';
+import Content from "@/features/course/components/CourseContent";
+import CourseHero from "@/features/course/components/CourseHero";
+import Sidebar from "@/features/course/sections/Sidebar";
+import useCourse from "@/features/courses/hooks/useCourse";
+import type { Course } from "@/features/courses/types/course";
 
 const Course = ({ course }: { course: Course | null }) => {
     const {

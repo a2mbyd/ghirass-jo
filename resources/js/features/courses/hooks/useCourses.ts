@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MajorWithCourses } from '@/types';
+import type { MajorWithCourses } from "@/shared/types/index";
 
 const useCourses = (majors: MajorWithCourses[]) => {
     const [selectedMajorSlug, setSelectedMajorSlug] = useState<string | null>(

@@ -1,5 +1,5 @@
-import Badge from '@/components/ui/Badge';
 import { Network } from 'lucide-react';
+import Badge from "@/shared/ui/Badge";
 
 const RoadMapSectionHeader = () => {
     return (

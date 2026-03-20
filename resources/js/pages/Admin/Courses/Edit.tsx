@@ -1,12 +1,12 @@
+import { BookOpen } from 'lucide-react';
 import AdminCourseController from '@/actions/App/Http/Controllers/AdminCourseController';
 import CourseForm from '@/components/Admin/Courses/CourseForm';
-import FormHeader from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormHeader';
-import { BookOpen } from 'lucide-react';
-import {
+import type {
     AdminCourseBasic,
     AdminCourseWithRelations,
-} from '@/types/admin/course';
-import { Major, Section } from '@/types';
+} from "@/features/admin/courses/types/course";
+import type { Major, Section } from "@/shared/types/index";
+import FormHeader from "@/shared/ui/admin/form/FormHeader";
 
 interface EditProps {
     course: AdminCourseWithRelations;

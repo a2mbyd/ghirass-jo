@@ -1,9 +1,10 @@
-import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
-import { getMajorIcon } from '@/lib/MajorIconMap';
 import { BookOpen, Star, Trophy, X } from 'lucide-react';
-import CourseCard from '../CourseCard';
+import { createElement } from 'react';
+import CourseCard from '@/features/courses/components/CourseCard';
+import { getMajorAccentColor } from "@/shared/lib/MajorAccentColorMap";
+import { getMajorIcon } from "@/shared/lib/MajorIconMap";
+import type { MajorWithCourses } from "@/shared/types/index";
 import CourseSection from './MajorPanel.CourseSection';
-import type { MajorWithCourses } from '@/types';
 
 interface MajorPanelProps {
     major: MajorWithCourses;
@@ -11,7 +12,6 @@ interface MajorPanelProps {
 }
 
 const MajorPanel = ({ major, onClose }: MajorPanelProps) => {
-    const Icon = getMajorIcon(major.slug);
     const accentColor = getMajorAccentColor(major.slug);
 
     return (
@@ -22,7 +22,7 @@ const MajorPanel = ({ major, onClose }: MajorPanelProps) => {
                     <div
                         className={`flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br ${accentColor} text-white shadow`}
                     >
-                        <Icon className="h-5 w-5" />
+                        {createElement(getMajorIcon(major.slug), { className: 'h-5 w-5' })}
                     </div>
                     <div>
                         <h3 className="text-[15px] font-extrabold text-text">

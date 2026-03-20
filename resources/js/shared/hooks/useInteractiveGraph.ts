@@ -1,21 +1,17 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
-import { useNodesState, useEdgesState, type Node } from 'reactflow';
+import { MarkerType, useNodesState, useEdgesState, type Node } from 'reactflow';
 
+import { PALETTE } from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.colors';
+import {
+    buildNodes,
+    buildEdges,
+} from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.helpers';
 import type {
     CourseNodeData,
     ColorScheme,
     Course,
     Section,
 } from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.types';
-import { PALETTE } from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.colors';
-import {
-    buildNodes,
-    buildEdges,
-} from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.helpers';
-import {
-    UNI_ELECTIVES,
-    MAJOR_ELECTIVES,
-} from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.constants';
 
 interface RoadmapGraphProps {
     sections: Section[];
@@ -136,20 +132,24 @@ const useInteractiveGraph = ({ sections, allCourses }: RoadmapGraphProps) => {
                             (hid !== null && !chain) || !inFilter ? 0.1 : 1,
                     },
                     markerEnd: {
-                        ...(e.markerEnd as any),
+                        type: MarkerType.ArrowClosed,
                         color: chain ? '#6366F1' : '#94A3B8',
                     },
                 };
             }),
         );
-    }, [hoveredId, filterSec, completedIds, anc, desc]);
+    }, [hoveredId, filterSec, completedIds, anc, desc, setNodes, setEdges, allCourses]);
 
     // ── toggle completed on node click ───────────────────────────────────────
     const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
         const cid = parseInt(node.id);
         setCompletedIds((prev) => {
             const next = new Set(prev);
-            next.has(cid) ? next.delete(cid) : next.add(cid);
+            if (next.has(cid)) {
+                next.delete(cid);
+            } else {
+                next.add(cid);
+            }
             return next;
         });
     }, []);

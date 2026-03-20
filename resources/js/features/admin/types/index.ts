@@ -1,3 +1,3 @@
-export type * from './course';
-export type * from './doctor';
-export type * from './major';
+export type * from '../courses/types/course';
+export type * from '../doctors/types/doctor';
+export type * from '../majors/types/major';

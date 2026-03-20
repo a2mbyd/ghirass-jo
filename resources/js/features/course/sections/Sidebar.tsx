@@ -1,6 +1,6 @@
-import { CourseFile, CourseVideo } from '@/types/course';
-import { STATS_CONFIG, TAB_CONFIG } from './Course.config';
-import { TabKey } from './Course.types';
+import type { CourseFile, CourseVideo } from "@/features/courses/types/course";
+import { STATS_CONFIG, TAB_CONFIG } from '../course.config';
+import type { TabKey } from '../types';
 
 interface SidebarProps {
     activeTab: TabKey;
@@ -12,8 +12,6 @@ interface SidebarProps {
 const Sidebar = ({
     activeTab,
     setActiveTab,
-    files,
-    videos,
     counts,
 }: SidebarProps) => {
     return (

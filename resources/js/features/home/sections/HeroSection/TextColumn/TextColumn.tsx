@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { BookOpen, Calculator, ArrowUpLeft, Zap } from 'lucide-react';
-import Badge from '@/components/ui/Badge';
-import type { Major } from '@/types';
+import type { Major } from "@/shared/types/index";
+import Badge from "@/shared/ui/Badge";
 
 const TextColumn = ({ majors }: { majors: Major[] }) => {
     

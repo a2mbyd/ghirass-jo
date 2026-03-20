@@ -1,11 +1,12 @@
+import { useForm } from '@inertiajs/react';
+import type React from 'react';
+import { useRef, useState } from 'react';
 import {
     store,
     update,
 } from '@/actions/App/Http/Controllers/AdminDoctorController';
-import { getImageUrl } from '@/lib/utils';
-import { Doctor } from '@/types/doctors';
-import { useForm } from '@inertiajs/react';
-import React, { useRef, useState } from 'react';
+import type { Doctor } from "@/features/doctors/types/doctors";
+import { getImageUrl } from "@/shared/lib/utils";
 
 interface UseDoctorsFormParams {
     mode: 'create' | 'edit';

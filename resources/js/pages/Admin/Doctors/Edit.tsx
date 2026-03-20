@@ -1,10 +1,10 @@
-import { index } from '@/actions/App/Http/Controllers/AdminDoctorController';
-import DoctorsForm from '@/components/Admin/Doctors/DoctorsForm/DoctorsForm';
-import FormHeader from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormHeader';
-import { Doctor } from '@/types/doctors';
-import { Section } from '@/types/section';
 import { Stethoscope } from 'lucide-react';
 import React from 'react';
+import { index } from '@/actions/App/Http/Controllers/AdminDoctorController';
+import DoctorsForm from '@/components/Admin/Doctors/DoctorsForm/DoctorsForm';
+import type { Doctor } from "@/features/doctors/types/doctors";
+import type { Section } from "@/features/doctors/types/section";
+import FormHeader from "@/shared/ui/admin/form/FormHeader";
 
 interface EditProps {
     doctor: Doctor;

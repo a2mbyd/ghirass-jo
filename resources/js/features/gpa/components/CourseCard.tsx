@@ -1,8 +1,8 @@
-import { CourseEntry } from '@/types';
-import { GRADE_OPTIONS } from './gradeOptions';
-import React from 'react';
 import { Trash2 } from 'lucide-react';
-import IncrementalInput from '../ui/GPA/IncrementalInput';
+import React from 'react';
+import type { CourseEntry } from "@/shared/types/index";
+import IncrementalInput from '@/shared/ui/gpa/IncrementalInput';
+import { GRADE_OPTIONS } from './gradeOptions';
 
 interface CourseCardProps {
     course: CourseEntry;

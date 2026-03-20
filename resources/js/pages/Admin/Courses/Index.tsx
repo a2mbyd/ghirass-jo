@@ -1,16 +1,16 @@
-import { AdminCourse } from '@/types/admin/major';
-import { Section } from '@/types/section';
-import AdminCourseController from '@/actions/App/Http/Controllers/AdminCourseController';
-import DeleteItemAssertionModal from '@/components/ui/Admin/DeleteItemAssertionModal';
 import { router } from '@inertiajs/react';
 import { BookMarked } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
-import { ACCENT_COLORS } from '../Sections/colors';
-import IndexPageHeader from '@/components/ui/Admin/CreateAndEditForm/IndexPageHeader';
-import CoursesStatsStrip from '@/components/Admin/Courses/CoursesStatsStrip';
+import AdminCourseController from '@/actions/App/Http/Controllers/AdminCourseController';
 import CoursesCollapsibleSection from '@/components/Admin/Courses/CoursesCollapsibleSection';
 import CoursesFilters from '@/components/Admin/Courses/CoursesFilters';
+import CoursesStatsStrip from '@/components/Admin/Courses/CoursesStatsStrip';
 import EmptyStateSearch from '@/components/Admin/Courses/EmptyStateSearch';
+import type { AdminCourse } from "@/features/admin/majors/types/major";
+import type { Section } from "@/features/doctors/types/section";
+import DeleteItemAssertionModal from "@/shared/ui/admin/DeleteItemAssertionModal";
+import IndexPageHeader from "@/shared/ui/admin/form/IndexPageHeader";
+import { ACCENT_COLORS } from '../Sections/colors';
 
 interface IndexProps {
     courses: AdminCourse[];
@@ -25,7 +25,11 @@ const Index = ({ courses, sections }: IndexProps) => {
     const toggleCollapse = (key: number | string) => {
         setCollapsed((prev) => {
             const next = new Set(prev);
-            next.has(key) ? next.delete(key) : next.add(key);
+            if (next.has(key)) {
+                next.delete(key);
+            } else {
+                next.add(key);
+            }
             return next;
         });
     };

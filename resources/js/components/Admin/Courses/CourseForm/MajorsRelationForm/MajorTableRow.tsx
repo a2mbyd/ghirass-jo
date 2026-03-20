@@ -1,7 +1,7 @@
 import { GraduationCap, Trash2 } from 'lucide-react';
+import SelectInput from "@/shared/ui/admin/inputs/SelectInput";
 import { COURSE_MAJOR_TYPES, YEARS, SEMESTERS } from '../CourseForm.constants';
 import type { FormMajorAssignment } from '../CourseForm.types';
-import SelectInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/SelectInput';
 
 interface MajorTableRowProps {
     assignment: FormMajorAssignment;

@@ -1,6 +1,6 @@
-import type { CSSProperties } from 'react';
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import type { CSSProperties } from 'react';
+import { cn } from "@/shared/lib/utils";
 import type { ColorScheme } from '../GraphSection.types';
 
 /** Dimmed state colors per theme */

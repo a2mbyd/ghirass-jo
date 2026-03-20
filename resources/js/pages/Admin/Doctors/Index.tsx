@@ -1,12 +1,12 @@
-import AdminDoctorController from '@/actions/App/Http/Controllers/AdminDoctorController';
-import DoctorsFilters from '@/components/Admin/Doctors/DoctorsFilters';
-import SectionCard from '@/components/Admin/Doctors/SectionCard';
-import IndexPageHeader from '@/components/ui/Admin/CreateAndEditForm/IndexPageHeader';
-import DeleteItemAssertionModal from '@/components/ui/Admin/DeleteItemAssertionModal';
-import { SectionWithDoctors } from '@/types/admin/doctor';
 import { router } from '@inertiajs/react';
 import { Stethoscope } from 'lucide-react';
 import React, { useState } from 'react';
+import AdminDoctorController from '@/actions/App/Http/Controllers/AdminDoctorController';
+import DoctorsFilters from '@/components/Admin/Doctors/DoctorsFilters';
+import SectionCard from '@/components/Admin/Doctors/SectionCard';
+import type { SectionWithDoctors } from "@/features/admin/doctors/types/doctor";
+import DeleteItemAssertionModal from "@/shared/ui/admin/DeleteItemAssertionModal";
+import IndexPageHeader from "@/shared/ui/admin/form/IndexPageHeader";
 
 const Index = ({ sections }: { sections: SectionWithDoctors[] }) => {
     const [search, setSearch] = useState('');

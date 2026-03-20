@@ -1,10 +1,10 @@
-import FormCard from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormCard';
-import { ExternalLink, Plus, Trash2, X } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import type { ReactNode } from 'react';
+import FormCard from "@/shared/ui/admin/form/FormCard";
 import { RESOURCE_FORM_PALETTE } from '../CourseForm.constants';
-import PendingRow from './PendingRow';
 import ExistingRow from './ExistingRow';
 import type { ExistingItem } from './ExistingRow';
+import PendingRow from './PendingRow';
 import type { PendingItem } from './PendingRow';
 
 interface ResourceCardFormProps {

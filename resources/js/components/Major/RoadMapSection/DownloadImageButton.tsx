@@ -1,5 +1,5 @@
-import { Major } from '@/types';
 import { Download } from 'lucide-react';
+import type { Major } from "@/shared/types/index";
 
 interface DownloadImageButtonProps {
     major: Major;

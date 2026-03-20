@@ -1,6 +1,6 @@
-import { AdminCourse } from '@/types/admin/major';
 import { ChevronDown, Layers } from 'lucide-react';
 import React from 'react';
+import type { AdminCourse } from "@/features/admin/majors/types/major";
 import CoursesRow from './CoursesRow';
 
 interface CoursesCollapsibleSectionProps {

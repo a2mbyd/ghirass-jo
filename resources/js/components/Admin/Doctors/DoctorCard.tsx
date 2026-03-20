@@ -1,9 +1,9 @@
-import AdminDoctorController from '@/actions/App/Http/Controllers/AdminDoctorController';
-import { getImageUrl } from '@/lib/utils';
-import type { Doctor } from '@/types/doctors';
 import { Link } from '@inertiajs/react';
 import { Pencil, Trash2, User } from 'lucide-react';
 import React from 'react';
+import AdminDoctorController from '@/actions/App/Http/Controllers/AdminDoctorController';
+import type { Doctor } from "@/features/doctors/types/doctors";
+import { getImageUrl } from "@/shared/lib/utils";
 
 interface Props {
     doctor: Doctor;

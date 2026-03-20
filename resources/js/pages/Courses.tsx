@@ -1,12 +1,12 @@
-import MajorPanel from '@/components/Courses/MajorPanel/MajorPanel';
-import CollapsibleSection from '@/components/Courses/CollapsibleSection';
-import { Course, MajorWithCourses } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BookOpen, Brain, Building2, GraduationCap, Star } from 'lucide-react';
-import useCourses from '@/hooks/useCourses';
-import CoursesHero from '@/components/Courses/CoursesHero';
-import MajorCard from '@/components/Courses/MajorCard';
-import SectionDivider from '@/components/ui/SectionDivider';
+import CollapsibleSection from "@/features/courses/components/CollapsibleSection";
+import MajorCard from "@/features/courses/components/MajorCard";
+import useCourses from "@/features/courses/hooks/useCourses";
+import CoursesHero from "@/features/courses/sections/CoursesHero/CoursesHero/index";
+import MajorPanel from "@/features/courses/sections/MajorPanel/MajorPanel/MajorPanel";
+import type { Course, MajorWithCourses } from "@/shared/types/index";
+import SectionDivider from "@/shared/ui/SectionDivider";
 
 interface CoursesProps {
     majors: MajorWithCourses[];

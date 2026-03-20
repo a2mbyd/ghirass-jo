@@ -1,5 +1,4 @@
 import { CircleAlert } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
 
 interface DeleteItemAssertionModalProps {
   isOpen: boolean;
@@ -16,10 +15,7 @@ export default function DeleteItemAssertionModal({
   title = "Are you absolutely sure?",
   description = "This action is irreversible. Once confirmed, the item will be permanently removed.",
 }: DeleteItemAssertionModalProps) {
-  const [confirming, setConfirming] = useState(false);
-
- 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     onConfirm();
     onClose();
   };
@@ -62,14 +58,9 @@ export default function DeleteItemAssertionModal({
           </button>
           <button
             onClick={handleConfirm}
-            disabled={confirming}
-            className="delete-modal-confirm flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-70"
+            className="delete-modal-confirm flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all"
           >
-            {confirming ? (
-              <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-            ) : (
-              "Delete"
-            )}
+            Delete
           </button>
         </div>
       </div>

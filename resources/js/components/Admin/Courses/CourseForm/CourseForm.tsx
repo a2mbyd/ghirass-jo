@@ -8,19 +8,20 @@ import {
     Plus,
     Video,
 } from 'lucide-react';
-import Actions from '@/components/ui/Admin/CreateAndEditForm/Actions';
-import CourseSelector from '@/components/ui/Admin/CreateAndEditForm/CourseSelector';
-import FormCard from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormCard';
-import NumberInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/NumberInput';
-import SelectInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/SelectInput';
-import TextAreaInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/TextAreaInput';
-import TextInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/TextInput';
-import ToggleInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/ToggleInput';
-import { useCourseForm } from '@/hooks/Admin/useCourseForm';
+import { useCourseForm } from "@/features/admin/courses/hooks/useCourseForm";
 import type {
     AdminCourseBasic,
     AdminCourseWithRelations,
-} from '@/types/admin/course';
+} from "@/features/admin/courses/types/course";
+import type { Section } from "@/features/doctors/types/section";
+import Actions from "@/shared/ui/admin/form/Actions";
+import CourseSelector from "@/shared/ui/admin/form/CourseSelector";
+import FormCard from "@/shared/ui/admin/form/FormCard";
+import NumberInput from "@/shared/ui/admin/inputs/NumberInput";
+import SelectInput from "@/shared/ui/admin/inputs/SelectInput";
+import TextAreaInput from "@/shared/ui/admin/inputs/TextAreaInput";
+import TextInput from "@/shared/ui/admin/inputs/TextInput";
+import ToggleInput from "@/shared/ui/admin/inputs/ToggleInput";
 import { getPYQMeta } from './CourseForm.constants';
 import {
     sectionOptions,
@@ -31,14 +32,19 @@ import {
 import type { CourseFormMode } from './CourseForm.types';
 import { MajorsFormCard } from './MajorsRelationForm/MajorsFormCard';
 import ResourceCardForm from './ResourceCardForm';
-import { Major, Section } from '@/types';
+
+interface MajorOption {
+    id: number;
+    name: string;
+    slug: string;
+}
 
 interface CourseFormProps {
     mode: CourseFormMode;
     course?: AdminCourseWithRelations;
     sections: Section[];
     allCourses: AdminCourseBasic[];
-    allMajors: Major[];
+    allMajors: MajorOption[];
     cancelLink: string;
 }
 

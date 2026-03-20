@@ -1,7 +1,7 @@
-import { Course } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import type { Course } from "@/shared/types/index";
 import CourseCard from './CourseCard';
 import { SECTION_FALLBACK, TYPE_COLORS } from './Courses.config';
 

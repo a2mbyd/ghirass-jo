@@ -1,7 +1,7 @@
-import { ACCENT_COLORS } from '@/pages/Admin/Sections/colors';
-import { Section } from '@/types/section';
 import { BookOpen, GraduationCap, Hash, Trash2 } from 'lucide-react';
 import React from 'react';
+import type { Section } from "@/features/doctors/types/section";
+import { ACCENT_COLORS } from '@/pages/Admin/Sections/colors';
 
 interface SectionCardProps {
     section: Section;

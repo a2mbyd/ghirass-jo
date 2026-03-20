@@ -1,8 +1,8 @@
 import { GraduationCap, BookMarked, Layers, Stethoscope } from 'lucide-react';
-import { index as majorsIndex } from '@/routes/admin/majors';
 import { index as coursesIndex } from '@/routes/admin/courses';
-import { index as sectionsIndex } from '@/routes/admin/sections';
 import { index as doctorsIndex } from '@/routes/admin/doctors';
+import { index as majorsIndex } from '@/routes/admin/majors';
+import { index as sectionsIndex } from '@/routes/admin/sections';
 export const STATS_CONFIG = [
     {
         key: 'majors' as const,

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Major } from '@/types/major';
 import { Link } from '@inertiajs/react';
-import AdminMajorController from '@/actions/App/Http/Controllers/AdminMajorController';
 import { Pencil, Trash2, GraduationCap } from 'lucide-react';
+import React from 'react';
+import AdminMajorController from '@/actions/App/Http/Controllers/AdminMajorController';
+import type { Major } from "@/features/majors/types/major";
 
 interface MajorsRowProps {
     major: Major;

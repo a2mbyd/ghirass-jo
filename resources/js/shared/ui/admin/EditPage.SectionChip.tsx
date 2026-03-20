@@ -1,6 +1,6 @@
-import { Section } from '@/types';
 import { Layers } from 'lucide-react';
 import React from 'react'
+import type { Section } from "@/shared/types/index";
 
 interface SectionChipProps {
     section: Section;

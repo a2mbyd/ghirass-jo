@@ -1,11 +1,11 @@
-import { index } from '@/actions/App/Http/Controllers/AdminUserController';
-import Actions from '@/components/ui/Admin/CreateAndEditForm/Actions';
-import FormCard from '@/components/ui/Admin/CreateAndEditForm/FormCard';
-import TextInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/TextInput';
-import PasswordInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/PasswordInput';
-import { useUsersForm } from '@/hooks/Admin/useUsersForm';
-import { AdminUser } from '@/types/auth';
 import { User } from 'lucide-react';
+import { index } from '@/actions/App/Http/Controllers/AdminUserController';
+import { useUsersForm } from "@/features/admin/users/hooks/useUsersForm";
+import type { AdminUser } from "@/shared/types/auth";
+import Actions from "@/shared/ui/admin/form/Actions";
+import FormCard from "@/shared/ui/admin/form/index";
+import PasswordInput from "@/shared/ui/admin/inputs/PasswordInput";
+import TextInput from "@/shared/ui/admin/inputs/TextInput";
 
 interface UsersFormProps {
     mode: 'create' | 'edit';

@@ -1,9 +1,9 @@
-import { CourseFile, CourseVideo, PastYearQuestion } from '@/types/course';
 import React from 'react';
-import EmptyState from './Course.EmptyState';
-import VideoRow from './Course.VideoRow';
-import FileRow from './Course.FileRow';
-import { TabKey } from './Course.types';
+import type { CourseFile, CourseVideo, PastYearQuestion } from "@/features/courses/types/course";
+import EmptyState from '../components/EmptyState';
+import FileRow from '../components/FileRow';
+import VideoRow from '../components/VideoRow';
+import type { TabKey } from '../types';
 
 const TabContent = ({
     activeTab,

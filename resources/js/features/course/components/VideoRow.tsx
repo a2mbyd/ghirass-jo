@@ -1,5 +1,5 @@
-import { CourseVideo } from '@/types/course';
 import { Play } from 'lucide-react';
+import type { CourseVideo } from "@/features/courses/types/course";
 
 const VideoRow = ({ video, index }: { video: CourseVideo; index: number }) => (
     <a

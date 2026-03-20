@@ -1,8 +1,8 @@
-import DoctorCard from '@/components/Doctors/DoctorCard';
-import { Doctor } from '@/types/doctors';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Users } from 'lucide-react';
 import { useState } from 'react';
+import DoctorCard from "@/features/doctors/components/DoctorCard";
+import type { Doctor } from "@/features/doctors/types/doctors";
 import { accentPalette } from './SectionCard.config';
 
 interface SectionCardProps {

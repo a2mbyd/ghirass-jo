@@ -1,8 +1,8 @@
-import AdminCourseController from '@/actions/App/Http/Controllers/AdminCourseController';
-import { AdminCourse } from '@/types/admin/major';
 import { Link } from '@inertiajs/react';
-import { FlaskConical, Hash, Pencil, Plus, Trash2 } from 'lucide-react';
+import { FlaskConical, Hash, Pencil, Trash2 } from 'lucide-react';
 import React from 'react';
+import AdminCourseController from '@/actions/App/Http/Controllers/AdminCourseController';
+import type { AdminCourse } from "@/features/admin/majors/types/major";
 
 interface CoursesRowProps {
     groupCourses: AdminCourse[];

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { fadeIn } from '@/motion';
-import { Course, Major, Section } from '@/types';
+import React, { useState } from 'react';
+import { fadeIn } from "@/shared/motion/index";
+import type { Course, Major, Section } from "@/shared/types/index";
+import DownloadImageButton from './DownloadImageButton';
+import GraphSection from './RoadMapBody/GraphSection/GraphSection';
+import ImageSection from './RoadMapBody/ImageSection';
 import RoadMapSectionHeader from './RoadMapSection.header';
 import RoadMapSectionToggleButtons from './RoadMapSection.toggleButtons';
-import DownloadImageButton from './DownloadImageButton';
-import { RoadmapView } from './RoadMapSection.types';
-import ImageSection from './RoadMapBody/ImageSection';
-import GraphSection from './RoadMapBody/GraphSection/GraphSection';
+import type { RoadmapView } from './RoadMapSection.types';
 interface RoadMapSectionProps {
     major: Major;
     sections: Section[];

@@ -1,8 +1,9 @@
-import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
-import { getMajorIcon } from '@/lib/MajorIconMap';
-import { BookOpen, Star, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { MajorWithCourses } from '@/types';
+import { BookOpen, Star, Trophy } from 'lucide-react';
+import { createElement } from 'react';
+import { getMajorAccentColor } from "@/shared/lib/MajorAccentColorMap";
+import { getMajorIcon } from "@/shared/lib/MajorIconMap";
+import type { MajorWithCourses } from "@/shared/types/index";
 
 interface MajorCardProps {
     major: MajorWithCourses;
@@ -11,7 +12,6 @@ interface MajorCardProps {
 }
 
 const MajorCard = ({ major, isSelected, onClick }: MajorCardProps) => {
-    const Icon = getMajorIcon(major.slug);
     const accentColor = getMajorAccentColor(major.slug);
 
     return (
@@ -33,7 +33,7 @@ const MajorCard = ({ major, isSelected, onClick }: MajorCardProps) => {
             <div
                 className={`flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br ${accentColor} text-white shadow-md`}
             >
-                <Icon className="h-5.5 w-5.5" />
+                {createElement(getMajorIcon(major.slug), { className: 'h-5.5 w-5.5' })}
             </div>
 
             <h3 className="text-[13.5px] leading-snug font-extrabold text-text">

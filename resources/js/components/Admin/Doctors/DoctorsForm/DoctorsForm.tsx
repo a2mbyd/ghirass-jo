@@ -1,14 +1,14 @@
-import { index } from '@/actions/App/Http/Controllers/AdminDoctorController';
-import Actions from '@/components/ui/Admin/CreateAndEditForm/Actions';
-import FormCard from '@/components/ui/Admin/CreateAndEditForm/FormCard';
-import FileInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/FileInput';
-import SelectInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/SelectInput';
-import TextInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/TextInput';
-import { useDoctorsForm } from '@/hooks/Admin/useDoctorsForm';
-import { Doctor } from '@/types/doctors';
-import { Section } from '@/types/section';
 import { Stethoscope, User } from 'lucide-react';
 import React from 'react';
+import { index } from '@/actions/App/Http/Controllers/AdminDoctorController';
+import { useDoctorsForm } from "@/features/admin/doctors/hooks/useDoctorsForm";
+import type { Doctor } from "@/features/doctors/types/doctors";
+import type { Section } from "@/features/doctors/types/section";
+import Actions from "@/shared/ui/admin/form/Actions";
+import FormCard from "@/shared/ui/admin/form/index";
+import FileInput from "@/shared/ui/admin/inputs/FileInput";
+import SelectInput from "@/shared/ui/admin/inputs/SelectInput";
+import TextInput from "@/shared/ui/admin/inputs/TextInput";
 
 interface DoctorsFormProps {
     mode: 'create' | 'edit';

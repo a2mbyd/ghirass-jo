@@ -1,7 +1,7 @@
-import AdminUserController from '@/actions/App/Http/Controllers/AdminUserController';
-import { AdminUser } from '@/types/auth';
 import { useForm } from '@inertiajs/react';
-import React from 'react';
+import type React from 'react';
+import AdminUserController from '@/actions/App/Http/Controllers/AdminUserController';
+import type { AdminUser } from "@/shared/types/auth";
 
 interface UserFormData {
     username: string;

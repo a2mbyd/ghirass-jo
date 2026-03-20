@@ -1,10 +1,8 @@
 import React from 'react';
-import { SEMESTER_LABELS } from './CourseByYearSection.config';
-import { BookOpen, Clock } from 'lucide-react';
+import type { Course } from "@/features/courses/types/course";
 import CourseCard from './CourseByYearSection.CourseCard';
-import { Course } from '@/types/course';
-import { YearConfig } from './CourseByYearSection.types';
 import SemesterSectionHeader from './CourseByYearSection.semesterSection.header';
+import type { YearConfig } from './CourseByYearSection.types';
 
 interface SemesterSectionProps {
     semester: number;

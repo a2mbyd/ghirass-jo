@@ -1,9 +1,9 @@
+import { BookOpen } from 'lucide-react';
 import AdminCourseController from '@/actions/App/Http/Controllers/AdminCourseController';
 import CourseForm from '@/components/Admin/Courses/CourseForm';
-import FormHeader from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormHeader';
-import { AdminCourseBasic } from '@/types/admin/course';
-import { Section } from '@/types/section';
-import { BookOpen } from 'lucide-react';
+import type { AdminCourseBasic } from "@/features/admin/courses/types/course";
+import type { Section } from "@/features/doctors/types/section";
+import FormHeader from "@/shared/ui/admin/form/FormHeader";
 
 interface CreateProps {
     sections: Section[];

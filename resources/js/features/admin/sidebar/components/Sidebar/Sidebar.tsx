@@ -1,10 +1,10 @@
-import useTheme from '@/hooks/useTheme';
+import { usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import useTheme from "@/shared/hooks/useTheme";
 import SidebarFooter from './Sidebar.Footer';
 import SidebarHeader from './Sidebar.Header';
 import SidebarMain from './Sidebar.Main';
-import { usePage } from '@inertiajs/react';
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);

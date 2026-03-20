@@ -1,8 +1,8 @@
-import { AdminCourse, MajorWithRelations } from '@/types/admin/major';
-import { Section } from '@/types/section';
-import FormHeader from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormHeader';
 import MajorForm from '@/components/Admin/Majors/MajorForm';
+import type { AdminCourse, MajorWithRelations } from "@/features/admin/majors/types/major";
+import type { Section } from "@/features/doctors/types/section";
 import { index as majorsIndex } from '@/routes/admin/majors';
+import FormHeader from "@/shared/ui/admin/form/FormHeader";
 
 interface EditProps {
     major: MajorWithRelations;

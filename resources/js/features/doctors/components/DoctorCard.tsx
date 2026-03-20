@@ -1,6 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
 import { Check, Copy, Mail } from 'lucide-react';
-import { Doctor } from '@/types/doctors';
+import { useCallback, useRef, useState } from 'react';
+import type { Doctor } from "@/features/doctors/types/doctors";
 import { copyEmail, getDelay, getGradient } from './DoctorCard.config';
 
 interface DoctorCardProps {

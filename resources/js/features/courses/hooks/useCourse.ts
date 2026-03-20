@@ -1,36 +1,17 @@
-import { TAB_CONFIG } from '@/components/Course/Course.config';
-import { TabKey } from '@/components/Course/Course.types';
-import {
+import { useState } from 'react';
+import type { TabKey } from "@/features/course/types";
+import type {
     Course,
     CourseFile,
     CourseVideo,
     PastYearQuestion,
-} from '@/types/course';
-import React, { useState } from 'react';
+} from "@/features/courses/types/course";
 
 const useCourse = (course: Course | null) => {
     const [activeTab, setActiveTab] = useState<TabKey>('files');
-
-    const files: CourseFile[] =
-        course?.files?.map((file: any) => ({
-            id: file.id,
-            name: file.name ?? file.title ?? 'ملف',
-            url: file.url,
-        })) ?? [];
-
-    const videos: CourseVideo[] =
-        course?.videos?.map((video: any) => ({
-            id: video.id,
-            name: video.name ?? video.title ?? 'فيديو',
-            url: video.url,
-        })) ?? [];
-
-    const pastYearQuestions: PastYearQuestion[] =
-        course?.past_year_questions?.map((question: any) => ({
-            id: question.id,
-            name: question.name ?? question.title ?? 'سؤال',
-            url: question.url,
-        })) ?? [];
+    const files: CourseFile[] = course?.files ?? [];
+    const videos: CourseVideo[] = course?.videos ?? [];
+    const pastYearQuestions: PastYearQuestion[] = course?.past_year_questions ?? [];
 
     const counts: Record<TabKey, number> = {
         files: files.length,

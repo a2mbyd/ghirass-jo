@@ -1,8 +1,8 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Major } from '@/types';
 import { ImageIcon } from 'lucide-react';
-import { getImageUrl } from '@/lib/utils';
+import React from 'react';
+import { getImageUrl } from "@/shared/lib/utils";
+import type { Major } from "@/shared/types/index";
 
 const ImageSection = ({ major }: { major: Major }) => {
     if (major.roadmap_image)

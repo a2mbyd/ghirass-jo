@@ -1,4 +1,4 @@
-import { Course } from '@/types';
+import type { Course } from "@/shared/types/index";
 
 export const NODE_W = 180;
 export const NODE_H = 90;

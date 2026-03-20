@@ -3,10 +3,10 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { ReactNode } from 'react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import AdminLayout from './layouts/AdminLayout';
-import MainLayout from './layouts/MainLayout';
+import AdminLayout from "./app/layouts/AdminLayout";
+import MainLayout from "./app/layouts/MainLayout";
 import '../css/app.css';
-import ThemeProvider from './providers/ThemeProvider';
+import ThemeProvider from "./app/providers/ThemeProvider";
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

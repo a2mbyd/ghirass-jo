@@ -1,5 +1,6 @@
 import { Plus, Search, X } from 'lucide-react';
-import React, { DragEvent, useState } from 'react';
+import type { DragEvent} from 'react';
+import React, { useState } from 'react';
 
 export interface DnDItemRenderProps {
     isDragging: boolean;

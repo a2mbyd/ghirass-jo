@@ -1,8 +1,8 @@
 'use client';
 
 import { Handle, Position, type NodeProps } from 'reactflow';
+import { useThemeStore } from "@/shared/store/theme.store";
 import type { CourseNodeData } from '../GraphSection.types';
-import { useThemeStore } from '@/store/theme.store';
 import {
     CLASSES,
     getContainerClassName,

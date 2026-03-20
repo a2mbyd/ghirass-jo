@@ -1,6 +1,6 @@
-import React from 'react';
-import { YearConfig } from './CourseByYearSection.types';
 import { BookOpen, Clock } from 'lucide-react';
+import React from 'react';
+import type { YearConfig } from './CourseByYearSection.types';
 
 interface CourseByYearSectionYearBlockHeaderProps {
     year: number;

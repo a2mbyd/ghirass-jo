@@ -1,14 +1,14 @@
-import { store } from '@/actions/App/Http/Controllers/AdminSectionController';
-import CourseSelector from '@/components/ui/Admin/CreateAndEditForm/CourseSelector';
-import FormCard from '@/components/ui/Admin/CreateAndEditForm/FormCard';
-import Actions from '@/components/ui/Admin/CreateAndEditForm/Actions';
-import FormHeader from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormHeader';
-import TextInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/TextInput';
-import { AdminCourse } from '@/types/admin/major';
 import { useForm } from '@inertiajs/react';
 import { BookMarked, GraduationCap, Layers } from 'lucide-react';
 import React from 'react';
+import { store } from '@/actions/App/Http/Controllers/AdminSectionController';
+import type { AdminCourse } from "@/features/admin/majors/types/major";
 import { index as sectionsIndex } from '@/routes/admin/sections';
+import Actions from "@/shared/ui/admin/form/Actions";
+import CourseSelector from "@/shared/ui/admin/form/CourseSelector";
+import FormHeader from "@/shared/ui/admin/form/FormHeader";
+import FormCard from "@/shared/ui/admin/form/index";
+import TextInput from "@/shared/ui/admin/inputs/TextInput";
 
 interface CreateProps {
     allCourses: AdminCourse[];

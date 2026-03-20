@@ -1,11 +1,12 @@
-import { slideUp } from '@/motion';
-import { BookMarked } from 'lucide-react';
-import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
-import { getMajorIcon } from '@/lib/MajorIconMap';
-import { Course, Major, Section } from '@/types';
 import { motion } from 'framer-motion';
+import { BookMarked } from 'lucide-react';
+import { createElement } from 'react';
+import { getMajorAccentColor } from "@/shared/lib/MajorAccentColorMap";
+import { getMajorIcon } from "@/shared/lib/MajorIconMap";
+import { slideUp } from "@/shared/motion/index";
+import type { Course, Major, Section } from "@/shared/types/index";
+import Badge from "@/shared/ui/Badge";
 import HeroStatsCards from './Hero.StatsCards';
-import Badge from '@/components/ui/Badge';
 
 interface HeroProps {
     allCourses: Course[];
@@ -13,7 +14,6 @@ interface HeroProps {
     sections: Section[];
 }
 const Hero = ({ major, allCourses, sections }: HeroProps) => {
-    const MajorIcon = getMajorIcon(major.slug);
     const majorAccentColor = getMajorAccentColor(major.slug);
 
     return (
@@ -40,7 +40,7 @@ const Hero = ({ major, allCourses, sections }: HeroProps) => {
                         transition={{ ...slideUp.transition, delay: 0.05 }}
                         className={`mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br ${majorAccentColor} text-white shadow-lg`}
                     >
-                        <MajorIcon className="h-8 w-8" />
+                        {createElement(getMajorIcon(major.slug), { className: 'h-8 w-8' })}
                     </motion.div>
 
                     {/* Badge */}

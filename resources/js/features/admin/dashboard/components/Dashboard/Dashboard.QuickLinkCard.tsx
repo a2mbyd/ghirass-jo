@@ -1,4 +1,4 @@
-import { QuickLinkConfig } from './Dashboard.types';
+import type { QuickLinkConfig } from './Dashboard.types';
 
 interface QuickLinkCardProps {
     config: QuickLinkConfig;

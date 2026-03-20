@@ -1,4 +1,4 @@
-import { Course } from '@/types';
+import type { Course } from "@/shared/types/index";
 
 export const getStats = (
     totalCourses: number,

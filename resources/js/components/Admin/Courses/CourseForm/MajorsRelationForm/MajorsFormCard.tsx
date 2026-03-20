@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { GraduationCap, Plus, X } from 'lucide-react';
-import FormCard from '@/components/ui/Admin/CreateAndEditForm/FormCard';
+import { useState } from 'react';
+import FormCard from "@/shared/ui/admin/form/index";
+import type { FormMajorAssignment, NewMajorForm } from '../CourseForm.types';
 import { AddMajorForm } from './AddMajorForm';
 import { MajorEmptyState } from './MajorEmptyState';
 import { MajorTableRow } from './MajorTableRow';
-import type { FormMajorAssignment, NewMajorForm } from '../CourseForm.types';
 
 interface MajorsFormCardProps {
     courseType: string;

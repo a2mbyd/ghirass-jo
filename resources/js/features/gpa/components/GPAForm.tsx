@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import useGPA from '@/hooks/useGPA';
+import useGPA from "@/features/gpa/hooks/useGPA";
 import CourseCard from './CourseCard';
 import CumulativeGPA from './CumulativeGPA';
 import SemesterGPA from './SemesterGPA';
@@ -23,7 +23,7 @@ export default function GPAForm() {
     return (
         <div className="mx-auto max-w-2xl space-y-8">
             <div className="space-y-4">
-                {courses.map((course, index) => (
+                {courses.map((course) => (
                     <CourseCard
                         key={course.id}
                         course={course}

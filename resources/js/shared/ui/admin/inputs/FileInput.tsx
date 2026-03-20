@@ -1,5 +1,6 @@
 import { ImageIcon, Upload, User, X } from 'lucide-react';
-import React, { DragEvent, useRef, useState } from 'react';
+import type { DragEvent} from 'react';
+import React, { useRef, useState } from 'react';
 
 interface FileInputProps {
     label?: string;

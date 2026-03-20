@@ -1,12 +1,12 @@
-import type { Course, Major, Section } from '@/types';
-import Hero from '@/components/Major/Hero';
-import RoadMapSection from '@/components/Major/RoadMapSection';
-import CourseByYearSection from '@/components/Major/CourseByYearSection/CourseByYearSection';
 import { useMemo } from 'react';
+import RoadMapSection from '@/components/Major/RoadMapSection';
 import {
     MAJOR_ELECTIVES,
     UNI_ELECTIVES,
 } from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.constants';
+import CourseByYearSection from "@/features/major/sections/CourseByYearSection/CourseByYearSection/CourseByYearSection";
+import Hero from "@/features/major/sections/Hero/Hero/index";
+import type { Course, Major, Section } from "@/shared/types/index";
 
 const REMEDIAL_SECTION_ID = -6;
 

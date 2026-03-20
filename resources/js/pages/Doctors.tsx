@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
-import PageHeader from '@/components/PageHeader';
-import SectionCard from '@/components/Doctors/SectionCard';
-import { Doctor } from '@/types/doctors';
+import SectionCard from "@/features/doctors/components/SectionCard";
+import type { Doctor } from "@/features/doctors/types/doctors";
+import PageHeader from "@/shared/ui/PageHeader";
 
 interface DoctorsProps {
     doctorsBySection: Record<string, Doctor[]>;

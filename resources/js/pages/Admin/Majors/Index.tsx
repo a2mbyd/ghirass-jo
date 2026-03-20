@@ -1,12 +1,12 @@
-import { Major } from '@/types';
 import { router } from '@inertiajs/react';
 import { GraduationCap } from 'lucide-react';
 import { useState } from 'react';
-import DeleteItemAssertionModal from '@/components/ui/Admin/DeleteItemAssertionModal';
 import AdminMajorController from '@/actions/App/Http/Controllers/AdminMajorController';
 import MajorsFilters from '@/components/Admin/Majors/MajorsFilters';
 import MajorsTable from '@/components/Admin/Majors/MajorsTable';
-import IndexPageHeader from '@/components/ui/Admin/CreateAndEditForm/IndexPageHeader';
+import type { Major } from "@/shared/types/index";
+import DeleteItemAssertionModal from "@/shared/ui/admin/DeleteItemAssertionModal";
+import IndexPageHeader from "@/shared/ui/admin/form/IndexPageHeader";
 
 const Index = ({ majors }: { majors: Major[] }) => {
     const [search, setSearch] = useState('');

@@ -1,6 +1,6 @@
-import { Course } from '@/types/course';
-import { Clock, FlaskConical, GitMerge } from 'lucide-react';
 import { Link } from '@inertiajs/react';
+import { Clock, FlaskConical, GitMerge } from 'lucide-react';
+import type { Course } from "@/features/courses/types/course";
 import type { YearConfig } from './CourseByYearSection.types';
 
 interface CourseCardProps {

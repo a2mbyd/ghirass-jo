@@ -1,4 +1,4 @@
-import useTheme from '@/hooks/useTheme';
+import useTheme from "@/shared/hooks/useTheme";
 
 const MainVisual = () => {
     const { darkMode } = useTheme();

@@ -1,5 +1,5 @@
-import { SelectOption } from '@/components/ui/Admin/CreateAndEditForm/Inputs/SelectInput';
-import { Section } from '@/types';
+import type { Section } from "@/shared/types/index";
+import type { SelectOption } from "@/shared/ui/admin/inputs/SelectInput";
 import {
     COURSE_MAJOR_TYPES,
     COURSE_TYPES,

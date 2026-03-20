@@ -1,6 +1,6 @@
-import React from 'react';
-import Badge from '../ui/Badge';
 import { BookOpen, FlaskConical, Star, Stars } from 'lucide-react';
+import React from 'react';
+import Badge from '@/shared/ui/Badge';
 
 interface CourseHeroProps {
     course_code: string;

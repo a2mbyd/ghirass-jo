@@ -1,9 +1,9 @@
-import { slideUp } from '@/motion/animations';
-import { BookMarked } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Course, MajorWithCourses } from '@/types/course';
-import StatsCard from './CoursesHero.StatsCard';
+import { BookMarked } from 'lucide-react';
+import type { Course} from "@/features/courses/types/course";
+import { slideUp } from "@/shared/motion/animations";
 import { getStats } from './CoursesHero.config';
+import StatsCard from './CoursesHero.StatsCard';
 
 interface CoursesHeroProps {
     totalCourses: number;

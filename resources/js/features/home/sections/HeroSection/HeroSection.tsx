@@ -1,4 +1,4 @@
-import type { Major } from '@/types';
+import type { Major } from "@/shared/types/index";
 import MainVisual from './MainVisual';
 import TextColumn from './TextColumn/TextColumn';
 

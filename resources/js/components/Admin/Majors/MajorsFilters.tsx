@@ -1,6 +1,6 @@
-import { Major } from '@/types/major';
 import { Search, X } from 'lucide-react';
 import React from 'react';
+import type { Major } from "@/features/majors/types/major";
 
 interface MajorsFiltersProps {
     search: string;

@@ -1,6 +1,6 @@
-import { generateId } from '@/lib/utils';
-import React, { useState } from 'react';
-import { CourseEntry } from '@/types';
+import { useState } from 'react';
+import { generateId } from "@/shared/lib/utils";
+import type { CourseEntry } from "@/shared/types/index";
 
 const MAX_CREDITS = 300;
 const MAX_GPA = 4.2;

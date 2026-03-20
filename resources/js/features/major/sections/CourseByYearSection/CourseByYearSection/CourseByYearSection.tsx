@@ -1,6 +1,6 @@
-import { Course } from '@/types/course';
-import { getByYear, isExcluded } from './CourseByYearSection.helpers';
+import type { Course } from "@/features/courses/types/course";
 import CourseByYearSectionHeader from './CourseByYearSection.header';
+import { getByYear, isExcluded } from './CourseByYearSection.helpers';
 import CourseByYearSectionYearBlock from './CourseByYearSection.yearBlock';
 
 interface CourseByYearSectionProps {

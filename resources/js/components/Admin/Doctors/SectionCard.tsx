@@ -1,7 +1,7 @@
-import DoctorCard from '@/components/Admin/Doctors/DoctorCard';
-import type { SectionWithDoctors } from '@/types/admin/doctor';
 import { Stethoscope, User } from 'lucide-react';
 import React from 'react';
+import DoctorCard from '@/components/Admin/Doctors/DoctorCard';
+import type { SectionWithDoctors } from "@/features/admin/doctors/types/doctor";
 
 interface Props {
     section: SectionWithDoctors;

@@ -1,6 +1,6 @@
-import { Section } from '@/types';
+import type { Section } from "@/shared/types/index";
 import { PALETTE } from '../GraphSection.colors';
-import { ColorScheme } from '../GraphSection.types';
+import type { ColorScheme } from '../GraphSection.types';
 
 interface SectionOptionCardProps {
     section: Section;

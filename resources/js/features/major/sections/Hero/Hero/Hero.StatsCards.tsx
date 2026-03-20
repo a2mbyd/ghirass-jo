@@ -1,8 +1,8 @@
-import { slideUp } from '@/motion';
-import { Course } from '@/types';
-import { Section } from '@/types/section';
 import { motion } from 'framer-motion';
 import { BookOpen, Clock, Layers } from 'lucide-react';
+import type { Section } from "@/features/doctors/types/section";
+import { slideUp } from "@/shared/motion/index";
+import type { Course } from "@/shared/types/index";
 
 interface StatsCardsProps {
     sections: Section[];

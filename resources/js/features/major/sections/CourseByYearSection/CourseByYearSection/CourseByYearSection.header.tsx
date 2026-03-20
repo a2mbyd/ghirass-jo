@@ -1,7 +1,7 @@
-import { slideUp } from '@/motion/animations';
-import { Course } from '@/types/course';
 import { motion } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
+import type { Course } from "@/features/courses/types/course";
+import { slideUp } from "@/shared/motion/animations";
 
 interface CourseByYearSectionHeaderProps {
     filtered: Course[];

@@ -1,9 +1,9 @@
+import { usePage } from '@inertiajs/react';
+import { Users } from 'lucide-react';
 import React from 'react';
+import { index as usersIndex } from '@/routes/admin/users';
 import { NAV_ITEMS } from './Sidebar.config';
 import NavItem from './Sidebar.NavItem';
-import { Users } from 'lucide-react';
-import { index as usersIndex } from '@/routes/admin/users';
-import { usePage } from '@inertiajs/react';
 
 interface SidebarMainProps {
     collapsed: boolean;

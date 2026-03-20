@@ -1,5 +1,6 @@
-import { LucideIcon, Plus } from 'lucide-react'
 import { Link } from '@inertiajs/react'
+import type { LucideIcon} from 'lucide-react';
+import { Plus } from 'lucide-react'
 import React from 'react'
 
 interface IndexPageHeaderProps {

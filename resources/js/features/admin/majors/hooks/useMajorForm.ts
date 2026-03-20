@@ -1,8 +1,8 @@
-import { AdminCourse, MajorWithRelations } from '@/types/admin/major';
-import AdminMajorController from '@/actions/App/Http/Controllers/AdminMajorController';
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
-import { getImageUrl } from '@/lib/utils';
+import AdminMajorController from '@/actions/App/Http/Controllers/AdminMajorController';
+import type { MajorWithRelations } from "@/features/admin/majors/types/major";
+import { getImageUrl } from "@/shared/lib/utils";
 
 interface FormData {
     name: string;

@@ -1,8 +1,8 @@
-import { index } from '@/actions/App/Http/Controllers/AdminUserController';
-import UsersForm from '@/components/Admin/Users/UsersForm/UsersForm';
-import FormHeader from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormHeader';
 import { Users } from 'lucide-react';
 import React from 'react';
+import { index } from '@/actions/App/Http/Controllers/AdminUserController';
+import UsersForm from '@/components/Admin/Users/UsersForm/UsersForm';
+import FormHeader from "@/shared/ui/admin/form/FormHeader";
 
 interface AdminUser {
     id: number;

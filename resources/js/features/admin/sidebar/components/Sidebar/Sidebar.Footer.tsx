@@ -1,8 +1,8 @@
-import { logout } from '@/routes';
 import { router } from '@inertiajs/react';
-import DarkModeButton from '../../ui/DarkModeButton';
+import { logout } from '@/routes';
+import type { AdminUser } from "@/shared/types/index";
+import DarkModeButton from '@/shared/ui/DarkModeButton';
 import SidebarLogoutTooltip from './Sidebar.LogoutTooltip';
-import { AdminUser } from '@/types';
 
 interface SidebarFooterProps {
     collapsed: boolean;

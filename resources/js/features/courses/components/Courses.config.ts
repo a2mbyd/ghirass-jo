@@ -1,4 +1,4 @@
-import { TypeColors } from './Courses.types';
+import type { TypeColors } from '../types/courses.types';
 
 export const TYPE_COLORS: Record<string, TypeColors> = {
     // inherent course types (global courses)

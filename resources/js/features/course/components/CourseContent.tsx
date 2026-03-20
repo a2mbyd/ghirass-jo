@@ -1,10 +1,10 @@
 import React from 'react';
-import TabContent from './Course.TabContent';
-import { TabKey } from './Course.types';
-import { CourseFile } from '@/types/course';
-import { CourseVideo } from '@/types/course';
-import { PastYearQuestion } from '@/types/course';
-import { TAB_CONFIG } from './Course.config';
+import type { CourseFile , CourseVideo , PastYearQuestion } from "@/features/courses/types/course";
+import { TAB_CONFIG } from '../course.config';
+import TabContent from '../sections/TabContent';
+import type { TabKey } from '../types';
+
+
 
 interface ContentProps {
     activeTab: TabKey;

@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import SelectInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/SelectInput';
+import SelectInput from "@/shared/ui/admin/inputs/SelectInput";
 import { YEARS, SEMESTERS } from '../CourseForm.constants';
 import type { NewMajorForm } from '../CourseForm.types';
 

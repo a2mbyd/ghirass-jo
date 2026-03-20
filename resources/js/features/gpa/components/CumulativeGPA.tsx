@@ -1,5 +1,5 @@
-import IncrementalInput from '../ui/GPA/IncrementalInput';
-import DirectedNumberInput from '../ui/GPA/DirectedNumberInput';
+import DirectedNumberInput from '@/shared/ui/gpa/DirectedNumberInput';
+import IncrementalInput from '@/shared/ui/gpa/IncrementalInput';
 
 const MAX_CREDITS = 300;
 const MAX_GPA = 4.2;

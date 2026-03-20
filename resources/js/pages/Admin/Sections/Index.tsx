@@ -1,13 +1,13 @@
-import { Section } from '@/types';
 import { router } from '@inertiajs/react';
 import { Layers } from 'lucide-react';
 import React, { useState } from 'react';
-import DeleteItemAssertionModal from '@/components/ui/Admin/DeleteItemAssertionModal';
 import AdminSectionController from '@/actions/App/Http/Controllers/AdminSectionController';
-import IndexPageHeader from '@/components/ui/Admin/CreateAndEditForm/IndexPageHeader';
-import SectionFilters from '@/components/Admin/Sections/SectionFilters';
-import EmptyStateSearch from '@/components/Admin/Sections/EmptyStateSearch';
-import SectionCard from '@/components/Admin/Sections/SectionCard';
+import EmptyStateSearch from "@/features/admin/sections/components/Sections/EmptyStateSearch";
+import SectionCard from "@/features/admin/sections/components/Sections/SectionCard";
+import SectionFilters from "@/features/admin/sections/components/Sections/SectionFilters";
+import type { Section } from "@/shared/types/index";
+import DeleteItemAssertionModal from "@/shared/ui/admin/DeleteItemAssertionModal";
+import IndexPageHeader from "@/shared/ui/admin/form/IndexPageHeader";
 
 const Index = ({ sections }: { sections: Section[] }) => {
     const [search, setSearch] = useState('');

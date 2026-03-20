@@ -1,5 +1,5 @@
-import { useThemeStore } from '@/store/theme.store';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { useThemeStore } from "@/shared/store/theme.store";
 
 const useTheme = () => {
     const { darkMode, toggleDarkMode, setDarkMode } = useThemeStore();
@@ -9,7 +9,7 @@ const useTheme = () => {
             const themeStoreData = JSON.parse(themeStore);
             setDarkMode(themeStoreData.darkMode);
         }
-    }, []);
+    }, [setDarkMode]);
     return { darkMode, toggleDarkMode };
 };
 

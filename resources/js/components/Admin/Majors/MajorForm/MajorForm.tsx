@@ -1,14 +1,14 @@
-import { AdminCourse, MajorWithRelations } from '@/types/admin/major';
-import { Section } from '@/types/section';
 import { BookMarked, GraduationCap, ImageIcon } from 'lucide-react';
-import MajorCoursesDnD from '@/components/ui/Admin/CreateAndEditForm/MajorCoursesDnD';
-import FormCard from '@/components/ui/Admin/CreateAndEditForm/FormCard/FormCard';
-import TextInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/TextInput';
-import TextAreaInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/TextAreaInput';
-import FileInput from '@/components/ui/Admin/CreateAndEditForm/Inputs/FileInput';
-import Actions from '@/components/ui/Admin/CreateAndEditForm/Actions';
-import { useMajorForm } from '@/hooks/Admin/useMajorForm';
+import { useMajorForm } from "@/features/admin/majors/hooks/useMajorForm";
+import type { AdminCourse, MajorWithRelations } from "@/features/admin/majors/types/major";
+import type { Section } from "@/features/doctors/types/section";
 import { index as majorsIndex } from '@/routes/admin/majors';
+import Actions from "@/shared/ui/admin/form/Actions";
+import FormCard from "@/shared/ui/admin/form/FormCard";
+import MajorCoursesDnD from "@/shared/ui/admin/form/MajorCoursesDnD";
+import FileInput from "@/shared/ui/admin/inputs/FileInput";
+import TextAreaInput from "@/shared/ui/admin/inputs/TextAreaInput";
+import TextInput from "@/shared/ui/admin/inputs/TextInput";
 
 interface MajorFormProps {
     mode: 'create' | 'edit';

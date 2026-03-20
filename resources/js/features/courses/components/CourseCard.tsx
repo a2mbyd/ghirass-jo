@@ -1,6 +1,6 @@
-import { Course } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Clock, FlaskConical, GitMerge, Link2 } from 'lucide-react';
+import { Clock, FlaskConical, GitMerge } from 'lucide-react';
+import type { Course } from "@/shared/types/index";
 import { TYPE_COLORS, FALLBACK_COLORS } from './Courses.config';
 
 interface CourseCardProps {

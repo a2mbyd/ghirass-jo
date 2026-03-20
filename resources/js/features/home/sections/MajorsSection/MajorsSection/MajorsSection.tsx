@@ -1,4 +1,4 @@
-import { Major } from '@/types';
+import type { Major } from "@/shared/types/index";
 import MajorCard from './MajorCard';
 
 interface MajorsSectionProps {

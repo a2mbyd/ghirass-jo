@@ -1,8 +1,8 @@
-import { type ReactNode, useRef, useEffect } from 'react';
 import { router } from '@inertiajs/react';
+import { type ReactNode, useRef, useEffect } from 'react';
 import { dashboard } from '@/routes/admin';
-import Topbar from '@/components/Topbar/Topbar';
-import Footer from '@/components/Footer/Footer';
+import Footer from "@/shared/ui/footer/Footer/Footer";
+import Topbar from "@/shared/ui/topbar/Topbar/Topbar";
 
 const SECRET_CODE = 'admin';
 

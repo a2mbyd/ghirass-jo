@@ -1,5 +1,5 @@
 import { File } from 'lucide-react';
-import { CourseFile, PastYearQuestion } from '@/types/course';
+import type { CourseFile, PastYearQuestion } from "@/features/courses/types/course";
 
 const FileRow = ({
     item,

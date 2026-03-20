@@ -1,6 +1,5 @@
-import type { Section } from '../GraphSection.types';
-import type { ColorScheme } from '../GraphSection.types';
-import { PALETTE } from '../GraphSection.colors';
+import type { Section , ColorScheme } from '../GraphSection.types';
+
 import SectionOptionCard from './SectionOptionCard';
 
 interface GraphSectionFilterPanelProps {

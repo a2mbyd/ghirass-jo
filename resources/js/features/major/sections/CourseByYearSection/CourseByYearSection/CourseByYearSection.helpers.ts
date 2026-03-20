@@ -1,4 +1,4 @@
-import { Course } from '@/types/course';
+import type { Course } from "@/features/courses/types/course";
 
 export const isExcluded = (course: Course) =>
     course.course_type !== 'major_course' ;

@@ -1,22 +1,23 @@
 'use client';
 
+import type {
+    BackgroundVariant} from 'reactflow';
 import ReactFlow, {
     Background,
-    BackgroundVariant,
     Controls,
     Panel,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import { GLOBAL_STYLES } from './GraphSection.styles';
+import type { Course } from "@/features/courses/types/course";
+import useInteractiveGraph from "@/shared/hooks/useInteractiveGraph";
+import { useThemeStore } from "@/shared/store/theme.store";
+import type { Section } from "@/shared/types/index";
 import { CourseNode } from './CourseNode';
-import { GraphSectionFullscreenButton } from './GraphSection.FullscreenButton';
 import { GraphSectionFilterPanel } from './FilterPanel';
+import { GraphSectionFullscreenButton } from './GraphSection.FullscreenButton';
+import { GLOBAL_STYLES } from './GraphSection.styles';
 import { GraphSectionStatsPanel } from './StatsPanel';
-import useInteractiveGraph from '@/hooks/useInteractiveGraph';
-import { Course } from '@/types/course';
-import { Section } from '@/types';
-import { useThemeStore } from '@/store/theme.store';
 
 const NODE_TYPES = { courseNode: CourseNode };
 

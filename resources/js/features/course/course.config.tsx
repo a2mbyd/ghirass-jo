@@ -1,5 +1,5 @@
 import { File, HelpCircle, Video } from 'lucide-react';
-import { TabConfig } from './Course.types';
+import type { TabConfig } from './types';
 
 export const TAB_CONFIG: TabConfig[] = [
     {

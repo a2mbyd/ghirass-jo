@@ -1,6 +1,6 @@
-import type { Course } from '@/types/course';
-import type { Major } from '@/types/major';
-import type { Section } from '@/types/section';
+import type { Course } from "@/features/courses/types/course";
+import type { Section } from "@/features/doctors/types/section";
+import type { Major } from "@/features/majors/types/major";
 
 export type { Course, Major, Section };
 

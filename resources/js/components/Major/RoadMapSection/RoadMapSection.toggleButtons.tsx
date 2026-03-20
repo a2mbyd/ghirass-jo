@@ -1,5 +1,5 @@
-import { ImageIcon, Network } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ImageIcon, Network } from 'lucide-react';
 import React from 'react';
 
 interface RoadMapSectionToggleButtonsProps {

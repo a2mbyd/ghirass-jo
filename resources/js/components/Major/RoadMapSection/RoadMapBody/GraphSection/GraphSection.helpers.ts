@@ -1,9 +1,7 @@
 import { MarkerType, type Node, type Edge } from 'reactflow';
-import type { Course } from './GraphSection.types';
-import type { ColorScheme } from './GraphSection.types';
-import type { CourseNodeData } from './GraphSection.types';
 import { PALETTE } from './GraphSection.colors';
 import { NODE_W, NODE_H, H_GAP, V_GAP } from './GraphSection.constants';
+import type { Course , ColorScheme , CourseNodeData } from './GraphSection.types';
 
 /**
  * @param courses        - All courses (all groups already merged with virtual sectionIds)

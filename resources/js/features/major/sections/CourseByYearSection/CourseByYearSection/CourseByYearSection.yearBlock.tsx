@@ -1,11 +1,8 @@
-import React from 'react';
-import { getYearConfig } from './CourseByYearSection.config';
 import { motion } from 'framer-motion';
-import { Course } from '@/types/course';
-import { slideUp } from '@/motion/animations';
-import { BookOpen, Clock } from 'lucide-react';
-import CourseCard from './CourseByYearSection.CourseCard';
-import { SEMESTER_LABELS } from './CourseByYearSection.config';
+import React from 'react';
+import type { Course } from "@/features/courses/types/course";
+import { slideUp } from "@/shared/motion/animations";
+import { getYearConfig } from './CourseByYearSection.config';
 import SemesterSection from './CourseByYearSection.semesterSection';
 import CourseByYearSectionYearBlockHeader from './CourseByYearSection.yearBlock.header';
 

@@ -1,5 +1,5 @@
-import { Link } from '@inertiajs/react';
-import { usePage } from '@inertiajs/react';
+import { Link , usePage } from '@inertiajs/react';
+
 import React from 'react';
 
 interface NavItemProps {

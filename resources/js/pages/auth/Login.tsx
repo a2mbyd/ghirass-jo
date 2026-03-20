@@ -1,7 +1,7 @@
-import AuthenticatedSessionController from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 import { useForm } from '@inertiajs/react';
 import { GraduationCap, Lock, Mail } from 'lucide-react';
 import React from 'react';
+import AuthenticatedSessionController from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 
 interface LoginProps {
     status?: string;

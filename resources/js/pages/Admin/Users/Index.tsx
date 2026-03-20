@@ -1,9 +1,9 @@
-import AdminUserController from '@/actions/App/Http/Controllers/AdminUserController';
-import IndexPageHeader from '@/components/ui/Admin/CreateAndEditForm/IndexPageHeader';
-import DeleteItemAssertionModal from '@/components/ui/Admin/DeleteItemAssertionModal';
 import { Link, router } from '@inertiajs/react';
 import { Pencil, Search, Trash2, Users } from 'lucide-react';
 import React, { useState } from 'react';
+import AdminUserController from '@/actions/App/Http/Controllers/AdminUserController';
+import DeleteItemAssertionModal from "@/shared/ui/admin/DeleteItemAssertionModal";
+import IndexPageHeader from "@/shared/ui/admin/form/IndexPageHeader";
 
 interface AdminUser {
     id: number;

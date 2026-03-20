@@ -1,10 +1,9 @@
+import { useForm } from '@inertiajs/react';
+import { useMemo, useState } from 'react';
 import {
     store,
     update,
 } from '@/actions/App/Http/Controllers/AdminCourseController';
-import { AdminCourseWithRelations } from '@/types/admin/course';
-import { useForm } from '@inertiajs/react';
-import { useMemo, useState } from 'react';
 import type {
     CourseFormData,
     CourseFormMode,
@@ -13,6 +12,7 @@ import type {
     FormPYQ,
     FormResource,
 } from '@/components/Admin/Courses/CourseForm/CourseForm.types';
+import type { AdminCourseWithRelations } from "@/features/admin/courses/types/course";
 
 interface UseCourseFormParams {
     mode: CourseFormMode;

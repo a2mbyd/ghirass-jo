@@ -1,6 +1,6 @@
 // components/ThemeProvider.tsx
 import { useEffect, type ReactNode } from 'react';
-import { useThemeStore } from '@/store/theme.store';
+import { useThemeStore } from "@/shared/store/theme.store";
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {
     const { darkMode } = useThemeStore();

@@ -1,5 +1,5 @@
-import type { Major } from '@/types/major';
-import type { Section } from '@/types/section';
+import type { Section } from "@/features/doctors/types/section";
+import type { Major } from "@/features/majors/types/major";
 
 export interface AdminCourse {
     id: number;

@@ -1,10 +1,10 @@
 import { Link, usePage } from '@inertiajs/react';
 import { GraduationCap, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
+import useTheme from "@/shared/hooks/useTheme";
+import DarkModeButton from '@/shared/ui/DarkModeButton';
 import { navItems } from './navItems';
-import DarkModeButton from '../ui/DarkModeButton';
-import useTheme from '@/hooks/useTheme';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const Topbar = () => {
     const { url } = usePage();

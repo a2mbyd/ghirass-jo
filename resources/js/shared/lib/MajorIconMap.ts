@@ -1,3 +1,5 @@
+import type {
+    LucideIcon} from 'lucide-react';
 import {
     BarChart3,
     Bot,
@@ -6,7 +8,6 @@ import {
     Cpu,
     Gamepad2,
     Laptop,
-    LucideIcon,
     Network,
     RadioTower,
     ServerCog,

@@ -1,4 +1,4 @@
-import type { Major } from './major';
+import type { Major } from '@/features/majors/types/major';
 
 export interface Section {
     id: number;

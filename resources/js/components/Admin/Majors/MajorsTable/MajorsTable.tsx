@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import MajorsRow from './MajorsRow';
+import React from 'react';
+import type { Major } from "@/features/majors/types/major";
 import EmptyResults from './EmptyResults';
-import { Major } from '@/types/major';
 import MajorsHeaderRow from './MajorsHeaderRow';
+import MajorsRow from './MajorsRow';
 
 interface MajorsTableProps {
     filteredMajors: Major[];

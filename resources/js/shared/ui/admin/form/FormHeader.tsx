@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react'
-import { ArrowRight, GraduationCap, LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { ArrowRight, GraduationCap } from 'lucide-react';
 import React from 'react'
 
 interface FormHeaderProps {

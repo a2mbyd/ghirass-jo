@@ -1,10 +1,10 @@
-import StatsCard from '@/components/Admin/Dashboard/Dashboard.StatsCard';
 import { TrendingUp } from 'lucide-react';
 import {
     STATS_CONFIG,
     QUICK_LINKS_CONFIG,
-} from '@/components/Admin/Dashboard/Dashboard.config';
-import QuickLinkCard from '@/components/Admin/Dashboard/Dashboard.QuickLinkCard';
+} from "@/features/admin/dashboard/components/Dashboard/Dashboard.config";
+import QuickLinkCard from "@/features/admin/dashboard/components/Dashboard/Dashboard.QuickLinkCard";
+import StatsCard from "@/features/admin/dashboard/components/Dashboard/Dashboard.StatsCard";
 
 interface DashboardProps {
     stats: {

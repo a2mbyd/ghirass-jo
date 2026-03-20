@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
+import { GraduationCap , ChevronLeft, ChevronRight } from 'lucide-react';
+
 import React from 'react'
-import { GraduationCap } from 'lucide-react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface SidebarHeaderProps {
     collapsed: boolean;

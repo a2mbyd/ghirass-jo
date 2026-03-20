@@ -1,11 +1,11 @@
-import { Major } from '@/types';
 import { Link } from '@inertiajs/react';
 import { ChevronLeft } from 'lucide-react';
-import { getMajorAccentColor } from '@/lib/MajorAccentColorMap';
-import { getMajorIcon } from '@/lib/MajorIconMap';
+import { createElement } from 'react';
+import { getMajorAccentColor } from "@/shared/lib/MajorAccentColorMap";
+import { getMajorIcon } from "@/shared/lib/MajorIconMap";
+import type { Major } from "@/shared/types/index";
 
 const MajorCard = ({ major }: { major: Major }) => {
-    const Icon = getMajorIcon(major.slug);
     const accentColor = getMajorAccentColor(major.slug);
 
     return (
@@ -17,7 +17,7 @@ const MajorCard = ({ major }: { major: Major }) => {
             <div
                 className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r ${accentColor} text-white shadow-[0_0_18px_rgba(25,111,194,0.45)]`}
             >
-                <Icon className="h-8 w-8" />
+                {createElement(getMajorIcon(major.slug), { className: 'h-8 w-8' })}
             </div>
             <h3 className="mb-3 text-center text-base font-extrabold text-text md:text-lg">
                 {major.name}

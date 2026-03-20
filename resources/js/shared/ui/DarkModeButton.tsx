@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
 import { Moon, Sun } from 'lucide-react'
+import React, { useEffect } from 'react'
 
 interface DarkModeButtonProps {
     toggleDarkMode: () => void

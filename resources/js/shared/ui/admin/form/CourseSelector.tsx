@@ -1,8 +1,9 @@
-import DualPanelDnD, { DnDGroup } from '@/components/ui/DualPanelDnD';
-import { AdminCourseBasic } from '@/types/admin/course';
-import { Section } from '@/types/section';
 import { BookMarked, Plus, X } from 'lucide-react';
 import React from 'react';
+import type { AdminCourseBasic } from "@/features/admin/courses/types/course";
+import type { Section } from "@/features/doctors/types/section";
+import type { DnDGroup } from "@/shared/ui/DualPanelDnD";
+import DualPanelDnD from "@/shared/ui/DualPanelDnD";
 
 interface CourseSelectorProps {
     allCourses: AdminCourseBasic[];
