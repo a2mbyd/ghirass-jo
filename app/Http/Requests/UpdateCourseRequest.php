@@ -35,7 +35,7 @@ class UpdateCourseRequest extends FormRequest
             'majors.*.id' => ['required', 'exists:majors,id'],
             'majors.*.year' => ['required', 'integer', 'min:1', 'max:6'],
             'majors.*.semester' => ['required', 'integer', 'in:1,2'],
-            'majors.*.course_major_type' => ['required', 'in:elective_university,elective_major,required_university,required_major,required_college'],
+            'majors.*.course_major_type' => ['required', 'in:uni_elective,uni_required,college_required,remedial_course'],
             'new_files' => ['array'],
             'new_files.*.title' => ['required', 'string', 'max:255'],
             'new_files.*.url' => ['required', 'string', 'max:500'],

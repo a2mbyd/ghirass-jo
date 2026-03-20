@@ -26,9 +26,7 @@ class AdminMajorController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Majors/Create', [
-            'allCourses' => $this->courseService->coursesForForm()->filter(function ($course) {
-                return $course->course_type !== 'uni_elective' && $course->course_type !== 'uni_required';
-            }),
+            'allCourses' => $this->courseService->coursesForForm(),
             'allSections' => $this->courseService->sectionsForForm(),
         ]);
     }
@@ -52,9 +50,7 @@ class AdminMajorController extends Controller
 
         return Inertia::render('Admin/Majors/Edit', [
             'major' => $major,
-            'allCourses' => $this->courseService->coursesForForm()->filter(function ($course) {
-                return $course->course_type !== 'uni_elective' && $course->course_type !== 'uni_required';
-            }),
+            'allCourses' => $this->courseService->coursesForForm(),
             'allSections' => $this->courseService->sectionsForForm(),
         ]);
     }

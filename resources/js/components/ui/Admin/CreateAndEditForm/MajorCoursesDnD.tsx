@@ -27,7 +27,6 @@ const MajorCoursesDnD = ({
         key: s.id,
         label: s.name,
     }));
-
     return (
         <DualPanelDnD
             items={allCourses}

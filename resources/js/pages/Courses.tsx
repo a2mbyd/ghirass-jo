@@ -2,7 +2,7 @@ import MajorPanel from '@/components/Courses/MajorPanel/MajorPanel';
 import CollapsibleSection from '@/components/Courses/CollapsibleSection';
 import { Course, MajorWithCourses } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BookOpen, Building2, GraduationCap, Star } from 'lucide-react';
+import { BookOpen, Brain, Building2, GraduationCap, Star } from 'lucide-react';
 import useCourses from '@/hooks/useCourses';
 import CoursesHero from '@/components/Courses/CoursesHero';
 import MajorCard from '@/components/Courses/MajorCard';
@@ -13,6 +13,7 @@ interface CoursesProps {
     uniRequired: Course[];
     uniElective: Course[];
     collegeRequired: Course[];
+    remedialCourses: Course[];
 }
 
 export default function Courses({
@@ -20,6 +21,7 @@ export default function Courses({
     uniRequired,
     uniElective,
     collegeRequired,
+    remedialCourses,
 }: CoursesProps) {
     const {
         selectedMajorSlug,
@@ -33,7 +35,7 @@ export default function Courses({
         uniRequired.length > 0 ||
         uniElective.length > 0 ||
         collegeRequired.length > 0;
-
+    
     return (
         <div dir="rtl" className="flex flex-col gap-8">
             {/* ── Hero ── */}
@@ -78,6 +80,15 @@ export default function Courses({
                             icon={Building2}
                             courses={collegeRequired}
                             sectionType="college_required"
+                        />
+                    )}
+
+                    {remedialCourses.length > 0 && (
+                        <CollapsibleSection
+                            title="متطلبات استدراكية"
+                            icon={Brain}
+                            courses={remedialCourses}
+                            sectionType="remedial_course"
                         />
                     )}
                 </section>

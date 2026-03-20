@@ -21,8 +21,9 @@ const RoadMapSection = ({
 }: RoadMapSectionProps) => {
     const [roadmapView, setRoadmapView] = useState<RoadmapView>('image');
 
-    // Virtual section IDs must match useInteractiveGraph (college→-3, uni_required→-1, major_elective→-4, uni_elective→-2)
+    // Virtual section IDs must match useInteractiveGraph (college→-3, uni_required→-1, major_elective→-4, uni_elective→-2, remedial→-6)
     const extraSections: Section[] = [
+        { id: -6, name: 'متطلبات استدراكية' },
         { id: -3, name: 'متطلبات الكلية' },
         { id: -1, name: 'متطلبات الجامعة الإلزامية' },
         { id: -4, name: 'اختياريات التخصص' },

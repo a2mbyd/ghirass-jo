@@ -24,7 +24,7 @@ class CourseService
     {
         return [
             'sections' => $this->sectionsForForm(),
-            'allCourses' => Course::orderBy('name')->get(['id', 'name', 'course_code', 'course_type']),
+            'allCourses' => Course::where('course_type', '!=', 'elective_major')->orderBy('name')->get(['id', 'name', 'course_code', 'course_type', 'section_id']),
             'allMajors' => $this->majorsForForm(),
         ];
     }
@@ -34,8 +34,9 @@ class CourseService
         return [
             'sections' => $this->sectionsForForm(),
             'allCourses' => Course::where('id', '!=', $course->id)
+                ->where('course_type', '!=', 'elective_major')
                 ->orderBy('name')
-                ->get(['id', 'name', 'course_code', 'course_type']),
+                ->get(['id', 'name', 'course_code', 'course_type', 'section_id']),
             'allMajors' => $this->majorsForForm(),
         ];
     }
@@ -75,7 +76,6 @@ class CourseService
 
         $course->prerequisites()->sync($data['prerequisites'] ?? []);
         $course->majors()->sync($this->buildMajorSync($data['majors'] ?? []));
-
         foreach ($data['files'] ?? [] as $file) {
             $course->files()->create($file);
         }
@@ -185,6 +185,13 @@ class CourseService
             ->get();
     }
 
+    public function getRemedialCourses(): Collection
+    {
+        return Course::where('course_type', 'remedial_course')
+            ->with(['prerequisites'])
+            ->get();
+    }
+
     public function getCourseByCode(string $code): ?Course
     {
         return Course::where('course_code', $code)
@@ -195,9 +202,8 @@ class CourseService
     public function coursesForForm(): Collection
     {
         return Course::orderBy('name')
-            ->where('course_type', '!=', 'uni_elective')
-            ->where('course_type', '!=', 'uni_required')
-            ->get(['id', 'name', 'course_code', 'credit_hours', 'is_lab', 'section_id']);
+            ->whereIn('course_type', ['major_course', 'college_required'])
+            ->get(['id', 'name', 'course_code', 'credit_hours', 'is_lab', 'section_id', 'course_type']);
     }
 
     public function sectionsForForm(): Collection

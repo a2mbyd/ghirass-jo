@@ -61,23 +61,23 @@ function DualPanelDnD<T extends { id: number }>({
     error,
     className,
 }: DualPanelDnDProps<T>) {
-    const [search, setSearch] = useState('');
+    const [availableSearch, setAvailableSearch] = useState('');
+    const [assignedSearch, setAssignedSearch] = useState('');
     const [draggedId, setDraggedId] = useState<number | null>(null);
     const [dragOver, setDragOver] = useState<'available' | 'assigned' | null>(
         null,
     );
 
     const assignedSet = new Set(assignedIds);
-    const q = search.toLowerCase();
 
-    const matchesSearch = (item: T) =>
-        !q || getSearchText(item).toLowerCase().includes(q);
+    const matchesQuery = (item: T, q: string) =>
+        !q || getSearchText(item).toLowerCase().includes(q.toLowerCase());
 
     const available = items.filter(
-        (i) => !assignedSet.has(i.id) && matchesSearch(i),
+        (i) => !assignedSet.has(i.id) && matchesQuery(i, availableSearch),
     );
     const assigned = items.filter(
-        (i) => assignedSet.has(i.id) && matchesSearch(i),
+        (i) => assignedSet.has(i.id) && matchesQuery(i, assignedSearch),
     );
 
     const useGrouping = Boolean(getGroupKey && groups);
@@ -192,34 +192,40 @@ function DualPanelDnD<T extends { id: number }>({
                 : 'border-border bg-surface-alt'
         }`;
 
+    const renderSearchBar = (
+        value: string,
+        onChange: (v: string) => void,
+    ) => (
+        <div className="relative">
+            <Search className="pointer-events-none absolute top-1/2 right-3 h-3.5 w-3.5 -translate-y-1/2 text-text-subtle" />
+            <input
+                type="text"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder={searchPlaceholder}
+                className="w-full rounded-xl border border-border bg-background py-2 pr-9 pl-8 text-sm text-text placeholder-text-subtle outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
+            />
+            {value && (
+                <button
+                    type="button"
+                    onClick={() => onChange('')}
+                    className="absolute top-1/2 left-2 -translate-y-1/2 text-text-subtle hover:text-text"
+                >
+                    <X className="h-3.5 w-3.5" />
+                </button>
+            )}
+        </div>
+    );
+
     return (
         <div className={`space-y-3 ${className ?? ''}`}>
-            <div className="relative">
-                <Search className="pointer-events-none absolute top-1/2 right-3 h-3.5 w-3.5 -translate-y-1/2 text-text-subtle" />
-                <input
-                    type="text"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder={searchPlaceholder}
-                    className="w-full rounded-xl border border-border bg-background py-2 pr-9 pl-8 text-sm text-text placeholder-text-subtle outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
-                />
-                {search && (
-                    <button
-                        type="button"
-                        onClick={() => setSearch('')}
-                        className="absolute top-1/2 left-2 -translate-y-1/2 text-text-subtle hover:text-text"
-                    >
-                        <X className="h-3.5 w-3.5" />
-                    </button>
-                )}
-            </div>
-
             <div className="grid min-h-[400px] grid-cols-1 auto-rows-fr gap-3 md:grid-cols-2">
                 {/* Available */}
                 <div className="flex min-h-0 flex-col gap-1.5">
                     <p className="text-xs font-semibold tracking-wider text-text-subtle uppercase">
                         {availableLabel} ({available.length})
                     </p>
+                    {renderSearchBar(availableSearch, setAvailableSearch)}
                     <div
                         onDragOver={(e) => {
                             e.preventDefault();
@@ -233,7 +239,7 @@ function DualPanelDnD<T extends { id: number }>({
                         {available.length === 0 ? (
                             <div className="flex h-full min-h-[180px] items-center justify-center">
                                 <p className="text-xs text-text-subtle">
-                                    {search
+                                    {availableSearch
                                         ? emptySearchLabel
                                         : emptyAvailableLabel}
                                 </p>
@@ -253,6 +259,7 @@ function DualPanelDnD<T extends { id: number }>({
                     <p className="text-xs font-semibold tracking-wider text-text-subtle uppercase">
                         {assignedLabel} ({assigned.length})
                     </p>
+                    {renderSearchBar(assignedSearch, setAssignedSearch)}
                     <div
                         onDragOver={(e) => {
                             e.preventDefault();
@@ -269,7 +276,7 @@ function DualPanelDnD<T extends { id: number }>({
                         {assigned.length === 0 ? (
                             <div className="flex h-full min-h-[180px] items-center justify-center">
                                 <p className="text-xs text-text-subtle">
-                                    {search
+                                    {assignedSearch
                                         ? emptySearchLabel
                                         : emptyAssignedLabel}
                                 </p>

@@ -20,7 +20,7 @@ return new class extends Migration
 
             // major_course | uni_elective | uni_required
             $table->string('course_type')
-                ->check("course_type in ('major_course', 'uni_elective', 'uni_required', 'college_required')")
+                ->check("course_type in ('major_course', 'uni_elective', 'uni_required', 'college_required', 'remedial_course')")
                 ->default('major_course');
 
             $table->string('name');

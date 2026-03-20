@@ -17,6 +17,7 @@ class CourseController extends Controller
             'uniRequired' => CourseResource::collection($courseService->getCoursesByInherentType('uni_required')),
             'uniElective' => CourseResource::collection($courseService->getCoursesByInherentType('uni_elective')),
             'collegeRequired' => CourseResource::collection($courseService->getCoursesByInherentType('college_required')),
+            'remedialCourses' => CourseResource::collection($courseService->getRemedialCourses()),
         ]);
     }
 

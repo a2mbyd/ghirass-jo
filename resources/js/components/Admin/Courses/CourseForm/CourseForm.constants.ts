@@ -1,12 +1,13 @@
 export const COURSE_TYPES = [
     { value: 'major_course', label: 'مادة تخصص' },
-    { value: 'required_college', label: 'إجباري كلية' },
-    { value: 'required_university', label: 'إجباري جامعة' },
-    { value: 'elective_university', label: 'اختياري جامعة' },
+    { value: 'college_required', label: 'إجباري كلية' },
+    { value: 'uni_required', label: 'إجباري جامعة' },
+    { value: 'uni_elective', label: 'اختياري جامعة' },
+    { value: 'remedial_course', label: 'مادة استدراكية' },
 ] as const;
 
 export const COURSE_MAJOR_TYPES = [
-    { value: 'required_major', label: 'إجباري تخصص' },
+    { value: 'required_major', label: 'متطلب تخصص' },
     { value: 'elective_major', label: 'اختياري تخصص' },
     { value: 'graduation_project', label: 'مشروع تخرج' },
 ] as const;

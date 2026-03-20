@@ -3,6 +3,7 @@ export interface AdminCourseBasic {
     name: string;
     course_code: string;
     course_type: string;
+    section_id?: number | null;
 }
 
 export interface AdminCourseMajorAssignment {

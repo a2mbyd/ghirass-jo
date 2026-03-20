@@ -1,10 +1,12 @@
-import DualPanelDnD from '@/components/ui/DualPanelDnD';
+import DualPanelDnD, { DnDGroup } from '@/components/ui/DualPanelDnD';
 import { AdminCourseBasic } from '@/types/admin/course';
+import { Section } from '@/types/section';
 import { BookMarked, Plus, X } from 'lucide-react';
 import React from 'react';
 
 interface CourseSelectorProps {
     allCourses: AdminCourseBasic[];
+    allSections?: Section[];
     assignedIds: number[];
     onAssign: (id: number) => void;
     onUnassign: (id: number) => void;
@@ -13,11 +15,18 @@ interface CourseSelectorProps {
 
 const CourseSelector = ({
     allCourses,
+    allSections,
     assignedIds,
     onAssign,
     onUnassign,
     emptyAssignedLabel = 'اسحب مادة لإضافتها',
-}: CourseSelectorProps) => (
+}: CourseSelectorProps) => {
+    const groups: DnDGroup[] | undefined = allSections?.map((s) => ({
+        key: s.id,
+        label: s.name,
+    }));
+
+    return (
     <DualPanelDnD
         items={allCourses}
         assignedIds={assignedIds}
@@ -25,6 +34,9 @@ const CourseSelector = ({
         onUnassign={onUnassign}
         getSearchText={(c) => `${c.name} ${c.course_code}`}
         searchPlaceholder="ابحث بالاسم أو رمز المادة..."
+        getGroupKey={groups ? (c) => c.section_id ?? null : undefined}
+        groups={groups}
+        ungroupedLabel="غير مصنف"
         availableLabel="المتاحة"
         assignedLabel="المُضافة"
         emptyAvailableLabel="جميع المواد مُضافة"
@@ -70,6 +82,7 @@ const CourseSelector = ({
             </div>
         )}
     />
-);
+    );
+};
 
 export default CourseSelector;

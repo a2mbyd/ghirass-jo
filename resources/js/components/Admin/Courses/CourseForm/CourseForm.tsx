@@ -191,7 +191,7 @@ export default function CourseForm({
                 </div>
             </FormCard>
             {/* Majors */}
-            {!form.data.course_type.endsWith('university') && (
+            {form.data.course_type.startsWith('major') && (
                 <MajorsFormCard
                     courseType={form.data.course_type}
                     majors={form.data.majors}
@@ -205,7 +205,7 @@ export default function CourseForm({
                 />
             )}
             {/* Prerequisites */}
-            {!form.data.course_type.endsWith('university') && (
+            {form.data.course_type.startsWith('major') && (
                 <FormCard
                     title="المتطلبات السابقة"
                     icon={<GitBranch className="h-4 w-4 text-accent-amber" />}
@@ -217,9 +217,10 @@ export default function CourseForm({
                         <CourseSelector
                             allCourses={allCourses.filter(
                                 (c) =>
-                                    c.course_type !== 'uni_elective' &&
-                                    c.course_type !== 'uni_required',
+                                    c.course_type === 'major_course' ||
+                                    c.course_type === 'college_required',
                             )}
+                            allSections={sections}
                             assignedIds={form.data.prerequisites}
                             onAssign={assignPrereq}
                             onUnassign={unassignPrereq}

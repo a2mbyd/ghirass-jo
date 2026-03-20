@@ -42,16 +42,16 @@ class SectionFactory extends Factory
     public function universityRequired(): Factory
     {
         return $this->state(fn () => [
-            'name' => 'university_required',
-            'slug' => 'university-required',
+            'name' => 'uni_required',
+            'slug' => 'uni-required',
         ]);
     }
 
     public function universityElective(): Factory
     {
         return $this->state(fn () => [
-            'name' => 'university_elective',
-            'slug' => 'university-elective',
+            'name' => 'uni_elective',
+            'slug' => 'uni-elective',
         ]);
     }
 }

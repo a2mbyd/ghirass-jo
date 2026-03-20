@@ -45,8 +45,10 @@ return [
         ['course_code' => 'GEN105', 'name' => 'مهارات الاتصال وأخلاقيات المهن', 'description' => 'Communication Skills and Professional Ethics', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'uni_required'],
         ['course_code' => 'GEN106', 'name' => 'المهارات الحياتية', 'description' => 'Life Skills', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'uni_required'],
         ['course_code' => 'GEN107', 'name' => 'علوم عسكرية', 'description' => 'Military Science', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'uni_required'],
-        ['course_code' => 'PHY101', 'name' => 'فيزياء عامة عملي', 'description' => 'General Physics Practical', 'credit_hours' => 1, 'is_lab' => true, 'section' => null, 'course_type' => 'uni_required'],
-        ['course_code' => 'PHY102', 'name' => 'فيزياء 2', 'description' => 'Physics 2', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'uni_required', 'prerequisites' => [['course_code' => 'PHY101', 'type' => 'succeeded_before']]],
+
+        // ─── متطلبات استدراكية ─── course_type: remedial_course ───
+        ['course_code' => 'CS101', 'name' => 'حاسوب استدراكي', 'description' => 'Introductory Computer Science', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'remedial_course', 'year' => 1, 'semester' => 1],
+        ['course_code' => 'CS102', 'name' => 'انجليزي استدراكي', 'description' => 'Introductory English', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'remedial_course', 'year' => 1, 'semester' => 2],
 
         // ─── الرياضيات — section: 0 ───
         ['course_code' => 'MATH101', 'name' => 'تفاضل وتكامل 1', 'description' => 'Calculus 1', 'credit_hours' => 3, 'is_lab' => false, 'section' => 0, 'course_type' => 'major_course', 'pivot_type' => 'required_major', 'year' => 1, 'semester' => 1],
@@ -64,7 +66,6 @@ return [
         ['course_code' => 'IS402', 'name' => 'تحليل وتصميم الأنظمة', 'description' => 'Systems Analysis and Design', 'credit_hours' => 3, 'is_lab' => false, 'section' => 3, 'course_type' => 'major_course', 'pivot_type' => 'required_major', 'year' => 4, 'semester' => 2, 'prerequisites' => [['course_code' => 'IS302', 'type' => 'succeeded_before']]],
 
         // ─── علوم الحاسوب — section: 1 ───
-        ['course_code' => 'CS101', 'name' => 'حاسوب استدراكي', 'description' => 'Introductory Computer Science', 'credit_hours' => 3, 'is_lab' => false, 'section' => 1, 'course_type' => 'major_course', 'pivot_type' => 'required_major', 'year' => 1, 'semester' => 2],
         ['course_code' => 'CS201', 'name' => 'مقدمة إلى البرمجة', 'description' => 'Introduction to Programming', 'credit_hours' => 3, 'is_lab' => false, 'section' => 1, 'course_type' => 'major_course', 'pivot_type' => 'required_major', 'year' => 2, 'semester' => 1, 'prerequisites' => [['course_code' => 'CS101', 'type' => 'succeeded_before']]],
         ['course_code' => 'CS202', 'name' => 'مقدمة إلى البرمجة الكينونية', 'description' => 'Introduction to Object-Oriented Programming', 'credit_hours' => 3, 'is_lab' => false, 'section' => 1, 'course_type' => 'major_course', 'pivot_type' => 'required_major', 'year' => 2, 'semester' => 2, 'prerequisites' => [['course_code' => 'CS201', 'type' => 'succeeded_before']]],
         ['course_code' => 'CS203', 'name' => 'تراكيب البيانات', 'description' => 'Data Structures', 'credit_hours' => 3, 'is_lab' => false, 'section' => 1, 'course_type' => 'major_course', 'pivot_type' => 'required_major', 'year' => 2, 'semester' => 2, 'prerequisites' => [['course_code' => 'CS202', 'type' => 'succeeded_before'], ['course_code' => 'MATH241B', 'type' => 'succeeded_before']]],
@@ -95,9 +96,11 @@ return [
         ['course_code' => 'CS492', 'name' => 'مشروع تخرج 2', 'description' => 'Graduation Project 2', 'credit_hours' => 3, 'is_lab' => false, 'section' => 1, 'course_type' => 'major_course', 'pivot_type' => 'graduation_project', 'year' => 4, 'semester' => 2, 'prerequisites' => [['course_code' => 'CS491', 'type' => 'succeeded_before']]],
 
         // ─── اختياري تخصص — section: null, pivot_type: elective_major ───
-        ['course_code' => 'DEPELEC1', 'name' => 'اختياري قسم 1', 'description' => 'Department Elective 1', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
-        ['course_code' => 'DEPELEC2', 'name' => 'اختياري قسم 2', 'description' => 'Department Elective 2', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
-        ['course_code' => 'DEPELEC3', 'name' => 'اختياري قسم 3', 'description' => 'Department Elective 3', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
+        ['course_code' => 'DEPELEC1', 'name' => 'مواضيع متقدمة في علوم الحاسوب (اختياري)', 'description' => 'Advanced topics in computer science (major elective)', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
+        ['course_code' => 'DEPELEC2', 'name' => 'مواضيع متقدمة في هندسة الحاسوب (اختياري)', 'description' => 'Advanced topics in computer engineering (major elective)', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
+        ['course_code' => 'DEPELEC3', 'name' => 'مواضيع متقدمة في نظم المعلومات (اختياري)', 'description' => 'Advanced topics in information systems (major elective)', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
+        ['course_code' => 'DEPELEC4', 'name' => 'مواضيع متقدمة في هندسة البرمجيات (اختياري)', 'description' => 'Advanced topics in software engineering (major elective)', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
+        ['course_code' => 'DEPELEC5', 'name' => 'رياضيات وهندسة رياضية للحاسوب (اختياري)', 'description' => 'Mathematics and computer-oriented applied math (major elective)', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'major_course', 'pivot_type' => 'elective_major', 'year' => 4, 'semester' => 2],
 
         // ─── اختياري جامعة — course_type: uni_elective, no major pivot ───
         ['course_code' => 'UNIELEC1', 'name' => 'متطلب جامعة اختياري 1', 'description' => 'University Elective 1', 'credit_hours' => 3, 'is_lab' => false, 'section' => null, 'course_type' => 'uni_elective'],

@@ -8,13 +8,15 @@ import {
     UNI_ELECTIVES,
 } from '@/components/Major/RoadMapSection/RoadMapBody/GraphSection/GraphSection.constants';
 
+const REMEDIAL_SECTION_ID = -6;
+
 interface MajorProps {
     major: Major;
     sections: Section[];
     majorCourses: Course[];
     uniRequired: Course[];
     collegeRequired: Course[];
-    allCourses: Course[];
+    remedialCourses: Course[];
 }
 
 export default function Major({
@@ -23,7 +25,7 @@ export default function Major({
     majorCourses,
     uniRequired,
     collegeRequired,
-    allCourses,
+    remedialCourses,
 }: MajorProps) {
     const allMajorCourses = useMemo<Course[]>(
         () => [
@@ -35,23 +37,35 @@ export default function Major({
         ],
         [majorCourses, uniRequired, collegeRequired],
     );
+
+    const allCoursesForGraph = useMemo<Course[]>(
+        () => [
+            ...allMajorCourses,
+            ...remedialCourses.map((c) => ({
+                ...c,
+                sectionId: REMEDIAL_SECTION_ID,
+            })),
+        ],
+        [allMajorCourses, remedialCourses],
+    );
+
     return (
         <div dir="rtl" className="flex flex-col gap-8">
-            {/* ── Hero / Major Header — only counts real major sections & courses ── */}
+            {/* ── Hero / Major Header — excludes remedial courses ── */}
             <Hero
                 allCourses={allMajorCourses}
                 major={major}
                 sections={sections}
             />
 
-            {/* ── Roadmap Section — receives all course groups separately ── */}
+            {/* ── Roadmap Section — includes remedial courses for graph display ── */}
             <RoadMapSection
                 major={major}
                 sections={sections}
-                allCourses={allMajorCourses}
+                allCourses={allCoursesForGraph}
             />
 
-            {/* ── Courses by Year — only shows real major courses ── */}
+            {/* ── Courses by Year — excludes remedial courses ── */}
             <CourseByYearSection courses={allMajorCourses} />
         </div>
     );
